@@ -1,5 +1,5 @@
 {
-  "id": "6da61881-3b8a-41de-8e48-5ccabd18c51d",
+  "id": "5e3b02c4-ac48-41a3-9ec3-baacdecbc82b",
   "name": "FIRST MESSAGE  - N3 - A",
   "description": null,
   "active": true,
@@ -555,8 +555,7 @@
         0
       ],
       "id": "f194ce05-28a2-4de8-8c9c-9fbbb7765f48",
-      "name": "If - Data < 24h",
-      "disabled": true
+      "name": "If - Data < 24h"
     },
     {
       "parameters": {
@@ -650,8 +649,8 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 2
+              "field": "seconds",
+              "secondsInterval": 2
             }
           ]
         }
@@ -941,15 +940,15 @@
     "timezone": "America/Sao_Paulo",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "3fa86d7e-7b42-4e9f-a1ef-9c21d2516f02",
+  "activeVersionId": "63301dda-7fbf-459c-9344-4093045b3900",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:55:47.010Z",
-      "createdAt": "2025-10-20T18:55:47.010Z",
+      "updatedAt": "2025-10-20T18:56:51.335Z",
+      "createdAt": "2025-10-20T18:56:51.335Z",
       "role": "workflow:owner",
-      "workflowId": "6da61881-3b8a-41de-8e48-5ccabd18c51d",
+      "workflowId": "5e3b02c4-ac48-41a3-9ec3-baacdecbc82b",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -965,10 +964,10 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2025-12-11T15:43:44.749Z",
-    "createdAt": "2025-12-11T15:43:44.749Z",
-    "versionId": "3fa86d7e-7b42-4e9f-a1ef-9c21d2516f02",
-    "workflowId": "6da61881-3b8a-41de-8e48-5ccabd18c51d",
+    "updatedAt": "2025-12-11T15:43:44.805Z",
+    "createdAt": "2025-12-11T15:43:44.805Z",
+    "versionId": "63301dda-7fbf-459c-9344-4093045b3900",
+    "workflowId": "5e3b02c4-ac48-41a3-9ec3-baacdecbc82b",
     "nodes": [
       {
         "parameters": {
@@ -1520,8 +1519,7 @@
           0
         ],
         "id": "f194ce05-28a2-4de8-8c9c-9fbbb7765f48",
-        "name": "If - Data < 24h",
-        "disabled": true
+        "name": "If - Data < 24h"
       },
       {
         "parameters": {
@@ -1616,8 +1614,8 @@
           "rule": {
             "interval": [
               {
-                "field": "minutes",
-                "minutesInterval": 2
+                "field": "seconds",
+                "secondsInterval": 2
               }
             ]
           }
@@ -1908,10 +1906,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-27T21:43:40.689Z",
-        "id": 80,
-        "workflowId": "6da61881-3b8a-41de-8e48-5ccabd18c51d",
-        "versionId": "3fa86d7e-7b42-4e9f-a1ef-9c21d2516f02",
+        "createdAt": "2025-10-27T21:43:40.730Z",
+        "id": 84,
+        "workflowId": "5e3b02c4-ac48-41a3-9ec3-baacdecbc82b",
+        "versionId": "63301dda-7fbf-459c-9344-4093045b3900",
         "event": "activated",
         "userId": null
       }
