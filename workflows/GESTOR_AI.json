@@ -1,81 +1,10 @@
 {
-  "id": "7961fb74-6a96-4512-89d3-d45a5b528949",
+  "id": "29861fa4-b615-4050-b360-87f545b28edf",
   "name": "GESTOR AI",
   "description": null,
   "active": true,
-  "isArchived": true,
+  "isArchived": false,
   "nodes": [
-    {
-      "parameters": {
-        "operation": "get",
-        "tableId": "criativos",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "id",
-              "keyValue": "{{ $env.KEYVALUE }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        1184,
-        432
-      ],
-      "id": "f4312323-191a-442e-b9ca-6fe9f98ba09f",
-      "name": "SearchAd",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "tableId": "campanhas",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "nome_campanha",
-              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
-            },
-            {
-              "fieldId": "id_campaign",
-              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `{id_campaign}`, 'string') }}"
-            },
-            {
-              "fieldId": "status",
-              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `active`, 'string') }}"
-            },
-            {
-              "fieldId": "id_criativo",
-              "fieldValue": "={{ $('SET').item.json.id_ad }}"
-            },
-            {
-              "fieldId": "id_projeto",
-              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `{id_projeto}`, 'string') }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        2336,
-        432
-      ],
-      "id": "7d58ec3c-6ca0-4d05-b874-1e0d004b6a73",
-      "name": "SaveBase",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
     {
       "parameters": {
         "toolDescription": "Criar Campanhas",
@@ -116,47 +45,6 @@
       ],
       "id": "04e6dc06-7030-4791-a37c-c9936b6219a9",
       "name": "CreateCampaigns"
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "tableId": "criativos",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "id",
-              "condition": "eq",
-              "keyValue": "{{ $env.KEYVALUE }}"
-            }
-          ]
-        },
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "status",
-              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `ACTIVE`, 'string') }}"
-            },
-            {
-              "fieldId": "id_copy",
-              "fieldValue": "={{ $('SET').item.json.id_copy }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        2464,
-        432
-      ],
-      "id": "3e231e69-ab8f-4ad9-9299-8428c51cb0bc",
-      "name": "UpdateAd",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
     },
     {
       "parameters": {
@@ -319,84 +207,6 @@
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Você está no controle de todo o fluxo de lançamento de campanhas de tráfego pago.",
-        "hasOutputParser": true,
-        "options": {
-          "systemMessage": "=AGENTE GESTOR - ORQUESTRADOR DE CAMPANHAS META ADS\nDEFINIÇÃO DO PAPEL\n\nVocê é o Agente Gestor, responsável por orquestrar um workflow completo no n8n para criação automatizada de campanhas no Meta Ads. Sua função é controlar todo o fluxo de execução, validar dados e garantir que cada etapa seja executada na ordem correta.\nFERRAMENTAS DISPONÍVEIS\n🗃️ SupabaseTool\n\nDataProject: Obtém dados iniciais do projeto\nSearchAd: Retorna URL do vídeo para download\nSearchCopy: Retorna título e descrição do copy\nSaveBase: Salva dados da campanha após execução\nUpdateAd: Atualiza status e IDs no banco\nUpdateCopy: Atualiza dados do copy associando ao projeto\n\n🔗 HTTPRequestTool\n\nCreateCampaigns: Cria campanha no Meta Ads\nCreateAdsets: Cria conjunto de anúncios (adset)\nUploadVideo: Faz upload do vídeo criativo\nCreateCreative: Cria o criativo final com vídeo + copy\nUploadAd: Cria o anúncio final e o ativa\n\nVARIÁVEIS DO SISTEMA\nDados Base (DataProject)\n{id_projeto}, {nome_comercio}, *{api_meta} - variavel presente em todas as tools da Meta, certifique de estar usando está variavel*, {id_conta}, \n{id_pagina}, {id_instagram}, {url_destino}, {publico}, {id_pixel}\n\nDados Coletados\n{id_ad}, {url_download} → SearchAd\n{copy_titulo}, {copy_descricao} → SearchCopy\nIDs Gerados no Fluxo\n{id_campanha} → CreateCampaigns\n{adset_id} → CreateAdsets\n{criative_id} → UploadVideo (depois modificado por CreateCreative)\nDados de Input\n{invest}, {raio} → inputs do projeto\n{id_ad}, {id_copy} → usados em SaveBase e UpdateAd\n\nFLUXO DE EXECUÇÃO OBRIGATÓRIO\nETAPA 1: COLETA DE DADOS INICIAIS\n1. DataProject\n   → Coleta: {id_projeto}, *{api_meta}*, {id_conta}, {id_pagina}, etc.\n   \n2. SearchAd\n   → Coleta: {id_ad} e {url_download}\n   \n3. SearchCopy\n   → Coleta: {copy_titulo} e {copy_descricao}\n\nETAPA 2: CRIAÇÃO DA ESTRUTURA META ADS\n4. CreateCampaigns\n   → Input: {id_conta} e *{api_meta}*\n   → Output: {id_campanha}\n   \n5. CreateAdsets\n   → Input: {id_campanha}, {invest}, {raio}, {id_pagina} e *{api_meta}*\n   → Output: {adset_id}\n\nETAPA 3: CRIAÇÃO DO CRIATIVO\n6. UploadVideo\n   → Input: {url_download} e *{api_meta}*\n   → Output: {criative_id} (ID do vídeo)\n   \n7. CreateCreative\n   → Input: {criative_id}, {id_ad}, {copy_titulo}, {copy_descricao}, {id_pagina} e *{api_meta}*\n   → Output: {criative_id} (ID do criativo final)\n\nETAPA 4: CRIAÇÃO DO ANÚNCIO\n8. UploadAd\n   → Input: {adset_id} e {criative_id} (do CreateCreative)\n   → Action: Cria e ativa o anúncio\n\nETAPA 5: ATUALIZAÇÃO DO BANCO\n9. SaveBase\n   → Registra campanha e criativo no Supabase\n   \n10. UpdateAd\n    → Atualiza status e IDs no Supabase\n\n11. UpdateCopy\n    → Atualiza dados do copy associando ao projeto\n\nREGRAS CRÍTICAS DE VALIDAÇÃO\n⚠️ VALIDAÇÕES OBRIGATÓRIAS\n\nAntes de cada etapa: Confirme se todas as variáveis necessárias estão presentes\n\nDados essenciais: {id_conta}, {api_meta}, {id_pagina}, {url_download}, {api_meta}\n\nIDs de dependência: Não avance sem o ID da etapa anterior\nFormato JSON: O campo creative no UploadAd deve ser objeto JSON, não string\n\n🚫 NUNCA FAÇA ISSO\n\nPular etapas do fluxo\nUsar variáveis não validadas\nUsar o {criative_id} do UploadVideo diretamente no UploadAd\nContinuar com dados faltantes\nIgnorar as variaveis\n\n✅ SEMPRE FAÇA ISSO\n\nValide variáveis antes de cada chamada\nUse o {criative_id} retornado pelo CreateCreative no UploadAd\nUse sempre {api_meta} que necessário, tal variavel é fundamental para acessar a meta\nInforme qual ferramenta está sendo usada\nComunique o status de cada etapa\nPare o fluxo em caso de erro\n\nTEMPLATE DE EXECUÇÃO\nPara cada ferramenta, siga este padrão:\n🔧 EXECUTANDO: [Nome da Ferramenta]\n📥 INPUT: {variavel1}, {variavel2}...\n🎯 OBJETIVO: [O que esta etapa faz]\n📤 OUTPUT ESPERADO: {nova_variavel}\nTRATAMENTO DE ERROS\nSe qualquer etapa falhar:\n\nPARE imediatamente o fluxo\nIDENTIFIQUE qual variável está faltando\nCOMUNIQUE o erro de forma clara\nAGUARDE correção antes de continuar\n\nCOMUNICAÇÃO\nMantenha clareza em cada ação:\n\nQual ferramenta está sendo executada\nQuais variáveis estão sendo utilizadas\nQual o resultado obtido\nQual será a próxima etapa\n\nLEMBRE-SE: Você é o maestro desta operação. Nada acontece sem sua validação e comando direto.",
-          "maxIterations": 20
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2,
-      "position": [
-        1728,
-        176
-      ],
-      "id": "2d28b855-1d4a-462b-96f1-ac268055fa86",
-      "name": "Gestor",
-      "retryOnFail": false,
-      "executeOnce": false,
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "tableId": "copy",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "id",
-              "keyValue": "{{ $env.KEYVALUE }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        1344,
-        432
-      ],
-      "id": "7acb20f4-1f2e-4547-8263-0c0acabc3e49",
-      "name": "SearchCopy1",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "tableId": "projetos",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "{{ $env.KEYNAME }}",
-              "keyValue": "{{ $env.KEYVALUE }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        1040,
-        432
-      ],
-      "id": "efc9a1d5-c5ff-443e-9bd2-b8f9193065e4",
-      "name": "DataProject1",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
-    {
-      "parameters": {
         "jsonSchemaExample": "{\n\t\"status\": \"\"\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
@@ -488,91 +298,6 @@
       ],
       "id": "29362708-0c1a-41e4-a878-9543847994d9",
       "name": "SET"
-    },
-    {
-      "parameters": {
-        "resource": "messages-api",
-        "instanceName": "EvolutionNathan",
-        "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
-        "messageText": "=Subindo anuncio no Facebook e Instagram",
-        "options_message": {}
-      },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
-      "typeVersion": 1,
-      "position": [
-        1472,
-        176
-      ],
-      "id": "c0593736-ad67-4b13-926e-a5aff2375b22",
-      "name": "Enviar texto1",
-      "credentials": {
-        "evolutionApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Evolution account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "tableId": "copy",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "id",
-              "condition": "eq",
-              "keyValue": "{{ $env.KEYVALUE }}"
-            }
-          ]
-        },
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "id_projeto",
-              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{id_projeto}`, 'string') }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        2608,
-        432
-      ],
-      "id": "29274c1e-0089-482d-a13a-0ef20e6438d4",
-      "name": "UpdateCopy",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        880,
-        640
-      ],
-      "id": "e1dadce3-2005-49b3-9e04-65bc58729bd5",
-      "name": "4.1-mini",
-      "credentials": {
-        "openAiApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "OpenAi account | empriser"
-        }
-      }
     },
     {
       "parameters": {
@@ -758,62 +483,281 @@
     },
     {
       "parameters": {
-        "modelName": "=models/gemini-2.5-flash",
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "builtInTools": {},
         "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
       "position": [
-        880,
+        896,
         432
       ],
-      "id": "5dd4840a-48b7-4712-bbe1-5d500d75e0fe",
-      "name": "Google Gemini Chat Model",
+      "id": "b5547673-4c2b-4382-bceb-6e4dad0d1038",
+      "name": "5.1-mini",
       "credentials": {
-        "googlePalmApi": {
+        "openAiApi": {
           "id": "YOUR_CREDENTIAL_ID",
-          "name": "Google Gemini(PaLM) | Roro"
+          "name": "OpenAi account | Jordan"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "copy",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        432
+      ],
+      "id": "fb8b2291-ad0d-4b9b-8a80-c231380674d8",
+      "name": "SearchCopy",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "projetos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        432
+      ],
+      "id": "848fbb4e-a544-442a-ac98-59b2a02ab6c5",
+      "name": "DataProject",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "criativos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1184,
+        432
+      ],
+      "id": "ebf2be2c-7f93-44f6-a953-ff49cffe6ec1",
+      "name": "SearchAd",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "campanhas",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome_campanha",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+            },
+            {
+              "fieldId": "id_campaign",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `{id_campaign}`, 'string') }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `active`, 'string') }}"
+            },
+            {
+              "fieldId": "id_criativo",
+              "fieldValue": "={{ $('SET').item.json.id_ad }}"
+            },
+            {
+              "fieldId": "id_projeto",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `{id_projeto}`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2336,
+        432
+      ],
+      "id": "f9f250d7-3443-4236-bd15-4489e8d06229",
+      "name": "SaveBase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "criativos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `ACTIVE`, 'string') }}"
+            },
+            {
+              "fieldId": "id_copy",
+              "fieldValue": "={{ $('SET').item.json.id_copy }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        432
+      ],
+      "id": "f88f0d47-25ac-44c6-997b-0f6afa1eb85a",
+      "name": "UpdateAd",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "copy",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id_projeto",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{id_projeto}`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2608,
+        432
+      ],
+      "id": "3de29480-adf6-4559-acab-1deeb2e46ec0",
+      "name": "UpdateCopy",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Trafego Pago",
+        "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
+        "messageText": "=Subindo anuncio no Facebook e Instagram",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        176
+      ],
+      "id": "eec49de1-4597-4ea3-969e-53686f5816d6",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você está no controle de todo o fluxo de lançamento de campanhas de tráfego pago.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=AGENTE GESTOR - ORQUESTRADOR DE CAMPANHAS META ADS\nDEFINIÇÃO DO PAPEL\n\nVocê é o Agente Gestor, responsável por orquestrar um workflow completo no n8n para criação automatizada de campanhas no Meta Ads. Sua função é controlar todo o fluxo de execução, validar dados e garantir que cada etapa seja executada na ordem correta.\nFERRAMENTAS DISPONÍVEIS\n🗃️ SupabaseTool\n\nDataProject: Obtém dados iniciais do projeto\nSearchAd: Retorna URL do vídeo para download\nSearchCopy: Retorna título e descrição do copy\nSaveBase: Salva dados da campanha após execução\nUpdateAd: Atualiza status e IDs no banco\nUpdateCopy: Atualiza dados do copy associando ao projeto\n\n🔗 HTTPRequestTool\n\nCreateCampaigns: Cria campanha no Meta Ads\nCreateAdsets: Cria conjunto de anúncios (adset)\nUploadVideo: Faz upload do vídeo criativo\nCreateCreative: Cria o criativo final com vídeo + copy\nUploadAd: Cria o anúncio final e o ativa\n\nVARIÁVEIS DO SISTEMA\nDados Base (DataProject)\n{id_projeto}, {nome_comercio}, *{api_meta} - variavel presente em todas as tools da Meta, certifique de estar usando está variavel*, {id_conta}, \n{id_pagina}, {id_instagram}, {url_destino}, {publico}, {id_pixel}\n\nDados Coletados\n{id_ad}, {url_download} → SearchAd\n{copy_titulo}, {copy_descricao} → SearchCopy\nIDs Gerados no Fluxo\n{id_campanha} → CreateCampaigns\n{adset_id} → CreateAdsets\n{criative_id} → UploadVideo (depois modificado por CreateCreative)\nDados de Input\n{invest}, {raio} → inputs do projeto\n{id_ad}, {id_copy} → usados em SaveBase e UpdateAd\n\nFLUXO DE EXECUÇÃO OBRIGATÓRIO\nETAPA 1: COLETA DE DADOS INICIAIS\n1. DataProject\n   → Coleta: {id_projeto}, *{api_meta}*, {id_conta}, {id_pagina}, etc.\n   \n2. SearchAd\n   → Coleta: {id_ad} e {url_download}\n   \n3. SearchCopy\n   → Coleta: {copy_titulo} e {copy_descricao}\n\nETAPA 2: CRIAÇÃO DA ESTRUTURA META ADS\n4. CreateCampaigns\n   → Input: {id_conta} e *{api_meta}*\n   → Output: {id_campanha}\n   \n5. CreateAdsets\n   → Input: {id_campanha}, {invest}, {raio}, {id_pagina} e *{api_meta}*\n   → Output: {adset_id}\n\nETAPA 3: CRIAÇÃO DO CRIATIVO\n6. UploadVideo\n   → Input: {url_download} e *{api_meta}*\n   → Output: {criative_id} (ID do vídeo)\n   \n7. CreateCreative\n   → Input: {criative_id}, {id_ad}, {copy_titulo}, {copy_descricao}, {id_pagina} e *{api_meta}*\n   → Output: {criative_id} (ID do criativo final)\n\nETAPA 4: CRIAÇÃO DO ANÚNCIO\n8. UploadAd\n   → Input: {adset_id} e {criative_id} (do CreateCreative)\n   → Action: Cria e ativa o anúncio\n\nETAPA 5: ATUALIZAÇÃO DO BANCO\n9. SaveBase\n   → Registra campanha e criativo no Supabase\n   \n10. UpdateAd\n    → Atualiza status e IDs no Supabase\n\n11. UpdateCopy\n    → Atualiza dados do copy associando ao projeto\n\nREGRAS CRÍTICAS DE VALIDAÇÃO\n⚠️ VALIDAÇÕES OBRIGATÓRIAS\n\nAntes de cada etapa: Confirme se todas as variáveis necessárias estão presentes\n\nDados essenciais: {id_conta}, {api_meta}, {id_pagina}, {url_download}, {api_meta}\n\nIDs de dependência: Não avance sem o ID da etapa anterior\nFormato JSON: O campo creative no UploadAd deve ser objeto JSON, não string\n\n🚫 NUNCA FAÇA ISSO\n\nPular etapas do fluxo\nUsar variáveis não validadas\nUsar o {criative_id} do UploadVideo diretamente no UploadAd\nContinuar com dados faltantes\nIgnorar as variaveis\n\n✅ SEMPRE FAÇA ISSO\n\nValide variáveis antes de cada chamada\nUse o {criative_id} retornado pelo CreateCreative no UploadAd\nUse sempre {api_meta} que necessário, tal variavel é fundamental para acessar a meta\nInforme qual ferramenta está sendo usada\nComunique o status de cada etapa\nPare o fluxo em caso de erro\n\nTEMPLATE DE EXECUÇÃO\nPara cada ferramenta, siga este padrão:\n🔧 EXECUTANDO: [Nome da Ferramenta]\n📥 INPUT: {variavel1}, {variavel2}...\n🎯 OBJETIVO: [O que esta etapa faz]\n📤 OUTPUT ESPERADO: {nova_variavel}\nTRATAMENTO DE ERROS\nSe qualquer etapa falhar:\n\nPARE imediatamente o fluxo\nIDENTIFIQUE qual variável está faltando\nCOMUNIQUE o erro de forma clara\nAGUARDE correção antes de continuar\n\nCOMUNICAÇÃO\nMantenha clareza em cada ação:\n\nQual ferramenta está sendo executada\nQuais variáveis estão sendo utilizadas\nQual o resultado obtido\nQual será a próxima etapa\n\nLEMBRE-SE: Você é o maestro desta operação. Nada acontece sem sua validação e comando direto."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1776,
+        176
+      ],
+      "id": "a1b476b1-6b30-442f-8940-21d3ddbba9ff",
+      "name": "Gestor"
     }
   ],
   "connections": {
-    "SearchAd": {
-      "ai_tool": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "SaveBase": {
-      "ai_tool": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "CreateCampaigns": {
       "ai_tool": [
         []
-      ]
-    },
-    "UpdateAd": {
-      "ai_tool": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
       ]
     },
     "CreateAdsets": {
@@ -834,33 +778,6 @@
     "CreateCreative": {
       "ai_tool": [
         []
-      ]
-    },
-    "Gestor": {
-      "main": [
-        []
-      ]
-    },
-    "SearchCopy1": {
-      "ai_tool": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DataProject1": {
-      "ai_tool": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
       ]
     },
     "Structured Output Parser2": {
@@ -889,41 +806,8 @@
       "main": [
         [
           {
-            "node": "Enviar texto1",
+            "node": "Enviar texto",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Enviar texto1": {
-      "main": [
-        [
-          {
-            "node": "Gestor",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "UpdateCopy": {
-      "ai_tool": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "4.1-mini": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Gestor",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -989,25 +873,109 @@
         ]
       ]
     },
-    "Google Gemini Chat Model": {
+    "5.1-mini": {
       "ai_languageModel": [
-        []
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataProject": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SearchCopy": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SearchAd": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SaveBase": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateAd": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateCopy": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Gestor",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
   "settings": {
     "executionOrder": "v1",
-    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+    "errorWorkflow": "CRnDoVvUKB8NtpCj",
+    "binaryMode": "separate"
   },
-  "activeVersionId": "855d268d-224a-4d1f-813a-e7f114663f8c",
-  "versionCounter": 48,
+  "activeVersionId": "85aae2a7-e844-4064-8f78-5489195dacb3",
+  "versionCounter": 103,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:55:45.146Z",
-      "createdAt": "2025-10-20T18:55:45.146Z",
+      "updatedAt": "2025-10-20T18:56:35.311Z",
+      "createdAt": "2025-10-20T18:56:35.311Z",
       "role": "workflow:owner",
-      "workflowId": "7961fb74-6a96-4512-89d3-d45a5b528949",
+      "workflowId": "29861fa4-b615-4050-b360-87f545b28edf",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -1023,82 +991,11 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2025-12-11T15:43:43.845Z",
-    "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "855d268d-224a-4d1f-813a-e7f114663f8c",
-    "workflowId": "7961fb74-6a96-4512-89d3-d45a5b528949",
+    "updatedAt": "2026-05-05T19:56:49.579Z",
+    "createdAt": "2026-05-05T19:56:45.047Z",
+    "versionId": "85aae2a7-e844-4064-8f78-5489195dacb3",
+    "workflowId": "29861fa4-b615-4050-b360-87f545b28edf",
     "nodes": [
-      {
-        "parameters": {
-          "operation": "get",
-          "tableId": "criativos",
-          "filters": {
-            "conditions": [
-              {
-                "keyName": "id",
-                "keyValue": "={{ $('SET').item.json.id_ad }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          1184,
-          432
-        ],
-        "id": "f4312323-191a-442e-b9ca-6fe9f98ba09f",
-        "name": "SearchAd",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "tableId": "campanhas",
-          "fieldsUi": {
-            "fieldValues": [
-              {
-                "fieldId": "nome_campanha",
-                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
-              },
-              {
-                "fieldId": "id_campaign",
-                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `{id_campaign}`, 'string') }}"
-              },
-              {
-                "fieldId": "status",
-                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `active`, 'string') }}"
-              },
-              {
-                "fieldId": "id_criativo",
-                "fieldValue": "={{ $('SET').item.json.id_ad }}"
-              },
-              {
-                "fieldId": "id_projeto",
-                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `{id_projeto}`, 'string') }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          2336,
-          432
-        ],
-        "id": "7d58ec3c-6ca0-4d05-b874-1e0d004b6a73",
-        "name": "SaveBase",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
       {
         "parameters": {
           "toolDescription": "Criar Campanhas",
@@ -1139,47 +1036,6 @@
         ],
         "id": "04e6dc06-7030-4791-a37c-c9936b6219a9",
         "name": "CreateCampaigns"
-      },
-      {
-        "parameters": {
-          "operation": "update",
-          "tableId": "criativos",
-          "filters": {
-            "conditions": [
-              {
-                "keyName": "id",
-                "condition": "eq",
-                "keyValue": "={{ $('SET').item.json.id_ad }}"
-              }
-            ]
-          },
-          "fieldsUi": {
-            "fieldValues": [
-              {
-                "fieldId": "status",
-                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `ACTIVE`, 'string') }}"
-              },
-              {
-                "fieldId": "id_copy",
-                "fieldValue": "={{ $('SET').item.json.id_copy }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          2464,
-          432
-        ],
-        "id": "3e231e69-ab8f-4ad9-9299-8428c51cb0bc",
-        "name": "UpdateAd",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
       },
       {
         "parameters": {
@@ -1342,84 +1198,6 @@
       },
       {
         "parameters": {
-          "promptType": "define",
-          "text": "=Você está no controle de todo o fluxo de lançamento de campanhas de tráfego pago.",
-          "hasOutputParser": true,
-          "options": {
-            "systemMessage": "=AGENTE GESTOR - ORQUESTRADOR DE CAMPANHAS META ADS\nDEFINIÇÃO DO PAPEL\n\nVocê é o Agente Gestor, responsável por orquestrar um workflow completo no n8n para criação automatizada de campanhas no Meta Ads. Sua função é controlar todo o fluxo de execução, validar dados e garantir que cada etapa seja executada na ordem correta.\nFERRAMENTAS DISPONÍVEIS\n🗃️ SupabaseTool\n\nDataProject: Obtém dados iniciais do projeto\nSearchAd: Retorna URL do vídeo para download\nSearchCopy: Retorna título e descrição do copy\nSaveBase: Salva dados da campanha após execução\nUpdateAd: Atualiza status e IDs no banco\nUpdateCopy: Atualiza dados do copy associando ao projeto\n\n🔗 HTTPRequestTool\n\nCreateCampaigns: Cria campanha no Meta Ads\nCreateAdsets: Cria conjunto de anúncios (adset)\nUploadVideo: Faz upload do vídeo criativo\nCreateCreative: Cria o criativo final com vídeo + copy\nUploadAd: Cria o anúncio final e o ativa\n\nVARIÁVEIS DO SISTEMA\nDados Base (DataProject)\n{id_projeto}, {nome_comercio}, *{api_meta} - variavel presente em todas as tools da Meta, certifique de estar usando está variavel*, {id_conta}, \n{id_pagina}, {id_instagram}, {url_destino}, {publico}, {id_pixel}\n\nDados Coletados\n{id_ad}, {url_download} → SearchAd\n{copy_titulo}, {copy_descricao} → SearchCopy\nIDs Gerados no Fluxo\n{id_campanha} → CreateCampaigns\n{adset_id} → CreateAdsets\n{criative_id} → UploadVideo (depois modificado por CreateCreative)\nDados de Input\n{invest}, {raio} → inputs do projeto\n{id_ad}, {id_copy} → usados em SaveBase e UpdateAd\n\nFLUXO DE EXECUÇÃO OBRIGATÓRIO\nETAPA 1: COLETA DE DADOS INICIAIS\n1. DataProject\n   → Coleta: {id_projeto}, *{api_meta}*, {id_conta}, {id_pagina}, etc.\n   \n2. SearchAd\n   → Coleta: {id_ad} e {url_download}\n   \n3. SearchCopy\n   → Coleta: {copy_titulo} e {copy_descricao}\n\nETAPA 2: CRIAÇÃO DA ESTRUTURA META ADS\n4. CreateCampaigns\n   → Input: {id_conta} e *{api_meta}*\n   → Output: {id_campanha}\n   \n5. CreateAdsets\n   → Input: {id_campanha}, {invest}, {raio}, {id_pagina} e *{api_meta}*\n   → Output: {adset_id}\n\nETAPA 3: CRIAÇÃO DO CRIATIVO\n6. UploadVideo\n   → Input: {url_download} e *{api_meta}*\n   → Output: {criative_id} (ID do vídeo)\n   \n7. CreateCreative\n   → Input: {criative_id}, {id_ad}, {copy_titulo}, {copy_descricao}, {id_pagina} e *{api_meta}*\n   → Output: {criative_id} (ID do criativo final)\n\nETAPA 4: CRIAÇÃO DO ANÚNCIO\n8. UploadAd\n   → Input: {adset_id} e {criative_id} (do CreateCreative)\n   → Action: Cria e ativa o anúncio\n\nETAPA 5: ATUALIZAÇÃO DO BANCO\n9. SaveBase\n   → Registra campanha e criativo no Supabase\n   \n10. UpdateAd\n    → Atualiza status e IDs no Supabase\n\n11. UpdateCopy\n    → Atualiza dados do copy associando ao projeto\n\nREGRAS CRÍTICAS DE VALIDAÇÃO\n⚠️ VALIDAÇÕES OBRIGATÓRIAS\n\nAntes de cada etapa: Confirme se todas as variáveis necessárias estão presentes\n\nDados essenciais: {id_conta}, {api_meta}, {id_pagina}, {url_download}, {api_meta}\n\nIDs de dependência: Não avance sem o ID da etapa anterior\nFormato JSON: O campo creative no UploadAd deve ser objeto JSON, não string\n\n🚫 NUNCA FAÇA ISSO\n\nPular etapas do fluxo\nUsar variáveis não validadas\nUsar o {criative_id} do UploadVideo diretamente no UploadAd\nContinuar com dados faltantes\nIgnorar as variaveis\n\n✅ SEMPRE FAÇA ISSO\n\nValide variáveis antes de cada chamada\nUse o {criative_id} retornado pelo CreateCreative no UploadAd\nUse sempre {api_meta} que necessário, tal variavel é fundamental para acessar a meta\nInforme qual ferramenta está sendo usada\nComunique o status de cada etapa\nPare o fluxo em caso de erro\n\nTEMPLATE DE EXECUÇÃO\nPara cada ferramenta, siga este padrão:\n🔧 EXECUTANDO: [Nome da Ferramenta]\n📥 INPUT: {variavel1}, {variavel2}...\n🎯 OBJETIVO: [O que esta etapa faz]\n📤 OUTPUT ESPERADO: {nova_variavel}\nTRATAMENTO DE ERROS\nSe qualquer etapa falhar:\n\nPARE imediatamente o fluxo\nIDENTIFIQUE qual variável está faltando\nCOMUNIQUE o erro de forma clara\nAGUARDE correção antes de continuar\n\nCOMUNICAÇÃO\nMantenha clareza em cada ação:\n\nQual ferramenta está sendo executada\nQuais variáveis estão sendo utilizadas\nQual o resultado obtido\nQual será a próxima etapa\n\nLEMBRE-SE: Você é o maestro desta operação. Nada acontece sem sua validação e comando direto.",
-            "maxIterations": 20
-          }
-        },
-        "type": "@n8n/n8n-nodes-langchain.agent",
-        "typeVersion": 2,
-        "position": [
-          1728,
-          176
-        ],
-        "id": "2d28b855-1d4a-462b-96f1-ac268055fa86",
-        "name": "Gestor",
-        "retryOnFail": false,
-        "executeOnce": false,
-        "alwaysOutputData": true
-      },
-      {
-        "parameters": {
-          "operation": "get",
-          "tableId": "copy",
-          "filters": {
-            "conditions": [
-              {
-                "keyName": "id",
-                "keyValue": "={{ $('SET').item.json.id_copy }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          1344,
-          432
-        ],
-        "id": "7acb20f4-1f2e-4547-8263-0c0acabc3e49",
-        "name": "SearchCopy1",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "operation": "get",
-          "tableId": "projetos",
-          "filters": {
-            "conditions": [
-              {
-                "keyName": "nome",
-                "keyValue": "={{ $('SET').item.json.nome_comercio }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          1040,
-          432
-        ],
-        "id": "efc9a1d5-c5ff-443e-9bd2-b8f9193065e4",
-        "name": "DataProject1",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
-      {
-        "parameters": {
           "jsonSchemaExample": "{\n\t\"status\": \"\"\n}"
         },
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
@@ -1511,91 +1289,6 @@
         ],
         "id": "29362708-0c1a-41e4-a878-9543847994d9",
         "name": "SET"
-      },
-      {
-        "parameters": {
-          "resource": "messages-api",
-          "instanceName": "EvolutionNathan",
-          "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
-          "messageText": "=Subindo anuncio no Facebook e Instagram",
-          "options_message": {}
-        },
-        "type": "n8n-nodes-evolution-api.evolutionApi",
-        "typeVersion": 1,
-        "position": [
-          1472,
-          176
-        ],
-        "id": "c0593736-ad67-4b13-926e-a5aff2375b22",
-        "name": "Enviar texto1",
-        "credentials": {
-          "evolutionApi": {
-            "id": "b3mpy5RQEarqZZLq",
-            "name": "Evolution account 2"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "operation": "update",
-          "tableId": "copy",
-          "filters": {
-            "conditions": [
-              {
-                "keyName": "id",
-                "condition": "eq",
-                "keyValue": "={{ $('SET').item.json.id_copy }}"
-              }
-            ]
-          },
-          "fieldsUi": {
-            "fieldValues": [
-              {
-                "fieldId": "id_projeto",
-                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{id_projeto}`, 'string') }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          2608,
-          432
-        ],
-        "id": "29274c1e-0089-482d-a13a-0ef20e6438d4",
-        "name": "UpdateCopy",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "model": {
-            "__rl": true,
-            "value": "gpt-4.1-mini",
-            "mode": "list",
-            "cachedResultName": "gpt-4.1-mini"
-          },
-          "options": {}
-        },
-        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-        "typeVersion": 1.2,
-        "position": [
-          880,
-          640
-        ],
-        "id": "e1dadce3-2005-49b3-9e04-65bc58729bd5",
-        "name": "4.1-mini",
-        "credentials": {
-          "openAiApi": {
-            "id": "S4nX8HNif1ccfc47",
-            "name": "OpenAi account | empriser"
-          }
-        }
       },
       {
         "parameters": {
@@ -1781,62 +1474,280 @@
       },
       {
         "parameters": {
-          "modelName": "=models/gemini-2.5-flash",
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-5-mini"
+          },
+          "builtInTools": {},
           "options": {}
         },
-        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-        "typeVersion": 1,
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.3,
         "position": [
-          880,
+          896,
           432
         ],
-        "id": "5dd4840a-48b7-4712-bbe1-5d500d75e0fe",
-        "name": "Google Gemini Chat Model",
+        "id": "b5547673-4c2b-4382-bceb-6e4dad0d1038",
+        "name": "5.1-mini",
         "credentials": {
-          "googlePalmApi": {
-            "id": "mryxTvl1gp02HgXM",
-            "name": "Google Gemini(PaLM) | Roro"
+          "openAiApi": {
+            "id": "Nb5Mlro9i6fjrNZa",
+            "name": "OpenAi account | Jordan"
           }
         }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "copy",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "keyValue": "={{ $('SET').item.json.id_copy }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1344,
+          432
+        ],
+        "id": "fb8b2291-ad0d-4b9b-8a80-c231380674d8",
+        "name": "SearchCopy",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "projetos",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "nome",
+                "keyValue": "={{ $('SET').item.json.nome_comercio }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          432
+        ],
+        "id": "848fbb4e-a544-442a-ac98-59b2a02ab6c5",
+        "name": "DataProject",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "criativos",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "keyValue": "={{ $('SET').item.json.id_ad }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1184,
+          432
+        ],
+        "id": "ebf2be2c-7f93-44f6-a953-ff49cffe6ec1",
+        "name": "SearchAd",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "tableId": "campanhas",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "nome_campanha",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+              },
+              {
+                "fieldId": "id_campaign",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `{id_campaign}`, 'string') }}"
+              },
+              {
+                "fieldId": "status",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `active`, 'string') }}"
+              },
+              {
+                "fieldId": "id_criativo",
+                "fieldValue": "={{ $('SET').item.json.id_ad }}"
+              },
+              {
+                "fieldId": "id_projeto",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `{id_projeto}`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2336,
+          432
+        ],
+        "id": "f9f250d7-3443-4236-bd15-4489e8d06229",
+        "name": "SaveBase",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "criativos",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "condition": "eq",
+                "keyValue": "={{ $('SET').item.json.id_ad }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "status",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `ACTIVE`, 'string') }}"
+              },
+              {
+                "fieldId": "id_copy",
+                "fieldValue": "={{ $('SET').item.json.id_copy }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2464,
+          432
+        ],
+        "id": "f88f0d47-25ac-44c6-997b-0f6afa1eb85a",
+        "name": "UpdateAd",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "copy",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "condition": "eq",
+                "keyValue": "={{ $('SET').item.json.id_copy }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "id_projeto",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{id_projeto}`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2608,
+          432
+        ],
+        "id": "3de29480-adf6-4559-acab-1deeb2e46ec0",
+        "name": "UpdateCopy",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "Trafego Pago",
+          "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
+          "messageText": "=Subindo anuncio no Facebook e Instagram",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1440,
+          176
+        ],
+        "id": "eec49de1-4597-4ea3-969e-53686f5816d6",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "gpobE0e5T9fgY8wL",
+            "name": "Evolution API"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "Você está no controle de todo o fluxo de lançamento de campanhas de tráfego pago.",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=AGENTE GESTOR - ORQUESTRADOR DE CAMPANHAS META ADS\nDEFINIÇÃO DO PAPEL\n\nVocê é o Agente Gestor, responsável por orquestrar um workflow completo no n8n para criação automatizada de campanhas no Meta Ads. Sua função é controlar todo o fluxo de execução, validar dados e garantir que cada etapa seja executada na ordem correta.\nFERRAMENTAS DISPONÍVEIS\n🗃️ SupabaseTool\n\nDataProject: Obtém dados iniciais do projeto\nSearchAd: Retorna URL do vídeo para download\nSearchCopy: Retorna título e descrição do copy\nSaveBase: Salva dados da campanha após execução\nUpdateAd: Atualiza status e IDs no banco\nUpdateCopy: Atualiza dados do copy associando ao projeto\n\n🔗 HTTPRequestTool\n\nCreateCampaigns: Cria campanha no Meta Ads\nCreateAdsets: Cria conjunto de anúncios (adset)\nUploadVideo: Faz upload do vídeo criativo\nCreateCreative: Cria o criativo final com vídeo + copy\nUploadAd: Cria o anúncio final e o ativa\n\nVARIÁVEIS DO SISTEMA\nDados Base (DataProject)\n{id_projeto}, {nome_comercio}, *{api_meta} - variavel presente em todas as tools da Meta, certifique de estar usando está variavel*, {id_conta}, \n{id_pagina}, {id_instagram}, {url_destino}, {publico}, {id_pixel}\n\nDados Coletados\n{id_ad}, {url_download} → SearchAd\n{copy_titulo}, {copy_descricao} → SearchCopy\nIDs Gerados no Fluxo\n{id_campanha} → CreateCampaigns\n{adset_id} → CreateAdsets\n{criative_id} → UploadVideo (depois modificado por CreateCreative)\nDados de Input\n{invest}, {raio} → inputs do projeto\n{id_ad}, {id_copy} → usados em SaveBase e UpdateAd\n\nFLUXO DE EXECUÇÃO OBRIGATÓRIO\nETAPA 1: COLETA DE DADOS INICIAIS\n1. DataProject\n   → Coleta: {id_projeto}, *{api_meta}*, {id_conta}, {id_pagina}, etc.\n   \n2. SearchAd\n   → Coleta: {id_ad} e {url_download}\n   \n3. SearchCopy\n   → Coleta: {copy_titulo} e {copy_descricao}\n\nETAPA 2: CRIAÇÃO DA ESTRUTURA META ADS\n4. CreateCampaigns\n   → Input: {id_conta} e *{api_meta}*\n   → Output: {id_campanha}\n   \n5. CreateAdsets\n   → Input: {id_campanha}, {invest}, {raio}, {id_pagina} e *{api_meta}*\n   → Output: {adset_id}\n\nETAPA 3: CRIAÇÃO DO CRIATIVO\n6. UploadVideo\n   → Input: {url_download} e *{api_meta}*\n   → Output: {criative_id} (ID do vídeo)\n   \n7. CreateCreative\n   → Input: {criative_id}, {id_ad}, {copy_titulo}, {copy_descricao}, {id_pagina} e *{api_meta}*\n   → Output: {criative_id} (ID do criativo final)\n\nETAPA 4: CRIAÇÃO DO ANÚNCIO\n8. UploadAd\n   → Input: {adset_id} e {criative_id} (do CreateCreative)\n   → Action: Cria e ativa o anúncio\n\nETAPA 5: ATUALIZAÇÃO DO BANCO\n9. SaveBase\n   → Registra campanha e criativo no Supabase\n   \n10. UpdateAd\n    → Atualiza status e IDs no Supabase\n\n11. UpdateCopy\n    → Atualiza dados do copy associando ao projeto\n\nREGRAS CRÍTICAS DE VALIDAÇÃO\n⚠️ VALIDAÇÕES OBRIGATÓRIAS\n\nAntes de cada etapa: Confirme se todas as variáveis necessárias estão presentes\n\nDados essenciais: {id_conta}, {api_meta}, {id_pagina}, {url_download}, {api_meta}\n\nIDs de dependência: Não avance sem o ID da etapa anterior\nFormato JSON: O campo creative no UploadAd deve ser objeto JSON, não string\n\n🚫 NUNCA FAÇA ISSO\n\nPular etapas do fluxo\nUsar variáveis não validadas\nUsar o {criative_id} do UploadVideo diretamente no UploadAd\nContinuar com dados faltantes\nIgnorar as variaveis\n\n✅ SEMPRE FAÇA ISSO\n\nValide variáveis antes de cada chamada\nUse o {criative_id} retornado pelo CreateCreative no UploadAd\nUse sempre {api_meta} que necessário, tal variavel é fundamental para acessar a meta\nInforme qual ferramenta está sendo usada\nComunique o status de cada etapa\nPare o fluxo em caso de erro\n\nTEMPLATE DE EXECUÇÃO\nPara cada ferramenta, siga este padrão:\n🔧 EXECUTANDO: [Nome da Ferramenta]\n📥 INPUT: {variavel1}, {variavel2}...\n🎯 OBJETIVO: [O que esta etapa faz]\n📤 OUTPUT ESPERADO: {nova_variavel}\nTRATAMENTO DE ERROS\nSe qualquer etapa falhar:\n\nPARE imediatamente o fluxo\nIDENTIFIQUE qual variável está faltando\nCOMUNIQUE o erro de forma clara\nAGUARDE correção antes de continuar\n\nCOMUNICAÇÃO\nMantenha clareza em cada ação:\n\nQual ferramenta está sendo executada\nQuais variáveis estão sendo utilizadas\nQual o resultado obtido\nQual será a próxima etapa\n\nLEMBRE-SE: Você é o maestro desta operação. Nada acontece sem sua validação e comando direto."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1776,
+          176
+        ],
+        "id": "a1b476b1-6b30-442f-8940-21d3ddbba9ff",
+        "name": "Gestor"
       }
     ],
     "connections": {
-      "SearchAd": {
-        "ai_tool": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "SaveBase": {
-        "ai_tool": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "CreateCampaigns": {
         "ai_tool": [
           []
-        ]
-      },
-      "UpdateAd": {
-        "ai_tool": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
         ]
       },
       "CreateAdsets": {
@@ -1857,33 +1768,6 @@
       "CreateCreative": {
         "ai_tool": [
           []
-        ]
-      },
-      "Gestor": {
-        "main": [
-          []
-        ]
-      },
-      "SearchCopy1": {
-        "ai_tool": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "DataProject1": {
-        "ai_tool": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
         ]
       },
       "Structured Output Parser2": {
@@ -1912,41 +1796,8 @@
         "main": [
           [
             {
-              "node": "Enviar texto1",
+              "node": "Enviar texto",
               "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Enviar texto1": {
-        "main": [
-          [
-            {
-              "node": "Gestor",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "UpdateCopy": {
-        "ai_tool": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "4.1-mini": {
-        "ai_languageModel": [
-          [
-            {
-              "node": "Gestor",
-              "type": "ai_languageModel",
               "index": 0
             }
           ]
@@ -2012,24 +1863,107 @@
           ]
         ]
       },
-      "Google Gemini Chat Model": {
+      "5.1-mini": {
         "ai_languageModel": [
-          []
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DataProject": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SearchCopy": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SearchAd": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SaveBase": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UpdateAd": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UpdateCopy": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Enviar texto": {
+        "main": [
+          [
+            {
+              "node": "Gestor",
+              "type": "main",
+              "index": 0
+            }
+          ]
         ]
       }
     },
-    "authors": "system migration",
-    "name": null,
-    "description": null,
+    "authors": "Nathan Jordan",
+    "name": "GESTOR AI",
+    "description": "",
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-27T21:43:40.724Z",
-        "id": 4,
-        "workflowId": "7961fb74-6a96-4512-89d3-d45a5b528949",
-        "versionId": "855d268d-224a-4d1f-813a-e7f114663f8c",
+        "createdAt": "2026-05-05T19:56:49.136Z",
+        "id": 646,
+        "workflowId": "29861fa4-b615-4050-b360-87f545b28edf",
+        "versionId": "85aae2a7-e844-4064-8f78-5489195dacb3",
         "event": "activated",
-        "userId": null
+        "userId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
       }
     ]
   }
