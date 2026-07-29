@@ -1,5 +1,5 @@
 {
-  "id": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+  "id": "2fdf9012-68a9-46aa-826e-05f71baf7655",
   "name": "Copywriter N1",
   "description": null,
   "active": true,
@@ -192,15 +192,15 @@
     "executionOrder": "v1",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "8230b039-d4c6-492f-8c59-1726bb8b48b2",
+  "activeVersionId": "811a0ed9-a1f1-4a11-b05e-dfe866ebc7b4",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:56:03.724Z",
-      "createdAt": "2025-10-20T18:56:03.724Z",
+      "updatedAt": "2025-10-20T18:56:53.716Z",
+      "createdAt": "2025-10-20T18:56:53.716Z",
       "role": "workflow:owner",
-      "workflowId": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+      "workflowId": "2fdf9012-68a9-46aa-826e-05f71baf7655",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -218,8 +218,8 @@
   "activeVersion": {
     "updatedAt": "2025-12-11T15:43:43.845Z",
     "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "8230b039-d4c6-492f-8c59-1726bb8b48b2",
-    "workflowId": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+    "versionId": "811a0ed9-a1f1-4a11-b05e-dfe866ebc7b4",
+    "workflowId": "2fdf9012-68a9-46aa-826e-05f71baf7655",
     "nodes": [
       {
         "parameters": {
@@ -410,10 +410,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-27T21:43:35.662Z",
-        "id": 82,
-        "workflowId": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
-        "versionId": "8230b039-d4c6-492f-8c59-1726bb8b48b2",
+        "createdAt": "2025-10-28T01:11:28.152Z",
+        "id": 41,
+        "workflowId": "2fdf9012-68a9-46aa-826e-05f71baf7655",
+        "versionId": "811a0ed9-a1f1-4a11-b05e-dfe866ebc7b4",
         "event": "activated",
         "userId": null
       }
