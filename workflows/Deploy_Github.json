@@ -1,0 +1,689 @@
+{
+  "id": "08iwtM4xxMI8hHQv",
+  "name": "Deploy Github",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "update",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "workflowObject": "={{ $json.workflowParsed.toJsonString() }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        -32
+      ],
+      "id": "229e8bc3-d41a-490e-a97d-56f3cfe7c216",
+      "name": "Update a workflow",
+      "alwaysOutputData": true,
+      "credentials": {
+        "n8nApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {
+          "encoding": "utf8",
+          "keepSource": "json"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        112,
+        -32
+      ],
+      "id": "1e9b0e1b-10ce-44e3-8042-cb8364ac53a8",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b1b76e61-b504-47bc-88c5-4e09db580f38",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "={{ \n  $('Get a file').first().json.body?.commits?.[0]?.modified?.[0]?.split('.')?.[0]\n  || \n  $('Get a file').first().json.payloadParsed?.commits?.[0]?.modified?.[0]?.split('.')?.[0]\n}}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        736,
+        -32
+      ],
+      "id": "bc6fe09e-3b16-4341-b7ea-2b4257df870d",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -32
+      ],
+      "id": "1bc50d78-005b-440d-90d0-6907bb2565e9",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawPayload = $json.body.payload;\n\nconst parsed = typeof rawPayload === 'string'\n  ? JSON.parse(rawPayload)\n  : rawPayload;\n\nreturn [{\n  json: {\n    ...$json,\n    payloadParsed: parsed\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        -32
+      ],
+      "id": "14aec99b-a1d6-4886-8c73-356d49bf9009",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $('Extract from File').item.json.data;\n\n// 1️⃣ Garante objeto\nconst parsed = typeof raw === 'string'\n  ? JSON.parse(raw)\n  : raw;\n\n// 2️⃣ NORMALIZA para schema da API\nconst workflowObject = {\n  name: parsed.name ?? $json.name,\n  nodes: parsed.nodes,\n  connections: parsed.connections,\n  settings: parsed.settings ?? {},\n  active: false\n};\n\n// 3️⃣ VALIDAÇÃO DURA\nif (!Array.isArray(workflowObject.nodes)) {\n  throw new Error('Workflow inválido: nodes não é array');\n}\n\nif (typeof workflowObject.connections !== 'object') {\n  throw new Error('Workflow inválido: connections não é objeto');\n}\n\nreturn [{\n  json: {\n    ...$json,\n    workflowParsed: workflowObject\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        -32
+      ],
+      "id": "60c6f77a-cbf0-44df-a84d-f5c000bb324a",
+      "name": "Code in JavaScript1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "owner": {
+          "__rl": true,
+          "value": "https://github.com/nathanjordan1",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "AGENT-INSTAGRAM---P",
+          "mode": "list",
+          "cachedResultName": "AGENT-INSTAGRAM---P",
+          "cachedResultUrl": "{{ $env.CACHEDRESULTURL }}"
+        },
+        "events": [
+          "push"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -32
+      ],
+      "id": "e343cfd3-268b-407a-aa6e-dfac3acd5c29",
+      "name": "Github Trigger",
+      "credentials": {
+        "githubApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $json.body?.repository?.owner?.html_url || $json.payloadParsed?.repository?.owner?.html_url }}",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $json.body?.repository?.html_url || $json.payloadParsed?.repository?.html_url }}",
+          "mode": "url"
+        },
+        "filePath": "={{ $json.body?.commits?.[0]?.modified?.[0] || $json.payloadParsed?.commits?.[0]?.modified?.[0] }}",
+        "additionalParameters": {}
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        -32
+      ],
+      "id": "557bfa8a-eb0c-4ac7-81a8-44812457dabf",
+      "name": "Get a file",
+      "credentials": {
+        "githubApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "owner": {
+          "__rl": true,
+          "value": "https://github.com/nathanjordan1",
+          "mode": "url"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "ML",
+          "mode": "list",
+          "cachedResultName": "ML",
+          "cachedResultUrl": "{{ $env.CACHEDRESULTURL }}"
+        },
+        "events": [
+          "push"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        208
+      ],
+      "id": "2fdebdfa-fd60-4e49-97c0-9215e88c89ae",
+      "name": "Github Trigger1",
+      "credentials": {
+        "githubApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Update a workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Github Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "activeVersionId": "014d8f98-f9bd-49c4-9767-c508193cff80",
+  "versionCounter": 81,
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2026-01-09T23:28:22.793Z",
+      "createdAt": "2026-01-09T23:28:22.793Z",
+      "role": "workflow:owner",
+      "workflowId": "08iwtM4xxMI8hHQv",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-01-18T16:27:43.172Z",
+    "createdAt": "2026-01-18T16:25:59.496Z",
+    "versionId": "014d8f98-f9bd-49c4-9767-c508193cff80",
+    "workflowId": "08iwtM4xxMI8hHQv",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "update",
+          "workflowId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "workflowObject": "={{ $json.workflowParsed.toJsonString() }}",
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          1424,
+          -32
+        ],
+        "id": "229e8bc3-d41a-490e-a97d-56f3cfe7c216",
+        "name": "Update a workflow",
+        "alwaysOutputData": true,
+        "credentials": {
+          "n8nApi": {
+            "id": "hhzoTalXafjKSQUb",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "fromJson",
+          "options": {
+            "encoding": "utf8",
+            "keepSource": "json"
+          }
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1.1,
+        "position": [
+          112,
+          -32
+        ],
+        "id": "1e9b0e1b-10ce-44e3-8042-cb8364ac53a8",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "b1b76e61-b504-47bc-88c5-4e09db580f38",
+                "leftValue": "={{ $json.name }}",
+                "rightValue": "={{ \n  $('Get a file').first().json.body?.commits?.[0]?.modified?.[0]?.split('.')?.[0]\n  || \n  $('Get a file').first().json.payloadParsed?.commits?.[0]?.modified?.[0]?.split('.')?.[0]\n}}",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.3,
+        "position": [
+          736,
+          -32
+        ],
+        "id": "bc6fe09e-3b16-4341-b7ea-2b4257df870d",
+        "name": "Filter"
+      },
+      {
+        "parameters": {
+          "filters": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          416,
+          -32
+        ],
+        "id": "1bc50d78-005b-440d-90d0-6907bb2565e9",
+        "name": "Get many workflows",
+        "credentials": {
+          "n8nApi": {
+            "id": "hhzoTalXafjKSQUb",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const rawPayload = $json.body.payload;\n\nconst parsed = typeof rawPayload === 'string'\n  ? JSON.parse(rawPayload)\n  : rawPayload;\n\nreturn [{\n  json: {\n    ...$json,\n    payloadParsed: parsed\n  }\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -400,
+          -32
+        ],
+        "id": "14aec99b-a1d6-4886-8c73-356d49bf9009",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "jsCode": "const raw = $('Extract from File').item.json.data;\n\n// 1️⃣ Garante objeto\nconst parsed = typeof raw === 'string'\n  ? JSON.parse(raw)\n  : raw;\n\n// 2️⃣ NORMALIZA para schema da API\nconst workflowObject = {\n  name: parsed.name ?? $json.name,\n  nodes: parsed.nodes,\n  connections: parsed.connections,\n  settings: parsed.settings ?? {},\n  active: false\n};\n\n// 3️⃣ VALIDAÇÃO DURA\nif (!Array.isArray(workflowObject.nodes)) {\n  throw new Error('Workflow inválido: nodes não é array');\n}\n\nif (typeof workflowObject.connections !== 'object') {\n  throw new Error('Workflow inválido: connections não é objeto');\n}\n\nreturn [{\n  json: {\n    ...$json,\n    workflowParsed: workflowObject\n  }\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1104,
+          -32
+        ],
+        "id": "60c6f77a-cbf0-44df-a84d-f5c000bb324a",
+        "name": "Code in JavaScript1",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "owner": {
+            "__rl": true,
+            "value": "https://github.com/nathanjordan1",
+            "mode": "url"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "AGENT-INSTAGRAM---P",
+            "mode": "list",
+            "cachedResultName": "AGENT-INSTAGRAM---P",
+            "cachedResultUrl": "https://github.com/nathanjordan1/AGENT-INSTAGRAM---P"
+          },
+          "events": [
+            "push"
+          ],
+          "options": {}
+        },
+        "type": "n8n-nodes-base.githubTrigger",
+        "typeVersion": 1,
+        "position": [
+          -624,
+          -32
+        ],
+        "id": "e343cfd3-268b-407a-aa6e-dfac3acd5c29",
+        "name": "Github Trigger",
+        "webhookId": "4b250103-e60b-4bb6-8e3e-b280c955d734",
+        "credentials": {
+          "githubApi": {
+            "id": "k7ZlC7Dl8XqXZ12P",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "get",
+          "owner": {
+            "__rl": true,
+            "value": "={{ $json.body?.repository?.owner?.html_url || $json.payloadParsed?.repository?.owner?.html_url }}",
+            "mode": "url"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "={{ $json.body?.repository?.html_url || $json.payloadParsed?.repository?.html_url }}",
+            "mode": "url"
+          },
+          "filePath": "={{ $json.body?.commits?.[0]?.modified?.[0] || $json.payloadParsed?.commits?.[0]?.modified?.[0] }}",
+          "additionalParameters": {}
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          -160,
+          -32
+        ],
+        "id": "557bfa8a-eb0c-4ac7-81a8-44812457dabf",
+        "name": "Get a file",
+        "webhookId": "b4515114-8997-462b-babe-4cdbb9bdf94e",
+        "credentials": {
+          "githubApi": {
+            "id": "k7ZlC7Dl8XqXZ12P",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "owner": {
+            "__rl": true,
+            "value": "https://github.com/nathanjordan1",
+            "mode": "url"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "ML",
+            "mode": "list",
+            "cachedResultName": "ML",
+            "cachedResultUrl": "https://github.com/nathanjordan1/ML"
+          },
+          "events": [
+            "push"
+          ],
+          "options": {}
+        },
+        "type": "n8n-nodes-base.githubTrigger",
+        "typeVersion": 1,
+        "position": [
+          -624,
+          208
+        ],
+        "id": "2fdebdfa-fd60-4e49-97c0-9215e88c89ae",
+        "name": "Github Trigger1",
+        "webhookId": "975a0361-c973-43b4-ad08-8d0bce54bfc7",
+        "credentials": {
+          "githubApi": {
+            "id": "k7ZlC7Dl8XqXZ12P",
+            "name": "GitHub account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "Get many workflows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many workflows": {
+        "main": [
+          [
+            {
+              "node": "Filter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Get a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript1": {
+        "main": [
+          [
+            {
+              "node": "Update a workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Github Trigger": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get a file": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Github Trigger1": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Nathan Jordan",
+    "name": "Deploy Github",
+    "description": "",
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-01-18T16:27:43.163Z",
+        "id": 229,
+        "workflowId": "08iwtM4xxMI8hHQv",
+        "versionId": "014d8f98-f9bd-49c4-9767-c508193cff80",
+        "event": "activated",
+        "userId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    ]
+  }
+}
