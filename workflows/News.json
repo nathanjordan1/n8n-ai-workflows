@@ -1,0 +1,741 @@
+{
+  "id": "6dC5rLbb9YaW72Dw",
+  "name": "News",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        -16
+      ],
+      "id": "c08c665d-aed8-4d08-9268-3a430d4e9048",
+      "name": "Poder360",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        96
+      ],
+      "id": "a078b374-ebde-49df-93ee-d5bd1a001daa",
+      "name": "Folha Política",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        384,
+        192
+      ],
+      "id": "e4f53866-527c-4847-966a-184996d7299a",
+      "name": "G1 Brasil",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        304
+      ],
+      "id": "2c139960-b1b6-49da-805d-9914bcc2892b",
+      "name": "Pragmatismo Político",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        672,
+        432
+      ],
+      "id": "1243f640-3ff3-4525-a1fb-b23f978a8789",
+      "name": "Repórter Brasil",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        800,
+        544
+      ],
+      "id": "42bc9f00-cc08-45bb-a24e-26eef3940391",
+      "name": "Senado",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        944,
+        704
+      ],
+      "id": "01937782-640e-46c7-b84b-08cb6d11309b",
+      "name": "STJ",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        1072,
+        816
+      ],
+      "id": "24ec8af5-ee39-43a2-88ba-f158daf42b8c",
+      "name": "Folha Uol",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        1200,
+        928
+      ],
+      "id": "6173dd34-a402-43f1-be27-cb6ed0c2d0dd",
+      "name": "Brasil de Fato",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "news",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -384,
+        560
+      ],
+      "id": "910724b0-bb02-437a-9a5a-91cf40f66cb9",
+      "name": "Webhook"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2160,
+        448
+      ],
+      "id": "51ae7413-4203-4d95-99e6-da83325165c2",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1792,
+        320
+      ],
+      "id": "ada90194-d654-4f8c-95de-b2304c4552aa",
+      "name": "Merge"
+    }
+  ],
+  "connections": {
+    "Repórter Brasil": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Brasil de Fato",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Poder360",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Folha Política",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "G1 Brasil",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pragmatismo Político",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Repórter Brasil",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Senado",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "STJ",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Folha Uol",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poder360": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Folha Política": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "G1 Brasil": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Pragmatismo Político": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Senado": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "STJ": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Folha Uol": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "Brasil de Fato": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 8
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "activeVersionId": "b93fa2bd-5320-4c78-9a71-5ce3777462fe",
+  "versionCounter": 233,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-04-22T18:55:49.276Z",
+      "createdAt": "2026-04-22T18:55:49.276Z",
+      "role": "workflow:owner",
+      "workflowId": "6dC5rLbb9YaW72Dw",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-04-22T20:00:46.228Z",
+    "createdAt": "2026-04-22T20:00:43.605Z",
+    "versionId": "b93fa2bd-5320-4c78-9a71-5ce3777462fe",
+    "workflowId": "6dC5rLbb9YaW72Dw",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "https://www.poder360.com.br/feed/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          128,
+          -16
+        ],
+        "id": "c08c665d-aed8-4d08-9268-3a430d4e9048",
+        "name": "Poder360",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www1.folha.uol.com.br/poder/rss.xml",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          256,
+          96
+        ],
+        "id": "a078b374-ebde-49df-93ee-d5bd1a001daa",
+        "name": "Folha Política",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://g1.globo.com/rss/g1/brasil/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          384,
+          192
+        ],
+        "id": "e4f53866-527c-4847-966a-184996d7299a",
+        "name": "G1 Brasil",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://feeds.feedburner.com/pragmatismopolitico",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          528,
+          304
+        ],
+        "id": "2c139960-b1b6-49da-805d-9914bcc2892b",
+        "name": "Pragmatismo Político",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://reporterbrasil.org.br/feed/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          672,
+          432
+        ],
+        "id": "1243f640-3ff3-4525-a1fb-b23f978a8789",
+        "name": "Repórter Brasil",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www12.senado.leg.br/noticias/ultimas/rss",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          800,
+          544
+        ],
+        "id": "42bc9f00-cc08-45bb-a24e-26eef3940391",
+        "name": "Senado",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://res.stj.jus.br/hrestp-c-portalp/RSS.xml",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          944,
+          704
+        ],
+        "id": "01937782-640e-46c7-b84b-08cb6d11309b",
+        "name": "STJ",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://feeds.folha.uol.com.br/poder/rss091.xml",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          1072,
+          816
+        ],
+        "id": "24ec8af5-ee39-43a2-88ba-f158daf42b8c",
+        "name": "Folha Uol",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://www.brasildefato.com.br/rss",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          1200,
+          928
+        ],
+        "id": "6173dd34-a402-43f1-be27-cb6ed0c2d0dd",
+        "name": "Brasil de Fato",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "news",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -384,
+          560
+        ],
+        "id": "910724b0-bb02-437a-9a5a-91cf40f66cb9",
+        "name": "Webhook",
+        "webhookId": "5865ee2f-8519-4eb7-9557-f76ad45efb7d"
+      },
+      {
+        "parameters": {
+          "respondWith": "allIncomingItems",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [
+          2160,
+          448
+        ],
+        "id": "51ae7413-4203-4d95-99e6-da83325165c2",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "numberInputs": 10
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          1792,
+          320
+        ],
+        "id": "ada90194-d654-4f8c-95de-b2304c4552aa",
+        "name": "Merge"
+      }
+    ],
+    "connections": {
+      "Repórter Brasil": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 4
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Brasil de Fato",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Poder360",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Folha Política",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "G1 Brasil",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Pragmatismo Político",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Repórter Brasil",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Senado",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "STJ",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Folha Uol",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Poder360": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Folha Política": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "G1 Brasil": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 2
+            }
+          ]
+        ]
+      },
+      "Pragmatismo Político": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 3
+            }
+          ]
+        ]
+      },
+      "Senado": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 5
+            }
+          ]
+        ]
+      },
+      "STJ": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 6
+            }
+          ]
+        ]
+      },
+      "Folha Uol": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 7
+            }
+          ]
+        ]
+      },
+      "Brasil de Fato": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 8
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Nathan Jordan",
+    "name": "News",
+    "description": "",
+    "autosaved": true,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-04-22T20:00:46.220Z",
+        "id": 474,
+        "workflowId": "6dC5rLbb9YaW72Dw",
+        "versionId": "b93fa2bd-5320-4c78-9a71-5ce3777462fe",
+        "event": "activated",
+        "userId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    ]
+  }
+}
