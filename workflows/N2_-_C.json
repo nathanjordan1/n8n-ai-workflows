@@ -1,9 +1,9 @@
 {
-  "id": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+  "id": "473764ba-e43b-496f-bb39-fad62b04cbb0",
   "name": "N2 - C",
   "description": null,
   "active": true,
-  "isArchived": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -375,15 +375,15 @@
     "timezone": "America/Sao_Paulo",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "e6eda67f-97e8-4bb0-b2b4-3cd41f0a2bc3",
+  "activeVersionId": "dd012dc9-e241-4fe4-a237-118c86a95cb4",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:55:43.261Z",
-      "createdAt": "2025-10-20T18:55:43.261Z",
+      "updatedAt": "2025-10-20T18:56:33.840Z",
+      "createdAt": "2025-10-20T18:56:33.840Z",
       "role": "workflow:owner",
-      "workflowId": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+      "workflowId": "473764ba-e43b-496f-bb39-fad62b04cbb0",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -401,8 +401,8 @@
   "activeVersion": {
     "updatedAt": "2025-12-11T15:43:43.845Z",
     "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "e6eda67f-97e8-4bb0-b2b4-3cd41f0a2bc3",
-    "workflowId": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+    "versionId": "dd012dc9-e241-4fe4-a237-118c86a95cb4",
+    "workflowId": "473764ba-e43b-496f-bb39-fad62b04cbb0",
     "nodes": [
       {
         "parameters": {
@@ -775,10 +775,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-27T21:52:53.879Z",
-        "id": 10,
-        "workflowId": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
-        "versionId": "e6eda67f-97e8-4bb0-b2b4-3cd41f0a2bc3",
+        "createdAt": "2025-10-27T23:01:32.135Z",
+        "id": 59,
+        "workflowId": "473764ba-e43b-496f-bb39-fad62b04cbb0",
+        "versionId": "dd012dc9-e241-4fe4-a237-118c86a95cb4",
         "event": "activated",
         "userId": null
       }
