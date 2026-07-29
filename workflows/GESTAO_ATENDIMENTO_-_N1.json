@@ -1,9 +1,9 @@
 {
-  "id": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+  "id": "4c707b2d-2d90-4c15-8f68-7a123c33cac8",
   "name": "GESTAO ATENDIMENTO - N1",
   "description": null,
   "active": true,
-  "isArchived": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -108,6 +108,31 @@
     },
     {
       "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "o3-mini",
+          "mode": "list",
+          "cachedResultName": "o3-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        544
+      ],
+      "id": "0606064e-ee8d-4ade-804b-4cd34f722fee",
+      "name": "o3-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
         "modelName": "=models/gemini-2.5-flash",
         "options": {}
       },
@@ -122,7 +147,7 @@
       "credentials": {
         "googlePalmApi": {
           "id": "YOUR_CREDENTIAL_ID",
-          "name": "Google Gemini(PaLM) Api account | padrão"
+          "name": "Google Gemini(PaLM) | Five"
         }
       }
     }
@@ -161,6 +186,11 @@
         ]
       ]
     },
+    "o3-mini": {
+      "ai_languageModel": [
+        []
+      ]
+    },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
@@ -178,15 +208,15 @@
     "timezone": "America/Sao_Paulo",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "fedf0913-15b6-41a3-9b54-26e4637b115f",
+  "activeVersionId": "306e8122-de4b-493a-a539-91414283851b",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:56:51.756Z",
-      "createdAt": "2025-10-20T18:56:51.756Z",
+      "updatedAt": "2025-10-20T18:56:00.663Z",
+      "createdAt": "2025-10-20T18:56:00.663Z",
       "role": "workflow:owner",
-      "workflowId": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+      "workflowId": "4c707b2d-2d90-4c15-8f68-7a123c33cac8",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -204,8 +234,8 @@
   "activeVersion": {
     "updatedAt": "2025-12-11T15:43:43.845Z",
     "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "fedf0913-15b6-41a3-9b54-26e4637b115f",
-    "workflowId": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+    "versionId": "306e8122-de4b-493a-a539-91414283851b",
+    "workflowId": "4c707b2d-2d90-4c15-8f68-7a123c33cac8",
     "nodes": [
       {
         "parameters": {
@@ -310,6 +340,31 @@
       },
       {
         "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "o3-mini",
+            "mode": "list",
+            "cachedResultName": "o3-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          960,
+          544
+        ],
+        "id": "0606064e-ee8d-4ade-804b-4cd34f722fee",
+        "name": "o3-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
           "modelName": "=models/gemini-2.5-flash",
           "options": {}
         },
@@ -323,8 +378,8 @@
         "name": "Google Gemini Chat Model",
         "credentials": {
           "googlePalmApi": {
-            "id": "2frNUhHR1wicJVhl",
-            "name": "Google Gemini(PaLM) Api account | padrão"
+            "id": "7u5ZnsVQph23vbg0",
+            "name": "Google Gemini(PaLM) | Five"
           }
         }
       }
@@ -363,6 +418,11 @@
           ]
         ]
       },
+      "o3-mini": {
+        "ai_languageModel": [
+          []
+        ]
+      },
       "Google Gemini Chat Model": {
         "ai_languageModel": [
           [
@@ -381,10 +441,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-28T01:11:51.400Z",
-        "id": 8,
-        "workflowId": "2a5d15fd-1158-4577-b457-898c4322a5d7",
-        "versionId": "fedf0913-15b6-41a3-9b54-26e4637b115f",
+        "createdAt": "2025-10-27T21:43:37.397Z",
+        "id": 18,
+        "workflowId": "4c707b2d-2d90-4c15-8f68-7a123c33cac8",
+        "versionId": "306e8122-de4b-493a-a539-91414283851b",
         "event": "activated",
         "userId": null
       }
