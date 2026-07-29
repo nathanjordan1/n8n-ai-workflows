@@ -1,0 +1,2483 @@
+{
+  "id": "b1743ef8-76a6-4d69-9b29-4b556eb566fe",
+  "name": "GESTOR AI - OTIMIZAÇÃO",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"status\": \"\",\n    \"novo_orcamento_diario\": \"\",\n    \"mensagem\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        4256,
+        160
+      ],
+      "id": "4f3cbad8-a597-4c58-8608-538a8b2e2c90",
+      "name": "Structured Output Parser3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ce5ddfd7-cbba-4fa6-bdf5-4995eb89b476",
+              "leftValue": "={{ $('Get One Campaign2').item.json.status }}",
+              "rightValue": "=active",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3328,
+        -48
+      ],
+      "id": "5f830e79-b5af-49cc-985d-2595a15e9e5b",
+      "name": "Filter4"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "projetos",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        -272
+      ],
+      "id": "23619727-871d-4bfb-a249-0cb904ad5eae",
+      "name": "Get Project3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "insights",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        -48
+      ],
+      "id": "0cbb9650-174f-4c3f-bf64-ca0a4d83569c",
+      "name": "Get Insights4",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "{{ $env.GRAPHAPIVERSION }}",
+        "node": "={{ $json.id_campaign }}",
+        "edge": "insights",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "level",
+                "value": "campaign"
+              },
+              {
+                "name": "fields",
+                "value": "campaign_id,campaign_name,impressions,clicks,spend,reach,ctr,cpc,frequency,date_start,date_stop"
+              },
+              {
+                "name": "time_range",
+                "value": "{\"since\":\"2025-02-01\",\"until\":\"2025-07-01\"}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        4192,
+        -272
+      ],
+      "id": "0a1b7a8f-18cc-462f-9fef-5f24aa5e3af6",
+      "name": "Campanhas3",
+      "executeOnce": true,
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "campanhas",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        -272
+      ],
+      "id": "18225738-5a87-4da2-8082-b756e13bafc3",
+      "name": "Get All Campaign2",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "campanhas",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2784,
+        -48
+      ],
+      "id": "05775466-a08f-4f00-978c-81ae95df59d4",
+      "name": "Get One Campaign2",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "id, id_campaign, campaign_name, date_start, date_stop",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3616,
+        -48
+      ],
+      "id": "39c8c7ab-90c6-445e-85ef-746b05cae667",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        2784,
+        -272
+      ],
+      "id": "65ca9ac9-b667-419b-b1cf-b3053a4c4871",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{status}`, 'string') }}"
+            },
+            {
+              "name": "daily_budget",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        160
+      ],
+      "id": "e67d308c-2a39-4cab-bde5-1c2fc2787318",
+      "name": "OptimizeCampaign4"
+    },
+    {
+      "parameters": {
+        "content": "Agent Otimize",
+        "height": 688,
+        "width": 1776,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2656,
+        -368
+      ],
+      "typeVersion": 1,
+      "id": "63235dcb-b654-4648-9eb7-5ae35b700f42",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Otimize a campanha",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=### System Prompt\n\nVocê é um agente de otimização de campanhas no Meta Ads, focado exclusivamente no orçamento diário. Seu papel é analisar os dados fornecidos, decidir se o orçamento precisa ser alterado, aplicar a mudança com a ferramenta `OptimizeCampaign` e atualizar os dados no Supabase via `UpdateAd`.\n\n⚠️ Jamais altere o orçamento mensal.\n\n📌 Regras obrigatórias:\n1. Compare o novo orçamento sugerido com o orçamento atual da campanha.\n2. Se **qualquer um dos valores de orçamento estiver como `null` ou não numérico**, **não aplique a otimização** e registre o motivo no veredito.\n3. Só aplique a mudança se houver **diferença entre os valores** e ambos forem válidos.\n4. Ao gerar o JSON de saída, o campo `status` **NUNCA deve conter** `null` ou `{}` — ele deve ser:\n   - `\"ACTIVE\"` se mantiver ou escalar,\n   - `\"PAUSED\"` se o veredito for `\"pausar\"`,\n   - **omitido** completamente se não houver mudança.\n5. Após aplicar a otimização com a ferramenta `OptimizeCampaign`, atualize os dados no Supabase usando a ferramenta `UpdateAd`.\n\n📥 Variáveis disponíveis:\n- ID da campanha: `{{ $('Get One Campaign2').item.json.id_campaign }}`\n- Orçamento atual: `{{ $('Get One Campaign2').item.json.invest_daily }}`\n- Novo orçamento sugerido: `{{ $('Get Insights4').item.json.invest_daily }}`\n- Token de acesso: `{{ $('Get Project3').first().json.api_meta }}`\n\n🧾 Output esperado (em JSON):\n\n```json\n{\n  \"veredito\": \"string explicando se será otimizado ou não\",\n  \"justificativa\": \"motivo técnico da decisão\",\n  \"otimizacoes_recomendadas\": \"detalhes da nova configuração ou manutenção\",\n  \"monitorar\": \"ponto de atenção para próximas análises\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        3872,
+        -48
+      ],
+      "id": "d9fbedbe-189d-41c7-830b-30b80a420674",
+      "name": "Agent Otimizador2",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "campanhas",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "invest_daily",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{invest_daily}`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        4096,
+        160
+      ],
+      "id": "831bca68-1085-46c4-83a4-eb1973d1d461",
+      "name": "UpdateCampaign2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{novo_status}`, 'string') }}"
+            },
+            {
+              "name": "daily_budget",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3568,
+        160
+      ],
+      "id": "a0a677db-cfcb-47d7-bb32-a7b1a1ee21eb",
+      "name": "OptimizeCampaign5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5dac8689-a711-4e2f-82d6-2ba2f408bbc0",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "=active",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3904,
+        -272
+      ],
+      "id": "58393543-3179-4706-86b7-7246813e3940",
+      "name": "Filter5",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "insights",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3616,
+        -272
+      ],
+      "id": "eb3a11bc-9ce2-44f7-aa12-d11ca0bcd2b6",
+      "name": "Get Insights5",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"status\": \"\",\n    \"novo_orcamento_diario\": \"\",\n    \"mensagem\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        4256,
+        1072
+      ],
+      "id": "578242a7-67fe-40dd-b726-980656b7aeb6",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ce5ddfd7-cbba-4fa6-bdf5-4995eb89b476",
+              "leftValue": "={{ $('Get One Campaign3').item.json.status }}",
+              "rightValue": "=active",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3328,
+        864
+      ],
+      "id": "0a76860f-cb92-435c-8402-aef2c7fc7217",
+      "name": "Filter6"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "projetos",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        640
+      ],
+      "id": "d25c867f-41c1-47ac-ae33-3f957ff62959",
+      "name": "Get Project1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "insights",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        864
+      ],
+      "id": "21529d77-b30d-4fa6-9713-1acbf50761bb",
+      "name": "Get Insights6",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "graphApiVersion": "{{ $env.GRAPHAPIVERSION }}",
+        "node": "={{ $json.id_campaign }}",
+        "edge": "insights",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "level",
+                "value": "campaign"
+              },
+              {
+                "name": "fields",
+                "value": "campaign_id,campaign_name,impressions,clicks,spend,reach,ctr,cpc,frequency,date_start,date_stop"
+              },
+              {
+                "name": "time_range",
+                "value": "{\"since\":\"2025-02-01\",\"until\":\"2025-07-01\"}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        4192,
+        640
+      ],
+      "id": "71eba825-a8d3-4e2b-acf6-cfc382f85917",
+      "name": "Campanhas1",
+      "executeOnce": true,
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "campanhas",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        640
+      ],
+      "id": "6f02a5cd-a194-4734-9ce6-45ecea9b14bb",
+      "name": "Get All Campaign3",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "campanhas",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2784,
+        864
+      ],
+      "id": "a31e5e3f-a256-4920-be6d-b7b1b3988f22",
+      "name": "Get One Campaign3",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "id, id_campaign, campaign_name, date_start, date_stop",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3616,
+        864
+      ],
+      "id": "ef6213a0-d71b-4515-8d1c-ab86be151d7b",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        2784,
+        640
+      ],
+      "id": "6b9b1921-72aa-4f2d-a289-0452a2395ed4",
+      "name": "Schedule Trigger3"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{status}`, 'string') }}"
+            },
+            {
+              "name": "daily_budget",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        1072
+      ],
+      "id": "0571a039-8667-40ac-bd89-7d8b20a0f65a",
+      "name": "OptimizeCampaign6"
+    },
+    {
+      "parameters": {
+        "content": "Agent Otimize",
+        "height": 688,
+        "width": 1952,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2656,
+        544
+      ],
+      "typeVersion": 1,
+      "id": "18f7ff6a-850a-4e0e-9716-5ae525376e76",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Otimize a campanha",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=### System Prompt\n\nVocê é um agente de otimização de campanhas no Meta Ads, focado exclusivamente no orçamento diário. Seu papel é analisar os dados fornecidos, decidir se o orçamento precisa ser alterado, aplicar a mudança com a ferramenta `OptimizeCampaign` e atualizar os dados no Supabase via `UpdateAd`.\n\n⚠️ Jamais altere o orçamento mensal.\n\n📌 Regras obrigatórias:\n1. Compare o novo orçamento sugerido com o orçamento atual da campanha.\n2. Se **qualquer um dos valores de orçamento estiver como `null` ou não numérico**, **não aplique a otimização** e registre o motivo no veredito.\n3. Só aplique a mudança se houver **diferença entre os valores** e ambos forem válidos.\n4. Ao gerar o JSON de saída, o campo `status` **NUNCA deve conter** `null` ou `{}` — ele deve ser:\n   - `\"ACTIVE\"` se mantiver ou escalar,\n   - `\"PAUSED\"` se o veredito for `\"pausar\"`,\n   - **omitido** completamente se não houver mudança.\n5. Após aplicar a otimização com a ferramenta `OptimizeCampaign`, atualize os dados no Supabase usando a ferramenta `UpdateAd`.\n\n📥 Variáveis disponíveis:\n- ID da campanha: `{{ $('Get One Campaign3').item.json.id_campaign }}`\n- Orçamento atual: `{{ $('Get One Campaign3').item.json.invest_daily }}`\n- Novo orçamento sugerido: `{{ $('Get Insights6').item.json.invest_daily }}`\n- Token de acesso: `{{ $('Get Project1').first().json.api_meta }}`\n\n🧾 Output esperado (em JSON):\n\n```json\n{\n  \"veredito\": \"string explicando se será otimizado ou não\",\n  \"justificativa\": \"motivo técnico da decisão\",\n  \"otimizacoes_recomendadas\": \"detalhes da nova configuração ou manutenção\",\n  \"monitorar\": \"ponto de atenção para próximas análises\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        3872,
+        864
+      ],
+      "id": "907cee3a-df1c-4eeb-93ea-17ad72b668ad",
+      "name": "Agent Otimizador3",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "campanhas",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "invest_daily",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{invest_daily}`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        4096,
+        1072
+      ],
+      "id": "b11771e1-a04e-4ef7-8a7a-0c572fcc5531",
+      "name": "UpdateCampaign3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "status",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{novo_status}`, 'string') }}"
+            },
+            {
+              "name": "daily_budget",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        3568,
+        1072
+      ],
+      "id": "d9f57018-1e9b-48a7-bef8-4ad19543943f",
+      "name": "OptimizeCampaign7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5dac8689-a711-4e2f-82d6-2ba2f408bbc0",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "=active",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3904,
+        640
+      ],
+      "id": "e4a4ceea-4aa1-403d-9410-7391a0d176a4",
+      "name": "Filter7"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "insights",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3616,
+        640
+      ],
+      "id": "ff6ef1c2-7f45-401d-983e-8db2a0ab3a4c",
+      "name": "Get Insights7",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3776,
+        1072
+      ],
+      "id": "86eeec42-56f4-4074-99c9-907de385e0a0",
+      "name": "5-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | Jordan"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Structured Output Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent Otimizador2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter4": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Project3": {
+      "main": [
+        [
+          {
+            "node": "Get All Campaign2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Insights4": {
+      "main": [
+        [
+          {
+            "node": "Filter4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campanhas3": {
+      "main": [
+        [
+          {
+            "node": "Get One Campaign2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Campaign2": {
+      "main": [
+        [
+          {
+            "node": "Get Insights5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get One Campaign2": {
+      "main": [
+        [
+          {
+            "node": "Get Insights4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Agent Otimizador2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get Project3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OptimizeCampaign4": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent Otimizador2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateCampaign2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent Otimizador2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter5": {
+      "main": [
+        [
+          {
+            "node": "Campanhas3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Insights5": {
+      "main": [
+        [
+          {
+            "node": "Filter5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent Otimizador3",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter6": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Project1": {
+      "main": [
+        [
+          {
+            "node": "Get All Campaign3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Insights6": {
+      "main": [
+        [
+          {
+            "node": "Filter6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campanhas1": {
+      "main": [
+        [
+          {
+            "node": "Get One Campaign3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Campaign3": {
+      "main": [
+        [
+          {
+            "node": "Get Insights7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get One Campaign3": {
+      "main": [
+        [
+          {
+            "node": "Get Insights6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Agent Otimizador3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Get Project1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OptimizeCampaign6": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent Otimizador3",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateCampaign3": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent Otimizador3",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter7": {
+      "main": [
+        [
+          {
+            "node": "Campanhas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Insights7": {
+      "main": [
+        [
+          {
+            "node": "Filter7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent Otimizador2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agent Otimizador3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj",
+    "binaryMode": "separate"
+  },
+  "activeVersionId": "6fe466e1-41b8-4f57-92bc-b824f9c462da",
+  "versionCounter": 25,
+  "triggerCount": 2,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:56.519Z",
+      "createdAt": "2025-10-20T18:56:56.519Z",
+      "role": "workflow:owner",
+      "workflowId": "b1743ef8-76a6-4d69-9b29-4b556eb566fe",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-05-05T14:07:30.339Z",
+    "createdAt": "2026-05-05T14:07:25.217Z",
+    "versionId": "6fe466e1-41b8-4f57-92bc-b824f9c462da",
+    "workflowId": "b1743ef8-76a6-4d69-9b29-4b556eb566fe",
+    "nodes": [
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"status\": \"\",\n    \"novo_orcamento_diario\": \"\",\n    \"mensagem\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          4256,
+          160
+        ],
+        "id": "4f3cbad8-a597-4c58-8608-538a8b2e2c90",
+        "name": "Structured Output Parser3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "ce5ddfd7-cbba-4fa6-bdf5-4995eb89b476",
+                "leftValue": "={{ $('Get One Campaign2').item.json.status }}",
+                "rightValue": "=active",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          3328,
+          -48
+        ],
+        "id": "5f830e79-b5af-49cc-985d-2595a15e9e5b",
+        "name": "Filter4"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "projetos",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "nome",
+                "condition": "eq",
+                "keyValue": "Dom Belufe"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3056,
+          -272
+        ],
+        "id": "23619727-871d-4bfb-a249-0cb904ad5eae",
+        "name": "Get Project3",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "insights",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "condition": "eq",
+                "keyValue": "={{ $json.id_campaign }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3056,
+          -48
+        ],
+        "id": "0cbb9650-174f-4c3f-bf64-ca0a4d83569c",
+        "name": "Get Insights4",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "graphApiVersion": "v22.0",
+          "node": "={{ $json.id_campaign }}",
+          "edge": "insights",
+          "options": {
+            "queryParameters": {
+              "parameter": [
+                {
+                  "name": "level",
+                  "value": "campaign"
+                },
+                {
+                  "name": "fields",
+                  "value": "campaign_id,campaign_name,impressions,clicks,spend,reach,ctr,cpc,frequency,date_start,date_stop"
+                },
+                {
+                  "name": "time_range",
+                  "value": "{\"since\":\"2025-02-01\",\"until\":\"2025-07-01\"}"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.facebookGraphApi",
+        "typeVersion": 1,
+        "position": [
+          4192,
+          -272
+        ],
+        "id": "0a1b7a8f-18cc-462f-9fef-5f24aa5e3af6",
+        "name": "Campanhas3",
+        "executeOnce": true,
+        "credentials": {
+          "facebookGraphApi": {
+            "id": "AbXSWkMKafKjupZ2",
+            "name": "Facebook Graph account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "campanhas",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_projeto",
+                "keyValue": "={{ $json.id }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3328,
+          -272
+        ],
+        "id": "18225738-5a87-4da2-8082-b756e13bafc3",
+        "name": "Get All Campaign2",
+        "executeOnce": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "campanhas",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "keyValue": "=120219318698100281"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          2784,
+          -48
+        ],
+        "id": "05775466-a08f-4f00-978c-81ae95df59d4",
+        "name": "Get One Campaign2",
+        "executeOnce": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "include": "allFieldsExcept",
+          "fieldsToExclude": "id, id_campaign, campaign_name, date_start, date_stop",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          3616,
+          -48
+        ],
+        "id": "39c8c7ab-90c6-445e-85ef-746b05cae667",
+        "name": "Aggregate2"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          2784,
+          -272
+        ],
+        "id": "65ca9ac9-b667-419b-b1cf-b3053a4c4871",
+        "name": "Schedule Trigger2"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/{id_campanha}`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "status",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{status}`, 'string') }}"
+              },
+              {
+                "name": "daily_budget",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          3904,
+          160
+        ],
+        "id": "e67d308c-2a39-4cab-bde5-1c2fc2787318",
+        "name": "OptimizeCampaign4"
+      },
+      {
+        "parameters": {
+          "content": "Agent Otimize",
+          "height": 688,
+          "width": 1776,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          2656,
+          -368
+        ],
+        "typeVersion": 1,
+        "id": "63235dcb-b654-4648-9eb7-5ae35b700f42",
+        "name": "Sticky Note2"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Otimize a campanha",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=### System Prompt\n\nVocê é um agente de otimização de campanhas no Meta Ads, focado exclusivamente no orçamento diário. Seu papel é analisar os dados fornecidos, decidir se o orçamento precisa ser alterado, aplicar a mudança com a ferramenta `OptimizeCampaign` e atualizar os dados no Supabase via `UpdateAd`.\n\n⚠️ Jamais altere o orçamento mensal.\n\n📌 Regras obrigatórias:\n1. Compare o novo orçamento sugerido com o orçamento atual da campanha.\n2. Se **qualquer um dos valores de orçamento estiver como `null` ou não numérico**, **não aplique a otimização** e registre o motivo no veredito.\n3. Só aplique a mudança se houver **diferença entre os valores** e ambos forem válidos.\n4. Ao gerar o JSON de saída, o campo `status` **NUNCA deve conter** `null` ou `{}` — ele deve ser:\n   - `\"ACTIVE\"` se mantiver ou escalar,\n   - `\"PAUSED\"` se o veredito for `\"pausar\"`,\n   - **omitido** completamente se não houver mudança.\n5. Após aplicar a otimização com a ferramenta `OptimizeCampaign`, atualize os dados no Supabase usando a ferramenta `UpdateAd`.\n\n📥 Variáveis disponíveis:\n- ID da campanha: `{{ $('Get One Campaign2').item.json.id_campaign }}`\n- Orçamento atual: `{{ $('Get One Campaign2').item.json.invest_daily }}`\n- Novo orçamento sugerido: `{{ $('Get Insights4').item.json.invest_daily }}`\n- Token de acesso: `{{ $('Get Project3').first().json.api_meta }}`\n\n🧾 Output esperado (em JSON):\n\n```json\n{\n  \"veredito\": \"string explicando se será otimizado ou não\",\n  \"justificativa\": \"motivo técnico da decisão\",\n  \"otimizacoes_recomendadas\": \"detalhes da nova configuração ou manutenção\",\n  \"monitorar\": \"ponto de atenção para próximas análises\"\n}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          3872,
+          -48
+        ],
+        "id": "d9fbedbe-189d-41c7-830b-30b80a420674",
+        "name": "Agent Otimizador2",
+        "retryOnFail": true
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "campanhas",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "condition": "eq",
+                "keyValue": "={{ $('Get One Campaign2').item.json.id_campaign }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "invest_daily",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{invest_daily}`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          4096,
+          160
+        ],
+        "id": "831bca68-1085-46c4-83a4-eb1973d1d461",
+        "name": "UpdateCampaign2",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/{id_campanha}`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "status",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{novo_status}`, 'string') }}"
+              },
+              {
+                "name": "daily_budget",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          3568,
+          160
+        ],
+        "id": "a0a677db-cfcb-47d7-bb32-a7b1a1ee21eb",
+        "name": "OptimizeCampaign5"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5dac8689-a711-4e2f-82d6-2ba2f408bbc0",
+                "leftValue": "={{ $json.status }}",
+                "rightValue": "=active",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          3904,
+          -272
+        ],
+        "id": "58393543-3179-4706-86b7-7246813e3940",
+        "name": "Filter5",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "insights",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "condition": "eq",
+                "keyValue": "={{ $json.id_campaign }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3616,
+          -272
+        ],
+        "id": "eb3a11bc-9ce2-44f7-aa12-d11ca0bcd2b6",
+        "name": "Get Insights5",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"status\": \"\",\n    \"novo_orcamento_diario\": \"\",\n    \"mensagem\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          4256,
+          1072
+        ],
+        "id": "578242a7-67fe-40dd-b726-980656b7aeb6",
+        "name": "Structured Output Parser1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "ce5ddfd7-cbba-4fa6-bdf5-4995eb89b476",
+                "leftValue": "={{ $('Get One Campaign3').item.json.status }}",
+                "rightValue": "=active",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          3328,
+          864
+        ],
+        "id": "0a76860f-cb92-435c-8402-aef2c7fc7217",
+        "name": "Filter6"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "projetos",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "nome",
+                "condition": "eq",
+                "keyValue": "Dom Belufe"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3056,
+          640
+        ],
+        "id": "d25c867f-41c1-47ac-ae33-3f957ff62959",
+        "name": "Get Project1",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "insights",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "condition": "eq",
+                "keyValue": "={{ $json.id_campaign }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3056,
+          864
+        ],
+        "id": "21529d77-b30d-4fa6-9713-1acbf50761bb",
+        "name": "Get Insights6",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "graphApiVersion": "v22.0",
+          "node": "={{ $json.id_campaign }}",
+          "edge": "insights",
+          "options": {
+            "queryParameters": {
+              "parameter": [
+                {
+                  "name": "level",
+                  "value": "campaign"
+                },
+                {
+                  "name": "fields",
+                  "value": "campaign_id,campaign_name,impressions,clicks,spend,reach,ctr,cpc,frequency,date_start,date_stop"
+                },
+                {
+                  "name": "time_range",
+                  "value": "{\"since\":\"2025-02-01\",\"until\":\"2025-07-01\"}"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.facebookGraphApi",
+        "typeVersion": 1,
+        "position": [
+          4192,
+          640
+        ],
+        "id": "71eba825-a8d3-4e2b-acf6-cfc382f85917",
+        "name": "Campanhas1",
+        "executeOnce": true,
+        "credentials": {
+          "facebookGraphApi": {
+            "id": "AbXSWkMKafKjupZ2",
+            "name": "Facebook Graph account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "campanhas",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_projeto",
+                "keyValue": "={{ $json.id }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3328,
+          640
+        ],
+        "id": "6f02a5cd-a194-4734-9ce6-45ecea9b14bb",
+        "name": "Get All Campaign3",
+        "executeOnce": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "campanhas",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "keyValue": "=120219318698100281"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          2784,
+          864
+        ],
+        "id": "a31e5e3f-a256-4920-be6d-b7b1b3988f22",
+        "name": "Get One Campaign3",
+        "executeOnce": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "include": "allFieldsExcept",
+          "fieldsToExclude": "id, id_campaign, campaign_name, date_start, date_stop",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          3616,
+          864
+        ],
+        "id": "ef6213a0-d71b-4515-8d1c-ab86be151d7b",
+        "name": "Aggregate3"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          2784,
+          640
+        ],
+        "id": "6b9b1921-72aa-4f2d-a289-0452a2395ed4",
+        "name": "Schedule Trigger3"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/{id_campanha}`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "status",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{status}`, 'string') }}"
+              },
+              {
+                "name": "daily_budget",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          3904,
+          1072
+        ],
+        "id": "0571a039-8667-40ac-bd89-7d8b20a0f65a",
+        "name": "OptimizeCampaign6"
+      },
+      {
+        "parameters": {
+          "content": "Agent Otimize",
+          "height": 688,
+          "width": 1952,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          2656,
+          544
+        ],
+        "typeVersion": 1,
+        "id": "18f7ff6a-850a-4e0e-9716-5ae525376e76",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Otimize a campanha",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=### System Prompt\n\nVocê é um agente de otimização de campanhas no Meta Ads, focado exclusivamente no orçamento diário. Seu papel é analisar os dados fornecidos, decidir se o orçamento precisa ser alterado, aplicar a mudança com a ferramenta `OptimizeCampaign` e atualizar os dados no Supabase via `UpdateAd`.\n\n⚠️ Jamais altere o orçamento mensal.\n\n📌 Regras obrigatórias:\n1. Compare o novo orçamento sugerido com o orçamento atual da campanha.\n2. Se **qualquer um dos valores de orçamento estiver como `null` ou não numérico**, **não aplique a otimização** e registre o motivo no veredito.\n3. Só aplique a mudança se houver **diferença entre os valores** e ambos forem válidos.\n4. Ao gerar o JSON de saída, o campo `status` **NUNCA deve conter** `null` ou `{}` — ele deve ser:\n   - `\"ACTIVE\"` se mantiver ou escalar,\n   - `\"PAUSED\"` se o veredito for `\"pausar\"`,\n   - **omitido** completamente se não houver mudança.\n5. Após aplicar a otimização com a ferramenta `OptimizeCampaign`, atualize os dados no Supabase usando a ferramenta `UpdateAd`.\n\n📥 Variáveis disponíveis:\n- ID da campanha: `{{ $('Get One Campaign3').item.json.id_campaign }}`\n- Orçamento atual: `{{ $('Get One Campaign3').item.json.invest_daily }}`\n- Novo orçamento sugerido: `{{ $('Get Insights6').item.json.invest_daily }}`\n- Token de acesso: `{{ $('Get Project1').first().json.api_meta }}`\n\n🧾 Output esperado (em JSON):\n\n```json\n{\n  \"veredito\": \"string explicando se será otimizado ou não\",\n  \"justificativa\": \"motivo técnico da decisão\",\n  \"otimizacoes_recomendadas\": \"detalhes da nova configuração ou manutenção\",\n  \"monitorar\": \"ponto de atenção para próximas análises\"\n}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          3872,
+          864
+        ],
+        "id": "907cee3a-df1c-4eeb-93ea-17ad72b668ad",
+        "name": "Agent Otimizador3",
+        "retryOnFail": true
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "campanhas",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "condition": "eq",
+                "keyValue": "={{ $('Get One Campaign3').item.json.id_campaign }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "invest_daily",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{invest_daily}`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          4096,
+          1072
+        ],
+        "id": "b11771e1-a04e-4ef7-8a7a-0c572fcc5531",
+        "name": "UpdateCampaign3",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Otimizar Campanha (ajuste de status ou orçamento)",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/{id_campanha}`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "status",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{novo_status}`, 'string') }}"
+              },
+              {
+                "name": "daily_budget",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{novo_orcamento}`, 'string') }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          3568,
+          1072
+        ],
+        "id": "d9f57018-1e9b-48a7-bef8-4ad19543943f",
+        "name": "OptimizeCampaign7"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5dac8689-a711-4e2f-82d6-2ba2f408bbc0",
+                "leftValue": "={{ $json.status }}",
+                "rightValue": "=active",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          3904,
+          640
+        ],
+        "id": "e4a4ceea-4aa1-403d-9410-7391a0d176a4",
+        "name": "Filter7"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "insights",
+          "returnAll": true,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id_campaign",
+                "condition": "eq",
+                "keyValue": "={{ $json.id_campaign }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          3616,
+          640
+        ],
+        "id": "ff6ef1c2-7f45-401d-983e-8db2a0ab3a4c",
+        "name": "Get Insights7",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-5-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-5-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          3776,
+          1072
+        ],
+        "id": "86eeec42-56f4-4074-99c9-907de385e0a0",
+        "name": "5-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "Nb5Mlro9i6fjrNZa",
+            "name": "OpenAi account | Jordan"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Structured Output Parser3": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Agent Otimizador2",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter4": {
+        "main": [
+          [
+            {
+              "node": "Aggregate2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Project3": {
+        "main": [
+          [
+            {
+              "node": "Get All Campaign2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Insights4": {
+        "main": [
+          [
+            {
+              "node": "Filter4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Campanhas3": {
+        "main": [
+          [
+            {
+              "node": "Get One Campaign2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get All Campaign2": {
+        "main": [
+          [
+            {
+              "node": "Get Insights5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get One Campaign2": {
+        "main": [
+          [
+            {
+              "node": "Get Insights4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate2": {
+        "main": [
+          [
+            {
+              "node": "Agent Otimizador2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger2": {
+        "main": [
+          [
+            {
+              "node": "Get Project3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OptimizeCampaign4": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agent Otimizador2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UpdateCampaign2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agent Otimizador2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter5": {
+        "main": [
+          [
+            {
+              "node": "Campanhas3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Insights5": {
+        "main": [
+          [
+            {
+              "node": "Filter5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser1": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Agent Otimizador3",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter6": {
+        "main": [
+          [
+            {
+              "node": "Aggregate3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Project1": {
+        "main": [
+          [
+            {
+              "node": "Get All Campaign3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Insights6": {
+        "main": [
+          [
+            {
+              "node": "Filter6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Campanhas1": {
+        "main": [
+          [
+            {
+              "node": "Get One Campaign3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get All Campaign3": {
+        "main": [
+          [
+            {
+              "node": "Get Insights7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get One Campaign3": {
+        "main": [
+          [
+            {
+              "node": "Get Insights6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate3": {
+        "main": [
+          [
+            {
+              "node": "Agent Otimizador3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger3": {
+        "main": [
+          [
+            {
+              "node": "Get Project1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OptimizeCampaign6": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agent Otimizador3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UpdateCampaign3": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agent Otimizador3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter7": {
+        "main": [
+          [
+            {
+              "node": "Campanhas1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Insights7": {
+        "main": [
+          [
+            {
+              "node": "Filter7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "5-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent Otimizador2",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "Agent Otimizador3",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Nathan Jordan",
+    "name": "GESTOR AI - OTIMIZAÇÃO",
+    "description": "",
+    "autosaved": true,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-05-05T14:07:30.199Z",
+        "id": 620,
+        "workflowId": "b1743ef8-76a6-4d69-9b29-4b556eb566fe",
+        "versionId": "6fe466e1-41b8-4f57-92bc-b824f9c462da",
+        "event": "activated",
+        "userId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    ]
+  }
+}
