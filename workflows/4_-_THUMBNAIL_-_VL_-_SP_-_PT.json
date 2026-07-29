@@ -1,0 +1,2046 @@
+{
+  "id": "FJZzE3abFBMmAUzN",
+  "name": "4 - THUMBNAIL - VL - SP - PT",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# THUMBNAIL",
+        "height": 460,
+        "width": 2940,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -208,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "3b1eac73-7e6c-4290-a372-e4c3ee27c1e1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "=Erro na atualização da thumbnail do video longo em português - Verifique o fluxo",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        112
+      ],
+      "id": "f2805743-e4ee-4614-af81-9b4a0d528420",
+      "name": "Evolution API5",
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 229592,
+        "tableId": 546806,
+        "rowId": "={{ $json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 4370425,
+              "fieldValue": "=https://www.youtube.com/watch?v={{ $('SET').item.json.idVideo }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2496,
+        -96
+      ],
+      "id": "3cbb1b6b-e58a-435d-972c-9f603d13146c",
+      "name": "Baserow",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        -96
+      ],
+      "id": "1ff90d0a-1324-4985-8053-f5ca42d49d3d",
+      "name": "Baserow1",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "=thumbnail",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "thumbnail"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1536,
+        -16
+      ],
+      "id": "c7e53898-20e0-496d-a8e1-965278de623c",
+      "name": "Upload Thumbnail3",
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "66e78d88-18e2-4d71-9dd9-c984754217a1",
+              "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        -16
+      ],
+      "id": "c96dbd48-b067-4085-ae63-1c8f7895a94c",
+      "name": "VERIFICAO POSTAGEM1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "eec12bbf-d79e-4be7-8518-4f0575a37beb",
+              "leftValue": "={{ $json.IDVIDEO }}",
+              "rightValue": "sim",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        -16
+      ],
+      "id": "263a564d-40d3-471a-bc87-092789b51157",
+      "name": "VERIFICAR ID VIDEO1"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -16
+      ],
+      "id": "5d694ae2-f902-44fd-accf-e49bae77d51e",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        -96
+      ],
+      "id": "0d03a37c-3ccd-40d2-90b7-55e2d032114f",
+      "name": "Limit3"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"id\": \"{{ $('Edit Fields1').item.json.idVideo }}\",\n  \"status\": {\n    \"privacyStatus\": \"private\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2272,
+        112
+      ],
+      "id": "18aea865-416e-45b0-92d8-5d8393ac1729",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -16
+      ],
+      "id": "77bbb8d1-b502-4a98-864c-df8420a5a4a1",
+      "name": "Baserow4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "71dea887-9fa3-4f6d-913f-145967127c01",
+              "name": "title",
+              "value": "={{ $json.TITLE }}",
+              "type": "string"
+            },
+            {
+              "id": "8b3b555f-b6a8-46da-b84c-af5cd5e0b2c0",
+              "name": "roteiro",
+              "value": "={{ $json.ROTEIRO }}",
+              "type": "string"
+            },
+            {
+              "id": "97188373-1b79-46e0-b189-cc8a73617d42",
+              "name": "descricao",
+              "value": "={{ $json.DESCRICAO }}",
+              "type": "string"
+            },
+            {
+              "id": "fffdc7b7-5124-45e9-ae8e-bb1a07d59940",
+              "name": "hashtags",
+              "value": "={{ $json.HASHTAGS }}",
+              "type": "string"
+            },
+            {
+              "id": "e8951129-50fd-4d40-af34-ed7191231205",
+              "name": "idVideo",
+              "value": "={{ $json.IDVIDEO }}",
+              "type": "string"
+            },
+            {
+              "id": "ba711fd4-497e-4999-8178-821d3317a659",
+              "name": "THUMBNAIL DOWNLOAD",
+              "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+              "type": "string"
+            },
+            {
+              "id": "eafb0119-6a64-4ee3-82e2-fb48b3975436",
+              "name": "idioma",
+              "value": "Português - Brasil",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        -16
+      ],
+      "id": "8aaf773b-a2a2-46ea-91f7-999ca4816d86",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a957de0-2bf4-466e-805b-b8e8ac58ebe7",
+              "leftValue": "={{ $json.error.message }}",
+              "rightValue": "Client authentication failed",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        -16
+      ],
+      "id": "1c794b2c-a193-4f8e-97ed-5043aa31c499",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -128,
+        -16
+      ],
+      "id": "b598c55c-4a60-4580-a9e4-7656cfce91b5",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1280,
+        -16
+      ],
+      "id": "5c9f2e19-e1dd-41f8-bc5d-f3f15356e458",
+      "name": "Google Drive"
+    },
+    {
+      "parameters": {
+        "content": "# THUMBNAIL",
+        "height": 460,
+        "width": 2940,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        416,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "285e76f4-6c1d-4010-aefe-4fee00723ab7",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "=Erro na atualização da thumbnail do video longo em português - Verifique o fluxo",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        224
+      ],
+      "id": "f0854efd-5ccf-44a0-8d86-d032492f885d",
+      "name": "Evolution API",
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 229592,
+        "tableId": 546806,
+        "rowId": "={{ $json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 4370425,
+              "fieldValue": "=https://www.youtube.com/watch?v={{ $('SET1').item.json.idVideo }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        32
+      ],
+      "id": "ca69f4e6-9527-4585-8f39-cf6f09518fd7",
+      "name": "Baserow2",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        32
+      ],
+      "id": "0c5c3fae-72b2-423e-8c27-ba90b106e496",
+      "name": "Baserow3",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "=thumbnail",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "thumbnail"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        112
+      ],
+      "id": "856060da-17d2-4d0d-83db-528816bca148",
+      "name": "Upload Thumbnail",
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "66e78d88-18e2-4d71-9dd9-c984754217a1",
+              "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        112
+      ],
+      "id": "55764901-f372-4524-8ca5-8650601b477f",
+      "name": "VERIFICAO POSTAGEM"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "eec12bbf-d79e-4be7-8518-4f0575a37beb",
+              "leftValue": "={{ $json.IDVIDEO }}",
+              "rightValue": "sim",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        112
+      ],
+      "id": "5e51919d-1ec5-4d97-b5e3-868392a40bd1",
+      "name": "VERIFICAR ID VIDEO"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        960,
+        112
+      ],
+      "id": "75502cb9-0b66-445a-bb62-98a634e1b558",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2896,
+        32
+      ],
+      "id": "683322ac-4d38-4f09-86a3-16387fc8bbf3",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"id\": \"{{ $('Edit Fields1').item.json.idVideo }}\",\n  \"status\": {\n    \"privacyStatus\": \"private\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2896,
+        224
+      ],
+      "id": "937b8974-9623-4ba9-8a2b-472695e7725f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        736,
+        112
+      ],
+      "id": "cf2201e9-6388-420c-8711-766afedabd21",
+      "name": "Baserow5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "71dea887-9fa3-4f6d-913f-145967127c01",
+              "name": "title",
+              "value": "={{ $json.TITLE }}",
+              "type": "string"
+            },
+            {
+              "id": "8b3b555f-b6a8-46da-b84c-af5cd5e0b2c0",
+              "name": "roteiro",
+              "value": "={{ $json.ROTEIRO }}",
+              "type": "string"
+            },
+            {
+              "id": "97188373-1b79-46e0-b189-cc8a73617d42",
+              "name": "descricao",
+              "value": "={{ $json.DESCRICAO }}",
+              "type": "string"
+            },
+            {
+              "id": "fffdc7b7-5124-45e9-ae8e-bb1a07d59940",
+              "name": "hashtags",
+              "value": "={{ $json.HASHTAGS }}",
+              "type": "string"
+            },
+            {
+              "id": "e8951129-50fd-4d40-af34-ed7191231205",
+              "name": "idVideo",
+              "value": "={{ $json.IDVIDEO }}",
+              "type": "string"
+            },
+            {
+              "id": "ba711fd4-497e-4999-8178-821d3317a659",
+              "name": "THUMBNAIL DOWNLOAD",
+              "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+              "type": "string"
+            },
+            {
+              "id": "eafb0119-6a64-4ee3-82e2-fb48b3975436",
+              "name": "idioma",
+              "value": "Português - Brasil",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        112
+      ],
+      "id": "8d8b4d3f-772d-437a-babf-332c5dce7f5c",
+      "name": "SET1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a957de0-2bf4-466e-805b-b8e8ac58ebe7",
+              "leftValue": "={{ $json.error.message }}",
+              "rightValue": "Client authentication failed",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2384,
+        112
+      ],
+      "id": "e4eebebd-5cf6-441c-a783-36697f3ea163",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1904,
+        112
+      ],
+      "id": "dc9db196-038f-469a-9337-d38a2b35ce91",
+      "name": "Google Drive1"
+    }
+  ],
+  "connections": {
+    "Evolution API5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow1": {
+      "main": [
+        [
+          {
+            "node": "Limit3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Thumbnail3": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAO POSTAGEM1": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAR ID VIDEO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAR ID VIDEO1": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAO POSTAGEM1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit3": {
+      "main": [
+        [
+          {
+            "node": "Baserow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow4": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Baserow1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Baserow4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Upload Thumbnail3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow3": {
+      "main": [
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Thumbnail": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAO POSTAGEM": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAR ID VIDEO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAR ID VIDEO": {
+      "main": [
+        [
+          {
+            "node": "SET1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAO POSTAGEM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Baserow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow5": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Baserow3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Upload Thumbnail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "2f70520c-5664-4111-b0ad-af056d01b4cd",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-24T18:27:43.856Z",
+      "createdAt": "2025-10-24T18:27:43.856Z",
+      "role": "workflow:owner",
+      "workflowId": "FJZzE3abFBMmAUzN",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "2f70520c-5664-4111-b0ad-af056d01b4cd",
+    "workflowId": "FJZzE3abFBMmAUzN",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# THUMBNAIL",
+          "height": 460,
+          "width": 2940,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -208,
+          -128
+        ],
+        "typeVersion": 1,
+        "id": "3b1eac73-7e6c-4290-a372-e4c3ee27c1e1",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "testEvolution",
+          "remoteJid": "{{ $env.REDACTED_SECRET }}",
+          "messageText": "=Erro na atualização da thumbnail do video longo em português - Verifique o fluxo",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          2064,
+          112
+        ],
+        "id": "f2805743-e4ee-4614-af81-9b4a0d528420",
+        "name": "Evolution API5",
+        "retryOnFail": true,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "databaseId": 229592,
+          "tableId": 546806,
+          "rowId": "={{ $json.id }}",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 4370425,
+                "fieldValue": "=https://www.youtube.com/watch?v={{ $('SET').item.json.idVideo }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          2496,
+          -96
+        ],
+        "id": "3cbb1b6b-e58a-435d-972c-9f603d13146c",
+        "name": "Baserow",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "databaseId": 229592,
+          "tableId": 546806,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          2064,
+          -96
+        ],
+        "id": "1ff90d0a-1324-4985-8053-f5ca42d49d3d",
+        "name": "Baserow1",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://www.googleapis.com/upload/youtube/v3/thumbnails/set/?videoId={{ $('SET').item.json.idVideo }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleOAuth2Api",
+          "sendBody": true,
+          "contentType": "binaryData",
+          "inputDataFieldName": "=thumbnail",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file",
+                "outputPropertyName": "thumbnail"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1536,
+          -16
+        ],
+        "id": "c7e53898-20e0-496d-a8e1-965278de623c",
+        "name": "Upload Thumbnail3",
+        "retryOnFail": true,
+        "alwaysOutputData": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "66e78d88-18e2-4d71-9dd9-c984754217a1",
+                "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "empty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          560,
+          -16
+        ],
+        "id": "c96dbd48-b067-4085-ae63-1c8f7895a94c",
+        "name": "VERIFICAO POSTAGEM1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "eec12bbf-d79e-4be7-8518-4f0575a37beb",
+                "leftValue": "={{ $json.IDVIDEO }}",
+                "rightValue": "sim",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          816,
+          -16
+        ],
+        "id": "263a564d-40d3-471a-bc87-092789b51157",
+        "name": "VERIFICAR ID VIDEO1"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          336,
+          -16
+        ],
+        "id": "5d694ae2-f902-44fd-accf-e49bae77d51e",
+        "name": "Limit2"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          2272,
+          -96
+        ],
+        "id": "0d03a37c-3ccd-40d2-90b7-55e2d032114f",
+        "name": "Limit3"
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "https://www.googleapis.com/youtube/v3/videos?part=status",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleOAuth2Api",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"id\": \"{{ $('Edit Fields1').item.json.idVideo }}\",\n  \"status\": {\n    \"privacyStatus\": \"private\"\n  }\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2272,
+          112
+        ],
+        "id": "18aea865-416e-45b0-92d8-5d8393ac1729",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "databaseId": 229592,
+          "tableId": 546806,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          112,
+          -16
+        ],
+        "id": "77bbb8d1-b502-4a98-864c-df8420a5a4a1",
+        "name": "Baserow4"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "71dea887-9fa3-4f6d-913f-145967127c01",
+                "name": "title",
+                "value": "={{ $json.TITLE }}",
+                "type": "string"
+              },
+              {
+                "id": "8b3b555f-b6a8-46da-b84c-af5cd5e0b2c0",
+                "name": "roteiro",
+                "value": "={{ $json.ROTEIRO }}",
+                "type": "string"
+              },
+              {
+                "id": "97188373-1b79-46e0-b189-cc8a73617d42",
+                "name": "descricao",
+                "value": "={{ $json.DESCRICAO }}",
+                "type": "string"
+              },
+              {
+                "id": "fffdc7b7-5124-45e9-ae8e-bb1a07d59940",
+                "name": "hashtags",
+                "value": "={{ $json.HASHTAGS }}",
+                "type": "string"
+              },
+              {
+                "id": "e8951129-50fd-4d40-af34-ed7191231205",
+                "name": "idVideo",
+                "value": "={{ $json.IDVIDEO }}",
+                "type": "string"
+              },
+              {
+                "id": "ba711fd4-497e-4999-8178-821d3317a659",
+                "name": "THUMBNAIL DOWNLOAD",
+                "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+                "type": "string"
+              },
+              {
+                "id": "eafb0119-6a64-4ee3-82e2-fb48b3975436",
+                "name": "idioma",
+                "value": "Português - Brasil",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1056,
+          -16
+        ],
+        "id": "8aaf773b-a2a2-46ea-91f7-999ca4816d86",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "3a957de0-2bf4-466e-805b-b8e8ac58ebe7",
+                "leftValue": "={{ $json.error.message }}",
+                "rightValue": "Client authentication failed",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1760,
+          -16
+        ],
+        "id": "1c794b2c-a193-4f8e-97ed-5043aa31c499",
+        "name": "If2"
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -128,
+          -16
+        ],
+        "id": "b598c55c-4a60-4580-a9e4-7656cfce91b5",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1280,
+          -16
+        ],
+        "id": "5c9f2e19-e1dd-41f8-bc5d-f3f15356e458",
+        "name": "Google Drive"
+      },
+      {
+        "parameters": {
+          "content": "# THUMBNAIL",
+          "height": 460,
+          "width": 2940,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          416,
+          -16
+        ],
+        "typeVersion": 1,
+        "id": "285e76f4-6c1d-4010-aefe-4fee00723ab7",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "testEvolution",
+          "remoteJid": "{{ $env.REDACTED_SECRET }}",
+          "messageText": "=Erro na atualização da thumbnail do video longo em português - Verifique o fluxo",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          2688,
+          224
+        ],
+        "id": "f0854efd-5ccf-44a0-8d86-d032492f885d",
+        "name": "Evolution API",
+        "retryOnFail": true,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "databaseId": 229592,
+          "tableId": 546806,
+          "rowId": "={{ $json.id }}",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 4370425,
+                "fieldValue": "=https://www.youtube.com/watch?v={{ $('SET1').item.json.idVideo }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          3120,
+          32
+        ],
+        "id": "ca69f4e6-9527-4585-8f39-cf6f09518fd7",
+        "name": "Baserow2",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "databaseId": 229592,
+          "tableId": 546806,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          2688,
+          32
+        ],
+        "id": "0c5c3fae-72b2-423e-8c27-ba90b106e496",
+        "name": "Baserow3",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://www.googleapis.com/upload/youtube/v3/thumbnails/set/?videoId={{ $('SET1').item.json.idVideo }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleOAuth2Api",
+          "sendBody": true,
+          "contentType": "binaryData",
+          "inputDataFieldName": "=thumbnail",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file",
+                "outputPropertyName": "thumbnail"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2160,
+          112
+        ],
+        "id": "856060da-17d2-4d0d-83db-528816bca148",
+        "name": "Upload Thumbnail",
+        "retryOnFail": true,
+        "alwaysOutputData": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "66e78d88-18e2-4d71-9dd9-c984754217a1",
+                "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "empty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1184,
+          112
+        ],
+        "id": "55764901-f372-4524-8ca5-8650601b477f",
+        "name": "VERIFICAO POSTAGEM"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "eec12bbf-d79e-4be7-8518-4f0575a37beb",
+                "leftValue": "={{ $json.IDVIDEO }}",
+                "rightValue": "sim",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1440,
+          112
+        ],
+        "id": "5e51919d-1ec5-4d97-b5e3-868392a40bd1",
+        "name": "VERIFICAR ID VIDEO"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          960,
+          112
+        ],
+        "id": "75502cb9-0b66-445a-bb62-98a634e1b558",
+        "name": "Limit"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          2896,
+          32
+        ],
+        "id": "683322ac-4d38-4f09-86a3-16387fc8bbf3",
+        "name": "Limit4"
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "https://www.googleapis.com/youtube/v3/videos?part=status",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleOAuth2Api",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"id\": \"{{ $('Edit Fields1').item.json.idVideo }}\",\n  \"status\": {\n    \"privacyStatus\": \"private\"\n  }\n}\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2896,
+          224
+        ],
+        "id": "937b8974-9623-4ba9-8a2b-472695e7725f",
+        "name": "HTTP Request1"
+      },
+      {
+        "parameters": {
+          "databaseId": 229592,
+          "tableId": 546806,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          736,
+          112
+        ],
+        "id": "cf2201e9-6388-420c-8711-766afedabd21",
+        "name": "Baserow5"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "71dea887-9fa3-4f6d-913f-145967127c01",
+                "name": "title",
+                "value": "={{ $json.TITLE }}",
+                "type": "string"
+              },
+              {
+                "id": "8b3b555f-b6a8-46da-b84c-af5cd5e0b2c0",
+                "name": "roteiro",
+                "value": "={{ $json.ROTEIRO }}",
+                "type": "string"
+              },
+              {
+                "id": "97188373-1b79-46e0-b189-cc8a73617d42",
+                "name": "descricao",
+                "value": "={{ $json.DESCRICAO }}",
+                "type": "string"
+              },
+              {
+                "id": "fffdc7b7-5124-45e9-ae8e-bb1a07d59940",
+                "name": "hashtags",
+                "value": "={{ $json.HASHTAGS }}",
+                "type": "string"
+              },
+              {
+                "id": "e8951129-50fd-4d40-af34-ed7191231205",
+                "name": "idVideo",
+                "value": "={{ $json.IDVIDEO }}",
+                "type": "string"
+              },
+              {
+                "id": "ba711fd4-497e-4999-8178-821d3317a659",
+                "name": "THUMBNAIL DOWNLOAD",
+                "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+                "type": "string"
+              },
+              {
+                "id": "eafb0119-6a64-4ee3-82e2-fb48b3975436",
+                "name": "idioma",
+                "value": "Português - Brasil",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1680,
+          112
+        ],
+        "id": "8d8b4d3f-772d-437a-babf-332c5dce7f5c",
+        "name": "SET1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "3a957de0-2bf4-466e-805b-b8e8ac58ebe7",
+                "leftValue": "={{ $json.error.message }}",
+                "rightValue": "Client authentication failed",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2384,
+          112
+        ],
+        "id": "e4eebebd-5cf6-441c-a783-36697f3ea163",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1904,
+          112
+        ],
+        "id": "dc9db196-038f-469a-9337-d38a2b35ce91",
+        "name": "Google Drive1"
+      }
+    ],
+    "connections": {
+      "Evolution API5": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow1": {
+        "main": [
+          [
+            {
+              "node": "Limit3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload Thumbnail3": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "VERIFICAO POSTAGEM1": {
+        "main": [
+          [
+            {
+              "node": "VERIFICAR ID VIDEO1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "VERIFICAR ID VIDEO1": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit2": {
+        "main": [
+          [
+            {
+              "node": "VERIFICAO POSTAGEM1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit3": {
+        "main": [
+          [
+            {
+              "node": "Baserow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow4": {
+        "main": [
+          [
+            {
+              "node": "Limit2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "Google Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Baserow1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Evolution API5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Baserow4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Drive": {
+        "main": [
+          [
+            {
+              "node": "Upload Thumbnail3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Evolution API": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow3": {
+        "main": [
+          [
+            {
+              "node": "Limit4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload Thumbnail": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "VERIFICAO POSTAGEM": {
+        "main": [
+          [
+            {
+              "node": "VERIFICAR ID VIDEO",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "VERIFICAR ID VIDEO": {
+        "main": [
+          [
+            {
+              "node": "SET1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit": {
+        "main": [
+          [
+            {
+              "node": "VERIFICAO POSTAGEM",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit4": {
+        "main": [
+          [
+            {
+              "node": "Baserow2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow5": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET1": {
+        "main": [
+          [
+            {
+              "node": "Google Drive1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Baserow3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Evolution API",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Drive1": {
+        "main": [
+          [
+            {
+              "node": "Upload Thumbnail",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:43:34.496Z",
+        "id": 88,
+        "workflowId": "FJZzE3abFBMmAUzN",
+        "versionId": "2f70520c-5664-4111-b0ad-af056d01b4cd",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
