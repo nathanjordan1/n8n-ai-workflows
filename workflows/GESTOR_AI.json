@@ -1,0 +1,2036 @@
+{
+  "id": "7961fb74-6a96-4512-89d3-d45a5b528949",
+  "name": "GESTOR AI",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "criativos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1184,
+        432
+      ],
+      "id": "f4312323-191a-442e-b9ca-6fe9f98ba09f",
+      "name": "SearchAd",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | T.Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "campanhas",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome_campanha",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+            },
+            {
+              "fieldId": "id_campaign",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `{id_campaign}`, 'string') }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `active`, 'string') }}"
+            },
+            {
+              "fieldId": "id_criativo",
+              "fieldValue": "={{ $('SET').item.json.id_ad }}"
+            },
+            {
+              "fieldId": "id_projeto",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `{id_projeto}`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2336,
+        432
+      ],
+      "id": "7d58ec3c-6ca0-4d05-b874-1e0d004b6a73",
+      "name": "SaveBase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | T.Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Criar Campanhas",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+            },
+            {
+              "name": "objective",
+              "value": "=OUTCOME_ENGAGEMENT"
+            },
+            {
+              "name": "status",
+              "value": "=ACTIVE"
+            },
+            {
+              "name": "special_ad_categories",
+              "value": "=[]"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1552,
+        432
+      ],
+      "id": "04e6dc06-7030-4791-a37c-c9936b6219a9",
+      "name": "CreateCampaigns"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "criativos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `ACTIVE`, 'string') }}"
+            },
+            {
+              "fieldId": "id_copy",
+              "fieldValue": "={{ $('SET').item.json.id_copy }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        432
+      ],
+      "id": "3e231e69-ab8f-4ad9-9299-8428c51cb0bc",
+      "name": "UpdateAd",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | T.Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Cria adset",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "01"
+            },
+            {
+              "name": "optimization_goal",
+              "value": "REACH"
+            },
+            {
+              "name": "billing_event",
+              "value": "IMPRESSIONS"
+            },
+            {
+              "name": "daily_budget",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `{invest}`, 'string') }}"
+            },
+            {
+              "name": "campaign_id",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `{id_campanha}`, 'string') }}"
+            },
+            {
+              "name": "targeting",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters5_Value', `{\n  geo_locations: {\n    custom_locations: [\n      {\n        latitude: -23.6195199,\n        longitude: -46.6416207,\n        radius: {radius},\n        distance_unit: 'kilometer'\n      }\n    ]\n  }\n}`, 'string') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters6_Value', `{api_meta}`, 'string') }}"
+            },
+            {
+              "name": "bid_amount",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters7_Value', `100`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1728,
+        432
+      ],
+      "id": "2ce3a169-21e9-4b64-8ebc-fad02f2a64af",
+      "name": "CreateAdsets"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Upload Ad",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `AD01`, 'string') }}"
+            },
+            {
+              "name": "=file_url",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{url_download}`, 'string') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1904,
+        432
+      ],
+      "id": "5522e367-d0a8-4fb8-9529-6f434e3104d2",
+      "name": "UploadVideo",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "toolDescription": "Sobe anuncio",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"AD{id_ad}\",\n  \"creative\": {\n    \"creative_id\": \"{creative_id}\"\n  },\n  \"adset_id\": \"{adset_id}\",\n  \"status\": \"ACTIVE\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2192,
+        432
+      ],
+      "id": "8b8a24b1-8d5b-4b27-854e-cf334781ccb0",
+      "name": "UploadAd"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Sobe anuncio",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `nome: AD{id_ad}`, 'string') }}"
+            },
+            {
+              "name": "object_story_spec",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{\n    \"page_id\": \"{id_pagina}\",\n    \"video_data\": {\n      \"video_id\": \"{criative_id}\",\n      \"title\": \"{copy_titulo}\",\n      \"message\": \"{copy_descricao}\",\n      \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png\",\n      \"call_to_action\": {\n        \"type\": \"LEARN_MORE\",\n        \"value\": {\n          \"link\": \"{url_destino}\"\n        }\n      }\n    }\n  }`, 'string') }}"
+            },
+            {
+              "name": "status",
+              "value": "ACTIVE"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2048,
+        432
+      ],
+      "id": "e780c17c-c0ba-4c47-a687-cbd10379cad4",
+      "name": "CreateCreative"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você está no controle de todo o fluxo de lançamento de campanhas de tráfego pago.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=AGENTE GESTOR - ORQUESTRADOR DE CAMPANHAS META ADS\nDEFINIÇÃO DO PAPEL\n\nVocê é o Agente Gestor, responsável por orquestrar um workflow completo no n8n para criação automatizada de campanhas no Meta Ads. Sua função é controlar todo o fluxo de execução, validar dados e garantir que cada etapa seja executada na ordem correta.\nFERRAMENTAS DISPONÍVEIS\n🗃️ SupabaseTool\n\nDataProject: Obtém dados iniciais do projeto\nSearchAd: Retorna URL do vídeo para download\nSearchCopy: Retorna título e descrição do copy\nSaveBase: Salva dados da campanha após execução\nUpdateAd: Atualiza status e IDs no banco\nUpdateCopy: Atualiza dados do copy associando ao projeto\n\n🔗 HTTPRequestTool\n\nCreateCampaigns: Cria campanha no Meta Ads\nCreateAdsets: Cria conjunto de anúncios (adset)\nUploadVideo: Faz upload do vídeo criativo\nCreateCreative: Cria o criativo final com vídeo + copy\nUploadAd: Cria o anúncio final e o ativa\n\nVARIÁVEIS DO SISTEMA\nDados Base (DataProject)\n{id_projeto}, {nome_comercio}, *{api_meta} - variavel presente em todas as tools da Meta, certifique de estar usando está variavel*, {id_conta}, \n{id_pagina}, {id_instagram}, {url_destino}, {publico}, {id_pixel}\n\nDados Coletados\n{id_ad}, {url_download} → SearchAd\n{copy_titulo}, {copy_descricao} → SearchCopy\nIDs Gerados no Fluxo\n{id_campanha} → CreateCampaigns\n{adset_id} → CreateAdsets\n{criative_id} → UploadVideo (depois modificado por CreateCreative)\nDados de Input\n{invest}, {raio} → inputs do projeto\n{id_ad}, {id_copy} → usados em SaveBase e UpdateAd\n\nFLUXO DE EXECUÇÃO OBRIGATÓRIO\nETAPA 1: COLETA DE DADOS INICIAIS\n1. DataProject\n   → Coleta: {id_projeto}, *{api_meta}*, {id_conta}, {id_pagina}, etc.\n   \n2. SearchAd\n   → Coleta: {id_ad} e {url_download}\n   \n3. SearchCopy\n   → Coleta: {copy_titulo} e {copy_descricao}\n\nETAPA 2: CRIAÇÃO DA ESTRUTURA META ADS\n4. CreateCampaigns\n   → Input: {id_conta} e *{api_meta}*\n   → Output: {id_campanha}\n   \n5. CreateAdsets\n   → Input: {id_campanha}, {invest}, {raio}, {id_pagina} e *{api_meta}*\n   → Output: {adset_id}\n\nETAPA 3: CRIAÇÃO DO CRIATIVO\n6. UploadVideo\n   → Input: {url_download} e *{api_meta}*\n   → Output: {criative_id} (ID do vídeo)\n   \n7. CreateCreative\n   → Input: {criative_id}, {id_ad}, {copy_titulo}, {copy_descricao}, {id_pagina} e *{api_meta}*\n   → Output: {criative_id} (ID do criativo final)\n\nETAPA 4: CRIAÇÃO DO ANÚNCIO\n8. UploadAd\n   → Input: {adset_id} e {criative_id} (do CreateCreative)\n   → Action: Cria e ativa o anúncio\n\nETAPA 5: ATUALIZAÇÃO DO BANCO\n9. SaveBase\n   → Registra campanha e criativo no Supabase\n   \n10. UpdateAd\n    → Atualiza status e IDs no Supabase\n\n11. UpdateCopy\n    → Atualiza dados do copy associando ao projeto\n\nREGRAS CRÍTICAS DE VALIDAÇÃO\n⚠️ VALIDAÇÕES OBRIGATÓRIAS\n\nAntes de cada etapa: Confirme se todas as variáveis necessárias estão presentes\n\nDados essenciais: {id_conta}, {api_meta}, {id_pagina}, {url_download}, {api_meta}\n\nIDs de dependência: Não avance sem o ID da etapa anterior\nFormato JSON: O campo creative no UploadAd deve ser objeto JSON, não string\n\n🚫 NUNCA FAÇA ISSO\n\nPular etapas do fluxo\nUsar variáveis não validadas\nUsar o {criative_id} do UploadVideo diretamente no UploadAd\nContinuar com dados faltantes\nIgnorar as variaveis\n\n✅ SEMPRE FAÇA ISSO\n\nValide variáveis antes de cada chamada\nUse o {criative_id} retornado pelo CreateCreative no UploadAd\nUse sempre {api_meta} que necessário, tal variavel é fundamental para acessar a meta\nInforme qual ferramenta está sendo usada\nComunique o status de cada etapa\nPare o fluxo em caso de erro\n\nTEMPLATE DE EXECUÇÃO\nPara cada ferramenta, siga este padrão:\n🔧 EXECUTANDO: [Nome da Ferramenta]\n📥 INPUT: {variavel1}, {variavel2}...\n🎯 OBJETIVO: [O que esta etapa faz]\n📤 OUTPUT ESPERADO: {nova_variavel}\nTRATAMENTO DE ERROS\nSe qualquer etapa falhar:\n\nPARE imediatamente o fluxo\nIDENTIFIQUE qual variável está faltando\nCOMUNIQUE o erro de forma clara\nAGUARDE correção antes de continuar\n\nCOMUNICAÇÃO\nMantenha clareza em cada ação:\n\nQual ferramenta está sendo executada\nQuais variáveis estão sendo utilizadas\nQual o resultado obtido\nQual será a próxima etapa\n\nLEMBRE-SE: Você é o maestro desta operação. Nada acontece sem sua validação e comando direto.",
+          "maxIterations": 20
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1728,
+        176
+      ],
+      "id": "2d28b855-1d4a-462b-96f1-ac268055fa86",
+      "name": "Gestor",
+      "retryOnFail": false,
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "copy",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        432
+      ],
+      "id": "7acb20f4-1f2e-4547-8263-0c0acabc3e49",
+      "name": "SearchCopy1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | T.Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "projetos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        432
+      ],
+      "id": "efc9a1d5-c5ff-443e-9bd2-b8f9193065e4",
+      "name": "DataProject1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | T.Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"status\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2768,
+        432
+      ],
+      "id": "347d8587-71ad-4501-b658-7b59b369bb8b",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "content": "GESTOR AI",
+        "height": 480,
+        "width": 2080,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        832,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "08870123-9533-4a17-a2fb-0ec1aea056bc",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "nome_comercio"
+            },
+            {
+              "name": "id_copy",
+              "type": "number"
+            },
+            {
+              "name": "id_ad",
+              "type": "number"
+            },
+            {
+              "name": "numero"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        176
+      ],
+      "id": "9a3ee0e2-e653-4153-a1ad-4456eb504076",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc3aaeda-97b9-42fe-a85b-639b2916da94",
+              "name": "nome_comercio",
+              "value": "={{ $json.nome_comercio }}",
+              "type": "string"
+            },
+            {
+              "id": "9b29f944-63b5-4624-9d12-b6b7c0c8d972",
+              "name": "id_copy",
+              "value": "={{ $json.id_copy }}",
+              "type": "number"
+            },
+            {
+              "id": "de45dbd4-3d9d-40a5-b068-5e1995900bbd",
+              "name": "id_ad",
+              "value": "={{ $json.id_ad }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1168,
+        176
+      ],
+      "id": "29362708-0c1a-41e4-a878-9543847994d9",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "EvolutionNathan",
+        "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
+        "messageText": "=Subindo anuncio no Facebook e Instagram",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        176
+      ],
+      "id": "c0593736-ad67-4b13-926e-a5aff2375b22",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "copy",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id_projeto",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{id_projeto}`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2608,
+        432
+      ],
+      "id": "29274c1e-0089-482d-a13a-0ef20e6438d4",
+      "name": "UpdateCopy",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | T.Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        640
+      ],
+      "id": "e1dadce3-2005-49b3-9e04-65bc58729bd5",
+      "name": "4.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | empriser"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Criar Campanhas",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+            },
+            {
+              "name": "objective",
+              "value": "=OUTCOME_TRAFFIC"
+            },
+            {
+              "name": "status",
+              "value": "=ACTIVE"
+            },
+            {
+              "name": "special_ad_categories",
+              "value": "=[]"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1504,
+        704
+      ],
+      "id": "1caf3ff5-74a4-4c13-995f-cf212f469904",
+      "name": "CreateCampaigns1"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Cria adset",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"access_token\": \"{api_meta}\",\n  \"bid_amount\": \"100\",\n  \"billing_event\": \"IMPRESSIONS\",\n  \"campaign_id\": \"{id_campanha}\",\n  \"daily_budget\": \"{invest}\",\n  \"destination_type\": \"WHATSAPP\",\n  \"name\": \"01\",\n  \"optimization_goal\": \"CONVERSATIONS\",\n  \"promoted_object\": {\n    \"page_id\": \"{id_pagina}\"\n  },\n  \"status\": \"ACTIVE\",\n  \"targeting\": {\n    \"geo_locations\": {\n      \"custom_locations\": [\n        {\n          \"latitude\": -23.6195199,\n          \"longitude\": -46.6416207,\n          \"radius\": {radius},\n          \"distance_unit\": \"kilometer\"\n        }\n      ]\n    }\n  }\n}`, 'json') }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        704
+      ],
+      "id": "357d5431-f5bc-4d65-807a-567f152b6ac8",
+      "name": "CreateAdsets1"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Sobe anuncio",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"AD{id_ad}\",\n  \"creative\": {\n    \"creative_id\": \"{creative_id}\"\n  },\n  \"adset_id\": \"{adset_id}\",\n  \"status\": \"ACTIVE\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        704
+      ],
+      "id": "fd5b1b9b-5632-411f-b597-1f8d031abb66",
+      "name": "UploadAd1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"nome: AD{id_ad}\",\n  \"object_story_spec\": {\n    \"page_id\": \"{id_pagina}\",\n    \"video_data\": {\n      \"video_id\": \"{criative_id}\",\n      \"title\": \"{copy_titulo}\",\n      \"message\": \"{copy_descricao}\",\n      \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png\",\n      \"call_to_action\": {\n        \"type\": \"WHATSAPP_MESSAGE\",\n        \"value\": {\n          \"app_destination\": \"WHATSAPP\"\n        }\n      }\n    }\n  },\n  \"status\": \"ACTIVE\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2000,
+        880
+      ],
+      "id": "e112800e-08f8-4701-b5a5-52b607e0d654",
+      "name": "CreateCreative3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"AD01\",\n  \"file_url\": \"{url_download}\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1840,
+        704
+      ],
+      "id": "adbd37cc-5d4f-425f-8d6a-5564e51ef73e",
+      "name": "UploadVideo2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_token",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{api_meta}`, 'string') }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"nome: AD{id_ad}\",\n  \"object_story_spec\": {\n    \"page_id\": \"{id_pagina}\",\n    \"video_data\": {\n      \"video_id\": \"{criative_id}\",\n      \"title\": \"{copy_titulo}\",\n      \"message\": \"{copy_descricao}\",\n      \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png\",\n      \"call_to_action\": {\n        \"type\": \"WHATSAPP_MESSAGE\",\n        \"value\": {\n          \"app_destination\": \"WHATSAPP\"\n        }\n      }\n    }\n  }\n}`, 'json') }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        },
+        "optimizeResponse": true
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        2000,
+        704
+      ],
+      "id": "3b3a144d-918b-4b6d-b0f0-a54ae45add4c",
+      "name": "CreateCreative4"
+    },
+    {
+      "parameters": {
+        "modelName": "=models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        880,
+        432
+      ],
+      "id": "5dd4840a-48b7-4712-bbe1-5d500d75e0fe",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Gemini(PaLM) | Roro"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "SearchAd": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SaveBase": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateCampaigns": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "UpdateAd": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateAdsets": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "UploadVideo": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "UploadAd": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "CreateCreative": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Gestor": {
+      "main": [
+        []
+      ]
+    },
+    "SearchCopy1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataProject1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        [
+          {
+            "node": "Gestor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateCopy": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateCampaigns1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateAdsets1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UploadAd1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateCreative3": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "UploadVideo2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateCreative4": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "855d268d-224a-4d1f-813a-e7f114663f8c",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:55:45.146Z",
+      "createdAt": "2025-10-20T18:55:45.146Z",
+      "role": "workflow:owner",
+      "workflowId": "7961fb74-6a96-4512-89d3-d45a5b528949",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "855d268d-224a-4d1f-813a-e7f114663f8c",
+    "workflowId": "7961fb74-6a96-4512-89d3-d45a5b528949",
+    "nodes": [
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "criativos",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "keyValue": "={{ $('SET').item.json.id_ad }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1184,
+          432
+        ],
+        "id": "f4312323-191a-442e-b9ca-6fe9f98ba09f",
+        "name": "SearchAd",
+        "credentials": {
+          "supabaseApi": {
+            "id": "IUcqED4yk7LjndhQ",
+            "name": "Supabase | T.Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "tableId": "campanhas",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "nome_campanha",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+              },
+              {
+                "fieldId": "id_campaign",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `{id_campaign}`, 'string') }}"
+              },
+              {
+                "fieldId": "status",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `active`, 'string') }}"
+              },
+              {
+                "fieldId": "id_criativo",
+                "fieldValue": "={{ $('SET').item.json.id_ad }}"
+              },
+              {
+                "fieldId": "id_projeto",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `{id_projeto}`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2336,
+          432
+        ],
+        "id": "7d58ec3c-6ca0-4d05-b874-1e0d004b6a73",
+        "name": "SaveBase",
+        "credentials": {
+          "supabaseApi": {
+            "id": "IUcqED4yk7LjndhQ",
+            "name": "Supabase | T.Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Criar Campanhas",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/campaigns`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+              },
+              {
+                "name": "objective",
+                "value": "=OUTCOME_ENGAGEMENT"
+              },
+              {
+                "name": "status",
+                "value": "=ACTIVE"
+              },
+              {
+                "name": "special_ad_categories",
+                "value": "=[]"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1552,
+          432
+        ],
+        "id": "04e6dc06-7030-4791-a37c-c9936b6219a9",
+        "name": "CreateCampaigns"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "criativos",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "condition": "eq",
+                "keyValue": "={{ $('SET').item.json.id_ad }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "status",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `ACTIVE`, 'string') }}"
+              },
+              {
+                "fieldId": "id_copy",
+                "fieldValue": "={{ $('SET').item.json.id_copy }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2464,
+          432
+        ],
+        "id": "3e231e69-ab8f-4ad9-9299-8428c51cb0bc",
+        "name": "UpdateAd",
+        "credentials": {
+          "supabaseApi": {
+            "id": "IUcqED4yk7LjndhQ",
+            "name": "Supabase | T.Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Cria adset",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/adsets`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "01"
+              },
+              {
+                "name": "optimization_goal",
+                "value": "REACH"
+              },
+              {
+                "name": "billing_event",
+                "value": "IMPRESSIONS"
+              },
+              {
+                "name": "daily_budget",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `{invest}`, 'string') }}"
+              },
+              {
+                "name": "campaign_id",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `{id_campanha}`, 'string') }}"
+              },
+              {
+                "name": "targeting",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters5_Value', `{\n  geo_locations: {\n    custom_locations: [\n      {\n        latitude: -23.6195199,\n        longitude: -46.6416207,\n        radius: {radius},\n        distance_unit: 'kilometer'\n      }\n    ]\n  }\n}`, 'string') }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters6_Value', `{api_meta}`, 'string') }}"
+              },
+              {
+                "name": "bid_amount",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters7_Value', `100`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1728,
+          432
+        ],
+        "id": "2ce3a169-21e9-4b64-8ebc-fad02f2a64af",
+        "name": "CreateAdsets"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Upload Ad",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/advideos`, 'string') }}",
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `AD01`, 'string') }}"
+              },
+              {
+                "name": "=file_url",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{url_download}`, 'string') }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "json"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1904,
+          432
+        ],
+        "id": "5522e367-d0a8-4fb8-9529-6f434e3104d2",
+        "name": "UploadVideo",
+        "retryOnFail": true
+      },
+      {
+        "parameters": {
+          "toolDescription": "Sobe anuncio",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/ads`, 'string') }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"AD{id_ad}\",\n  \"creative\": {\n    \"creative_id\": \"{creative_id}\"\n  },\n  \"adset_id\": \"{adset_id}\",\n  \"status\": \"ACTIVE\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          2192,
+          432
+        ],
+        "id": "8b8a24b1-8d5b-4b27-854e-cf334781ccb0",
+        "name": "UploadAd"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Sobe anuncio",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/adcreatives`, 'string') }}",
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `nome: AD{id_ad}`, 'string') }}"
+              },
+              {
+                "name": "object_story_spec",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `{\n    \"page_id\": \"{id_pagina}\",\n    \"video_data\": {\n      \"video_id\": \"{criative_id}\",\n      \"title\": \"{copy_titulo}\",\n      \"message\": \"{copy_descricao}\",\n      \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png\",\n      \"call_to_action\": {\n        \"type\": \"LEARN_MORE\",\n        \"value\": {\n          \"link\": \"{url_destino}\"\n        }\n      }\n    }\n  }`, 'string') }}"
+              },
+              {
+                "name": "status",
+                "value": "ACTIVE"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "optimizeResponse": true
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          2048,
+          432
+        ],
+        "id": "e780c17c-c0ba-4c47-a687-cbd10379cad4",
+        "name": "CreateCreative"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Você está no controle de todo o fluxo de lançamento de campanhas de tráfego pago.",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=AGENTE GESTOR - ORQUESTRADOR DE CAMPANHAS META ADS\nDEFINIÇÃO DO PAPEL\n\nVocê é o Agente Gestor, responsável por orquestrar um workflow completo no n8n para criação automatizada de campanhas no Meta Ads. Sua função é controlar todo o fluxo de execução, validar dados e garantir que cada etapa seja executada na ordem correta.\nFERRAMENTAS DISPONÍVEIS\n🗃️ SupabaseTool\n\nDataProject: Obtém dados iniciais do projeto\nSearchAd: Retorna URL do vídeo para download\nSearchCopy: Retorna título e descrição do copy\nSaveBase: Salva dados da campanha após execução\nUpdateAd: Atualiza status e IDs no banco\nUpdateCopy: Atualiza dados do copy associando ao projeto\n\n🔗 HTTPRequestTool\n\nCreateCampaigns: Cria campanha no Meta Ads\nCreateAdsets: Cria conjunto de anúncios (adset)\nUploadVideo: Faz upload do vídeo criativo\nCreateCreative: Cria o criativo final com vídeo + copy\nUploadAd: Cria o anúncio final e o ativa\n\nVARIÁVEIS DO SISTEMA\nDados Base (DataProject)\n{id_projeto}, {nome_comercio}, *{api_meta} - variavel presente em todas as tools da Meta, certifique de estar usando está variavel*, {id_conta}, \n{id_pagina}, {id_instagram}, {url_destino}, {publico}, {id_pixel}\n\nDados Coletados\n{id_ad}, {url_download} → SearchAd\n{copy_titulo}, {copy_descricao} → SearchCopy\nIDs Gerados no Fluxo\n{id_campanha} → CreateCampaigns\n{adset_id} → CreateAdsets\n{criative_id} → UploadVideo (depois modificado por CreateCreative)\nDados de Input\n{invest}, {raio} → inputs do projeto\n{id_ad}, {id_copy} → usados em SaveBase e UpdateAd\n\nFLUXO DE EXECUÇÃO OBRIGATÓRIO\nETAPA 1: COLETA DE DADOS INICIAIS\n1. DataProject\n   → Coleta: {id_projeto}, *{api_meta}*, {id_conta}, {id_pagina}, etc.\n   \n2. SearchAd\n   → Coleta: {id_ad} e {url_download}\n   \n3. SearchCopy\n   → Coleta: {copy_titulo} e {copy_descricao}\n\nETAPA 2: CRIAÇÃO DA ESTRUTURA META ADS\n4. CreateCampaigns\n   → Input: {id_conta} e *{api_meta}*\n   → Output: {id_campanha}\n   \n5. CreateAdsets\n   → Input: {id_campanha}, {invest}, {raio}, {id_pagina} e *{api_meta}*\n   → Output: {adset_id}\n\nETAPA 3: CRIAÇÃO DO CRIATIVO\n6. UploadVideo\n   → Input: {url_download} e *{api_meta}*\n   → Output: {criative_id} (ID do vídeo)\n   \n7. CreateCreative\n   → Input: {criative_id}, {id_ad}, {copy_titulo}, {copy_descricao}, {id_pagina} e *{api_meta}*\n   → Output: {criative_id} (ID do criativo final)\n\nETAPA 4: CRIAÇÃO DO ANÚNCIO\n8. UploadAd\n   → Input: {adset_id} e {criative_id} (do CreateCreative)\n   → Action: Cria e ativa o anúncio\n\nETAPA 5: ATUALIZAÇÃO DO BANCO\n9. SaveBase\n   → Registra campanha e criativo no Supabase\n   \n10. UpdateAd\n    → Atualiza status e IDs no Supabase\n\n11. UpdateCopy\n    → Atualiza dados do copy associando ao projeto\n\nREGRAS CRÍTICAS DE VALIDAÇÃO\n⚠️ VALIDAÇÕES OBRIGATÓRIAS\n\nAntes de cada etapa: Confirme se todas as variáveis necessárias estão presentes\n\nDados essenciais: {id_conta}, {api_meta}, {id_pagina}, {url_download}, {api_meta}\n\nIDs de dependência: Não avance sem o ID da etapa anterior\nFormato JSON: O campo creative no UploadAd deve ser objeto JSON, não string\n\n🚫 NUNCA FAÇA ISSO\n\nPular etapas do fluxo\nUsar variáveis não validadas\nUsar o {criative_id} do UploadVideo diretamente no UploadAd\nContinuar com dados faltantes\nIgnorar as variaveis\n\n✅ SEMPRE FAÇA ISSO\n\nValide variáveis antes de cada chamada\nUse o {criative_id} retornado pelo CreateCreative no UploadAd\nUse sempre {api_meta} que necessário, tal variavel é fundamental para acessar a meta\nInforme qual ferramenta está sendo usada\nComunique o status de cada etapa\nPare o fluxo em caso de erro\n\nTEMPLATE DE EXECUÇÃO\nPara cada ferramenta, siga este padrão:\n🔧 EXECUTANDO: [Nome da Ferramenta]\n📥 INPUT: {variavel1}, {variavel2}...\n🎯 OBJETIVO: [O que esta etapa faz]\n📤 OUTPUT ESPERADO: {nova_variavel}\nTRATAMENTO DE ERROS\nSe qualquer etapa falhar:\n\nPARE imediatamente o fluxo\nIDENTIFIQUE qual variável está faltando\nCOMUNIQUE o erro de forma clara\nAGUARDE correção antes de continuar\n\nCOMUNICAÇÃO\nMantenha clareza em cada ação:\n\nQual ferramenta está sendo executada\nQuais variáveis estão sendo utilizadas\nQual o resultado obtido\nQual será a próxima etapa\n\nLEMBRE-SE: Você é o maestro desta operação. Nada acontece sem sua validação e comando direto.",
+            "maxIterations": 20
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          1728,
+          176
+        ],
+        "id": "2d28b855-1d4a-462b-96f1-ac268055fa86",
+        "name": "Gestor",
+        "retryOnFail": false,
+        "executeOnce": false,
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "copy",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "keyValue": "={{ $('SET').item.json.id_copy }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1344,
+          432
+        ],
+        "id": "7acb20f4-1f2e-4547-8263-0c0acabc3e49",
+        "name": "SearchCopy1",
+        "credentials": {
+          "supabaseApi": {
+            "id": "IUcqED4yk7LjndhQ",
+            "name": "Supabase | T.Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "tableId": "projetos",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "nome",
+                "keyValue": "={{ $('SET').item.json.nome_comercio }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          432
+        ],
+        "id": "efc9a1d5-c5ff-443e-9bd2-b8f9193065e4",
+        "name": "DataProject1",
+        "credentials": {
+          "supabaseApi": {
+            "id": "IUcqED4yk7LjndhQ",
+            "name": "Supabase | T.Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"status\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          2768,
+          432
+        ],
+        "id": "347d8587-71ad-4501-b658-7b59b369bb8b",
+        "name": "Structured Output Parser2"
+      },
+      {
+        "parameters": {
+          "content": "GESTOR AI",
+          "height": 480,
+          "width": 2080,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          832,
+          128
+        ],
+        "typeVersion": 1,
+        "id": "08870123-9533-4a17-a2fb-0ec1aea056bc",
+        "name": "Sticky Note2"
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "nome_comercio"
+              },
+              {
+                "name": "id_copy",
+                "type": "number"
+              },
+              {
+                "name": "id_ad",
+                "type": "number"
+              },
+              {
+                "name": "numero"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          896,
+          176
+        ],
+        "id": "9a3ee0e2-e653-4153-a1ad-4456eb504076",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "dc3aaeda-97b9-42fe-a85b-639b2916da94",
+                "name": "nome_comercio",
+                "value": "={{ $json.nome_comercio }}",
+                "type": "string"
+              },
+              {
+                "id": "9b29f944-63b5-4624-9d12-b6b7c0c8d972",
+                "name": "id_copy",
+                "value": "={{ $json.id_copy }}",
+                "type": "number"
+              },
+              {
+                "id": "de45dbd4-3d9d-40a5-b068-5e1995900bbd",
+                "name": "id_ad",
+                "value": "={{ $json.id_ad }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1168,
+          176
+        ],
+        "id": "29362708-0c1a-41e4-a878-9543847994d9",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "EvolutionNathan",
+          "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
+          "messageText": "=Subindo anuncio no Facebook e Instagram",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1472,
+          176
+        ],
+        "id": "c0593736-ad67-4b13-926e-a5aff2375b22",
+        "name": "Enviar texto1",
+        "credentials": {
+          "evolutionApi": {
+            "id": "b3mpy5RQEarqZZLq",
+            "name": "Evolution account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "copy",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "condition": "eq",
+                "keyValue": "={{ $('SET').item.json.id_copy }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "id_projeto",
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `{id_projeto}`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          2608,
+          432
+        ],
+        "id": "29274c1e-0089-482d-a13a-0ef20e6438d4",
+        "name": "UpdateCopy",
+        "credentials": {
+          "supabaseApi": {
+            "id": "IUcqED4yk7LjndhQ",
+            "name": "Supabase | T.Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4.1-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-4.1-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          880,
+          640
+        ],
+        "id": "e1dadce3-2005-49b3-9e04-65bc58729bd5",
+        "name": "4.1-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account | empriser"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Criar Campanhas",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/campaigns`, 'string') }}",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `[AGENT] [{nome_comercio}] [COPY {titulo_copy}] [AD {id_ad}]`, 'string') }}"
+              },
+              {
+                "name": "objective",
+                "value": "=OUTCOME_TRAFFIC"
+              },
+              {
+                "name": "status",
+                "value": "=ACTIVE"
+              },
+              {
+                "name": "special_ad_categories",
+                "value": "=[]"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1504,
+          704
+        ],
+        "id": "1caf3ff5-74a4-4c13-995f-cf212f469904",
+        "name": "CreateCampaigns1"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Cria adset",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/adsets`, 'string') }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"access_token\": \"{api_meta}\",\n  \"bid_amount\": \"100\",\n  \"billing_event\": \"IMPRESSIONS\",\n  \"campaign_id\": \"{id_campanha}\",\n  \"daily_budget\": \"{invest}\",\n  \"destination_type\": \"WHATSAPP\",\n  \"name\": \"01\",\n  \"optimization_goal\": \"CONVERSATIONS\",\n  \"promoted_object\": {\n    \"page_id\": \"{id_pagina}\"\n  },\n  \"status\": \"ACTIVE\",\n  \"targeting\": {\n    \"geo_locations\": {\n      \"custom_locations\": [\n        {\n          \"latitude\": -23.6195199,\n          \"longitude\": -46.6416207,\n          \"radius\": {radius},\n          \"distance_unit\": \"kilometer\"\n        }\n      ]\n    }\n  }\n}`, 'json') }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "optimizeResponse": true
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1680,
+          704
+        ],
+        "id": "357d5431-f5bc-4d65-807a-567f152b6ac8",
+        "name": "CreateAdsets1"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Sobe anuncio",
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/ads`, 'string') }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"AD{id_ad}\",\n  \"creative\": {\n    \"creative_id\": \"{creative_id}\"\n  },\n  \"adset_id\": \"{adset_id}\",\n  \"status\": \"ACTIVE\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "optimizeResponse": true
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          2144,
+          704
+        ],
+        "id": "fd5b1b9b-5632-411f-b597-1f8d031abb66",
+        "name": "UploadAd1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/adcreatives?access_token={api_meta}`, 'string') }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"nome: AD{id_ad}\",\n  \"object_story_spec\": {\n    \"page_id\": \"{id_pagina}\",\n    \"video_data\": {\n      \"video_id\": \"{criative_id}\",\n      \"title\": \"{copy_titulo}\",\n      \"message\": \"{copy_descricao}\",\n      \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png\",\n      \"call_to_action\": {\n        \"type\": \"WHATSAPP_MESSAGE\",\n        \"value\": {\n          \"app_destination\": \"WHATSAPP\"\n        }\n      }\n    }\n  },\n  \"status\": \"ACTIVE\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "optimizeResponse": true
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          2000,
+          880
+        ],
+        "id": "e112800e-08f8-4701-b5a5-52b607e0d654",
+        "name": "CreateCreative3"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/advideos`, 'string') }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"AD01\",\n  \"file_url\": \"{url_download}\",\n  \"access_token\": \"{api_meta}\"\n}`, 'json') }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "optimizeResponse": true
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1840,
+          704
+        ],
+        "id": "adbd37cc-5d4f-425f-8d6a-5564e51ef73e",
+        "name": "UploadVideo2"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', `https://graph.facebook.com/v23.0/act_{id_conta}/adcreatives`, 'string') }}",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "access_token",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `{api_meta}`, 'string') }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', `{\n  \"name\": \"nome: AD{id_ad}\",\n  \"object_story_spec\": {\n    \"page_id\": \"{id_pagina}\",\n    \"video_data\": {\n      \"video_id\": \"{criative_id}\",\n      \"title\": \"{copy_titulo}\",\n      \"message\": \"{copy_descricao}\",\n      \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png\",\n      \"call_to_action\": {\n        \"type\": \"WHATSAPP_MESSAGE\",\n        \"value\": {\n          \"app_destination\": \"WHATSAPP\"\n        }\n      }\n    }\n  }\n}`, 'json') }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "responseFormat": "json"
+              }
+            }
+          },
+          "optimizeResponse": true
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          2000,
+          704
+        ],
+        "id": "3b3a144d-918b-4b6d-b0f0-a54ae45add4c",
+        "name": "CreateCreative4"
+      },
+      {
+        "parameters": {
+          "modelName": "=models/gemini-2.5-flash",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          880,
+          432
+        ],
+        "id": "5dd4840a-48b7-4712-bbe1-5d500d75e0fe",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "mryxTvl1gp02HgXM",
+            "name": "Google Gemini(PaLM) | Roro"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "SearchAd": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SaveBase": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateCampaigns": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "UpdateAd": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateAdsets": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "UploadVideo": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "UploadAd": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "CreateCreative": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "Gestor": {
+        "main": [
+          []
+        ]
+      },
+      "SearchCopy1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DataProject1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser2": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "Enviar texto1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Enviar texto1": {
+        "main": [
+          [
+            {
+              "node": "Gestor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UpdateCopy": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4.1-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateCampaigns1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateAdsets1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UploadAd1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateCreative3": {
+        "ai_tool": [
+          []
+        ]
+      },
+      "UploadVideo2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateCreative4": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          []
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:43:40.724Z",
+        "id": 4,
+        "workflowId": "7961fb74-6a96-4512-89d3-d45a5b528949",
+        "versionId": "855d268d-224a-4d1f-813a-e7f114663f8c",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
