@@ -1,0 +1,489 @@
+{
+  "id": "64bcdcff-58da-488f-8fb1-e4cc27525973",
+  "name": "COPYWRITER - N1",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "setor"
+            },
+            {
+              "name": "requisicao"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        80
+      ],
+      "id": "47c07fcc-dd82-4161-b214-a84e3236313f",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "modelName": "=models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        400,
+        320
+      ],
+      "id": "c395c340-d762-4854-af70-1401982b93e7",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Gemini(PaLM) | Phoenix"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        544,
+        320
+      ],
+      "id": "9c1be1b7-7694-486a-b8d4-a04a86224040",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"descricao\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        320
+      ],
+      "id": "92dd2339-f9b7-4a17-ae51-275c62aa9192",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        768,
+        320
+      ],
+      "id": "bc14f61a-b3e7-4863-a5f7-17b30379bdcc",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=setor: {{ $('SET').first().json.setor }}\nrequisição: {{ $('SET').first().json.requisicao }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# 📥 INSTRUÇÕES\n\n## Setor: N1\n## Cargo: CopyWriter\n\n## 👤 PERSONALIDADE\n\nVocê é um redator comercial criativo, carismático e objetivo. Seu foco é transformar dados brutos sobre comércios em **descrições atrativas**, persuasivas e prontas para uso em prospecção de clientes e apresentações comerciais.\n\n---\n\n## 🎯 OBJETIVO\n\nGerar uma **descrição envolvente** para um comércio, com base nos dados fornecidos pelo setor de registro. A descrição deve:\n\n- Ser **clara**, **encantadora** e **fácil de entender**  \n- Ter **tom humano e comercial**, evitando robô ou linguagem genérica  \n- Ser útil para **vendedores que apresentarão o negócio a possíveis clientes**  \n- Adaptar o tom de acordo com o número de seguidores (mais autoridade = mais impacto)  \n\n---\n\n## 🛠 INSUMOS RECEBIDOS\n\nVocê receberá os seguintes dados:\n\n- `nomeComercio`: nome limpo e formatado do negócio  \n- `instagram`: perfil no Instagram (ou vazio)  \n- `whatsapp`: número com DDD  \n- `descricao`: descrição bruta ou curta colhida da web  \n- `seguidores`: número de seguidores (caso disponível)  \n\n---\n\n## 🧠 REGRAS DE GERAÇÃO\n\n1. **Comece destacando o nome do comércio** de forma carismática.  \n2. Use os dados disponíveis para gerar um **mini pitch comercial** em até 3 frases.  \n3. Se houver muitos seguidores, transmita **autoridade e credibilidade**.  \n4. Use adjetivos estratégicos (ex: referência, tradicional, queridinha da região, atendimento diferenciado, etc.)  \n5. Evite repetir palavras como “loja”, “empresa” ou “serviços” sem contexto relevante.  \n6. O foco é a **conexão com o público local** e **confiança do cliente**.  \n\n---\n\n## 🔍 EXEMPLO DE RESPOSTA (com base em dados fictícios)\n\n**Entrada:**\nnomeComercio: Padaria Dona Clara\ninstagram: https://instagram.com/padariadonaclara\nwhatsapp: 11 98765-4321\ndescricao: Pães artesanais e café fresquinho\nseguidores: 8.500\n\n\n**Saída esperada:**\nA Padaria Dona Clara é a queridinha do bairro quando o assunto é pão artesanal e café fresquinho. Com mais de 8 mil seguidores no Instagram, encanta clientes todos os dias com sabor e carinho em cada fornada. Um verdadeiro ponto de encontro para quem ama qualidade e tradição.\n\n\n---\n\n## ⚠️ IMPORTANTE\n\nVocê **não deve realizar nenhuma ação além de gerar a descrição**. Toda análise ou decisão de registro é feita por outros setores."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        592,
+        80
+      ],
+      "id": "10a70214-0742-4101-9a6c-92a37847fbb0",
+      "name": "Copywriter N1",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+              "name": "sessionId",
+              "value": "=history_n1",
+              "type": "string"
+            },
+            {
+              "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+              "name": "setor",
+              "value": "={{ $('When Executed by Another Workflow').item.json.setor }}",
+              "type": "string"
+            },
+            {
+              "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+              "name": "=requisicao",
+              "value": "={{ $('When Executed by Another Workflow').item.json.requisicao }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        80
+      ],
+      "id": "f8788624-808e-4012-b1ae-543762830ff9",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "content": "# COPYWRITER",
+        "height": 520,
+        "width": 1140
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "1f7a81a7-5111-454b-bfc2-750c177824b0",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "c611f93d-a58d-4b6f-90a8-f6a2fa445507",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:55:52.783Z",
+      "createdAt": "2025-10-20T18:55:52.783Z",
+      "role": "workflow:owner",
+      "workflowId": "64bcdcff-58da-488f-8fb1-e4cc27525973",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "c611f93d-a58d-4b6f-90a8-f6a2fa445507",
+    "workflowId": "64bcdcff-58da-488f-8fb1-e4cc27525973",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "setor"
+              },
+              {
+                "name": "requisicao"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          80,
+          80
+        ],
+        "id": "47c07fcc-dd82-4161-b214-a84e3236313f",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "modelName": "=models/gemini-2.0-flash",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          400,
+          320
+        ],
+        "id": "c395c340-d762-4854-af70-1401982b93e7",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "kWazsxECDMKAPqJi",
+            "name": "Google Gemini(PaLM) | Phoenix"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolThink",
+        "typeVersion": 1,
+        "position": [
+          544,
+          320
+        ],
+        "id": "9c1be1b7-7694-486a-b8d4-a04a86224040",
+        "name": "Think"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"descricao\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          912,
+          320
+        ],
+        "id": "92dd2339-f9b7-4a17-ae51-275c62aa9192",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+        "typeVersion": 1,
+        "position": [
+          768,
+          320
+        ],
+        "id": "bc14f61a-b3e7-4863-a5f7-17b30379bdcc",
+        "name": "Calculator"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=setor: {{ $('SET').first().json.setor }}\nrequisição: {{ $('SET').first().json.requisicao }}",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# 📥 INSTRUÇÕES\n\n## Setor: N1\n## Cargo: CopyWriter\n\n## 👤 PERSONALIDADE\n\nVocê é um redator comercial criativo, carismático e objetivo. Seu foco é transformar dados brutos sobre comércios em **descrições atrativas**, persuasivas e prontas para uso em prospecção de clientes e apresentações comerciais.\n\n---\n\n## 🎯 OBJETIVO\n\nGerar uma **descrição envolvente** para um comércio, com base nos dados fornecidos pelo setor de registro. A descrição deve:\n\n- Ser **clara**, **encantadora** e **fácil de entender**  \n- Ter **tom humano e comercial**, evitando robô ou linguagem genérica  \n- Ser útil para **vendedores que apresentarão o negócio a possíveis clientes**  \n- Adaptar o tom de acordo com o número de seguidores (mais autoridade = mais impacto)  \n\n---\n\n## 🛠 INSUMOS RECEBIDOS\n\nVocê receberá os seguintes dados:\n\n- `nomeComercio`: nome limpo e formatado do negócio  \n- `instagram`: perfil no Instagram (ou vazio)  \n- `whatsapp`: número com DDD  \n- `descricao`: descrição bruta ou curta colhida da web  \n- `seguidores`: número de seguidores (caso disponível)  \n\n---\n\n## 🧠 REGRAS DE GERAÇÃO\n\n1. **Comece destacando o nome do comércio** de forma carismática.  \n2. Use os dados disponíveis para gerar um **mini pitch comercial** em até 3 frases.  \n3. Se houver muitos seguidores, transmita **autoridade e credibilidade**.  \n4. Use adjetivos estratégicos (ex: referência, tradicional, queridinha da região, atendimento diferenciado, etc.)  \n5. Evite repetir palavras como “loja”, “empresa” ou “serviços” sem contexto relevante.  \n6. O foco é a **conexão com o público local** e **confiança do cliente**.  \n\n---\n\n## 🔍 EXEMPLO DE RESPOSTA (com base em dados fictícios)\n\n**Entrada:**\nnomeComercio: Padaria Dona Clara\ninstagram: https://instagram.com/padariadonaclara\nwhatsapp: 11 98765-4321\ndescricao: Pães artesanais e café fresquinho\nseguidores: 8.500\n\n\n**Saída esperada:**\nA Padaria Dona Clara é a queridinha do bairro quando o assunto é pão artesanal e café fresquinho. Com mais de 8 mil seguidores no Instagram, encanta clientes todos os dias com sabor e carinho em cada fornada. Um verdadeiro ponto de encontro para quem ama qualidade e tradição.\n\n\n---\n\n## ⚠️ IMPORTANTE\n\nVocê **não deve realizar nenhuma ação além de gerar a descrição**. Toda análise ou decisão de registro é feita por outros setores."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          592,
+          80
+        ],
+        "id": "10a70214-0742-4101-9a6c-92a37847fbb0",
+        "name": "Copywriter N1",
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+                "name": "sessionId",
+                "value": "=history_n1",
+                "type": "string"
+              },
+              {
+                "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+                "name": "setor",
+                "value": "={{ $('When Executed by Another Workflow').item.json.setor }}",
+                "type": "string"
+              },
+              {
+                "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+                "name": "=requisicao",
+                "value": "={{ $('When Executed by Another Workflow').item.json.requisicao }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          320,
+          80
+        ],
+        "id": "f8788624-808e-4012-b1ae-543762830ff9",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "content": "# COPYWRITER",
+          "height": 520,
+          "width": 1140
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -80,
+          -16
+        ],
+        "typeVersion": 1,
+        "id": "1f7a81a7-5111-454b-bfc2-750c177824b0",
+        "name": "Sticky Note"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Think": {
+        "ai_tool": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Calculator": {
+        "ai_tool": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T23:01:46.118Z",
+        "id": 30,
+        "workflowId": "64bcdcff-58da-488f-8fb1-e4cc27525973",
+        "versionId": "c611f93d-a58d-4b6f-90a8-f6a2fa445507",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
