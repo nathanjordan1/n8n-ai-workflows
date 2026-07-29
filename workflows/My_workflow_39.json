@@ -1,0 +1,5764 @@
+{
+  "id": "58shSgDtlMyZ4rkl",
+  "name": "My workflow 39",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "inputDataFieldName": "legenda",
+        "name": "legenda",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "15Qbc9G9drbwrU9HLtDM2yIB1gd4mslIi",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        640
+      ],
+      "id": "2f7bf953-3a0d-45fe-886b-3b616f69dc89",
+      "name": "DriveLegenda",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1520,
+        640
+      ],
+      "id": "8b9e471e-e503-4490-bef1-e4bd826dfe0c",
+      "name": "DriveLegenda4",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "audio",
+        "name": "audio video",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1qtkqy1R4sZDIhEc5xNZrXk4vK-kfFtNJ",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1984,
+        640
+      ],
+      "id": "a2c96436-77aa-4ba7-a102-ada4c83a7ab0",
+      "name": "DriveAudio",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2224,
+        640
+      ],
+      "id": "7b5d4484-f90d-4a43-8d2a-13a038013a9b",
+      "name": "DriveAudio4",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2304,
+        1216
+      ],
+      "id": "f3b693af-f891-42b2-a52b-c17b38ff2d89",
+      "name": "ShareCenas",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "cenario",
+        "name": "cenario",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1lVVR3C9LpBQ4_-v83pc9tQiom1_xkKSK",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2064,
+        1152
+      ],
+      "id": "a3196974-3460-4eb7-b579-8a2b049a3df1",
+      "name": "UploadCenas",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=audio",
+        "name": "soundtrack",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1ERydKVNClp9VB7OCENJv2C40trIH-Vey",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2080,
+        1920
+      ],
+      "id": "c1fe448c-af42-4b67-8f9e-229793aa5575",
+      "name": "UploadSoundTrack",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2352,
+        2064
+      ],
+      "id": "e9740138-7bcc-46ac-85a3-5fe6f6bc968d",
+      "name": "ShareSoundTrack",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        2576
+      ],
+      "id": "a69307f3-95a0-400c-860c-dc3f604b2cd8",
+      "name": "Baserow"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 229592,
+        "tableId": 546806,
+        "rowId": "={{ $('Limit4').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 4370424,
+              "fieldValue": "={{ $('YouTube').item.json.uploadId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        2048,
+        2576
+      ],
+      "id": "5e84c14f-a228-4566-ae67-61e557c015f4",
+      "name": "Baserow1",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "message.content",
+        "binaryPropertyName": "legenda",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1008,
+        640
+      ],
+      "id": "2d83b813-a678-46d7-8bf8-3da622ed0f76",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ab14465d-8fc0-4667-8ff6-d978c33fbcbe",
+              "name": "message.content",
+              "value": "=={{ $json.srt.replaceAll(\"```\", \"\").replace(/^\\d+\\s*/gm, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        640
+      ],
+      "id": "6f803d9b-7ce1-4f75-8a85-aef85d5f9749",
+      "name": "LimpaSrt1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+              "leftValue": "={{ $json.audio_base64 }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1712,
+        144
+      ],
+      "id": "9282f2aa-5d3f-4867-83fe-c98b214abd04",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "# VOZ",
+        "height": 780,
+        "width": 2740,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -240,
+        32
+      ],
+      "typeVersion": 1,
+      "id": "2a102476-9a6e-49eb-9c19-2d195aae161c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "{{ $env.CURRENTKEY }}",
+              "newKey": "{{ $env.NEWKEY }}"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        176,
+        1504
+      ],
+      "id": "e3d53f04-6ac0-4b0b-a452-1a6b7f34ef54",
+      "name": "Rename Keys2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=VOCÊ DEVE ANALISAR AS FONTES E CRIAR UM PROMPT PARA UMA IA DE SOUNDTRACK PARA CRIAR UMA MÚSICA DE FUNDO NO MEU VIDEO DO YOUTUBE",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# SYSTEM\nSua função é simples e estratégica: gerar um prompt para a geração do som de fundo. \n\n\nVocê terá acesso a duas ideias principais do roteiro:\n- Roteiro: {{ $('SET').first().json.roteiro }}\n\nCom base nessas informações, pense em um prompt auditivo — algo que represente bem a essência da narrativa. Seja criativo, mas objetivo.\n\n# INSTRUÇÕES\n- Sempre em inglês.\n- Sem aspas ou pontuação.\n- O termo deve remeter ao clima ou energia da mensagem.\n\nResponda com o prompt ideal. Somente ele. Esse prompt será enviado para uma IA de imagem\n\n## IDIOMA\nEspanhol - Espanha\n\n# MODELO\n\"80 seconds of angelic, hopeful cinematic gospel music with ethereal vocals and soft orchestration\""
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        -208,
+        1504
+      ],
+      "id": "3e5eb155-57a4-41ff-ab10-e8236ca28d90",
+      "name": "GeradorSoundTrack1",
+      "executeOnce": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        1664
+      ],
+      "id": "7384794d-c09f-4f67-a0a7-a2d349fde3cc",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+              "leftValue": "={{ $json.uploadId }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        2656
+      ],
+      "id": "a1f8202b-5c6b-4621-818a-2acdbe18cd92",
+      "name": "If11"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "={{ $json.text }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        528,
+        2592
+      ],
+      "id": "65dd2752-d55c-4cdf-9b61-2060e715d0c7",
+      "name": "Evolution API2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        912,
+        2672
+      ],
+      "id": "529f94a9-fd9a-4fe2-9634-69b6fc95d094",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        2640
+      ],
+      "id": "643b7294-4270-4de0-bc9c-d9c3f48057fb",
+      "name": "Wait4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.error }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 3min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        176,
+        2560
+      ],
+      "id": "a47b390e-3660-4203-b22b-92c965b6acd7",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        0,
+        2672
+      ],
+      "id": "d178375b-a9f4-4257-ac7f-794c989cf220",
+      "name": "Google Gemini Chat Model4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "=Erro na publicação do video longo em português - Verifique o fluxo",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        2784
+      ],
+      "id": "ed3dc233-7bd3-4298-9c58-fc523090cf27",
+      "name": "Evolution API18"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        688,
+        2336
+      ],
+      "id": "11517cf1-274b-4a7e-b481-17ac042622ad",
+      "name": "CheckEditor",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "video"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1520,
+        2336
+      ],
+      "id": "c757150a-d004-4f37-b0f1-c7206421d7d8",
+      "name": "DownloadVideo",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+              "leftValue": "={{ $json.response.status }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        2336
+      ],
+      "id": "525d79b0-7852-461c-a252-57817a891320",
+      "name": "If18"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        512,
+        2336
+      ],
+      "id": "d70e9098-1488-4454-a32e-745a14ac6f63",
+      "name": "Wait10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "79205610-c83e-46c7-b5b0-f1ca12141d39",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": " exceeds one or more plan limits",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        2320
+      ],
+      "id": "e5a6ef24-c703-4f27-bdcb-a2897403c5af",
+      "name": "If12"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        2336
+      ],
+      "id": "8598f93d-a9ce-48fd-91e3-47d1414391c1",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "content": "# CENARIO",
+        "height": 580,
+        "width": 2740,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -240,
+        816
+      ],
+      "typeVersion": 1,
+      "id": "8439face-8cea-4c5a-aaeb-91df23facc12",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "# SOUNDTRACK",
+        "height": 840,
+        "width": 2740,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -240,
+        1392
+      ],
+      "typeVersion": 1,
+      "id": "c044e92c-819a-4063-80b2-1c7144722471",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "# EDIÇÃO",
+        "height": 700,
+        "width": 1340
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -240,
+        2240
+      ],
+      "typeVersion": 1,
+      "id": "98d9790b-a6bc-47f6-9357-b51ac4abcffc",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "# POSTAGEM",
+        "height": 700,
+        "width": 1400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1104,
+        2240
+      ],
+      "typeVersion": 1,
+      "id": "0dea9fce-9de4-414b-a4bf-65b10eb76b29",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        2576
+      ],
+      "id": "b4647a0e-1509-4198-b5c9-d567ec589e79",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "={{ $json.text }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        384
+      ],
+      "id": "b91852a5-bc54-4ec4-83e1-a73ce9c27c58",
+      "name": "Evolution API3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2128,
+        384
+      ],
+      "id": "555af943-05cc-4b32-8c3e-eb91f29157d1",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        384
+      ],
+      "id": "99181191-f97f-4f65-8749-cead5dce3dd6",
+      "name": "Wait5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.error }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 3min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (3min), senão após os 3min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1424,
+        384
+      ],
+      "id": "ca173484-c9d6-40eb-a875-73a2602dec69",
+      "name": "Basic LLM Chain3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        496
+      ],
+      "id": "3179a0b1-8626-43ae-ba10-63eff876a4bf",
+      "name": "Google Gemini Chat Model6"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=VOCÊ DEVE ANALISAR AS FONTES E CRIAR UM PROMPT PARA UMA IA DE IMAGENS PARA CRIAR O CENARIO DO MEU VIDEO DO YOUTUBE",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Crie uma imagem ultra-realista, com atmosfera contemplativa, para servir como cenário principal de um vídeo narrado sobre fé e superação.\n\nA cena deve transmitir visualmente a mensagem do roteiro a seguir:\n\n--- INÍCIO DO ROTEIRO ---\n{{ $('SET').first().json.roteiro }}\n--- FIM DO ROTEIRO ---\n\nA imagem deve conter apenas UM ELEMENTO central, relacionado ao cristianismo, como:\n\n• mãos em oração sobre uma bíblia aberta,  \n• vela acesa ao lado da bíblia,  \n• cruz de madeira com luz suave ao fundo,  \n• raio de luz entrando por uma janela simples,  \n• ou uma pomba branca pousada em um altar simples.  \n\nA composição deve ser minimalista, profunda e simbólica.\n\n## Diretrizes Visuais:\n- **Fundo escuro ou difuso**, com iluminação suave destacando o elemento principal. Pode conter sombras suaves para dar profundidade.\n- Paleta de cores: **tons terrosos escuros**, **dourado suave**, **branco quente**, **marrom**, e **tons âmbar** de luz de vela.\n- Iluminação quente e emocional — como luz de vela, ou luz que entra pela janela de uma capela ao amanhecer.\n- A imagem deve transmitir **esperança, consolo, fé e paz interior**.\n\n## Composição:\n- O elemento principal deve estar centralizado ou ligeiramente à esquerda (regra dos terços), com bastante espaço negativo ao redor.\n- Sem textos, logos, objetos modernos, nem elementos que desviem do foco espiritual.\n- A imagem deve ser horizontal (formato 16:9), própria para uso como vídeo de fundo narrado no YouTube.\n\n## Importante:\n- O clima deve ser de **reflexão e serenidade**, como se o espectador estivesse em oração ou num momento íntimo com Deus.\n- Evite cores vibrantes, excesso de detalhes ou qualquer sinal de tecnologia moderna.\n\nFormato final: imagem cinematográfica em 16:9, com foco emocional e religioso.\n\n## IDIOMA\nEspanhol - Espanha\n\n## OUTPUT\n**Gere apenas o prompt final pronto para ser usado por uma IA de geração de imagens. Sem explicações, sem justificativas, sem comentários. Apenas o prompt, direto.**"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        -208,
+        944
+      ],
+      "id": "c406f5cc-8c05-4fdd-a975-b15696cecb94",
+      "name": "RastreadorImages1",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        1056
+      ],
+      "id": "fc5016ed-ea44-4ec5-a853-5f65d3a4a950",
+      "name": "Google Gemini Chat Model7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7f65739c-492a-4b9c-9af3-9c8b7b07cfc2",
+              "leftValue": "={{ $json.inlineData }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1504,
+        944
+      ],
+      "id": "9b77cc7e-c18b-4649-a3d8-a6a24c3bd878",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "{{ $env.CURRENTKEY }}",
+              "newKey": "{{ $env.NEWKEY }}"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        176,
+        944
+      ],
+      "id": "47c62318-ff65-4256-b232-104ddc4436be",
+      "name": "Rename Keys3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $json.query || '';\nreturn {\n  json: {\n    query: query.replace(/\\n/g, ' ').trim()\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        944
+      ],
+      "id": "370ff039-2f25-480f-8656-ac26b929271d",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "candidates[0].content.parts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        944
+      ],
+      "id": "bf2087ac-1a28-45ea-9d56-0b1e2d062273",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": []
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n  {\n    \"contents\": [\n      {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"Você é um gerador de imagens AI profissional. Crie uma imagem com aparência ultra-realista e minimalista seguindo estritamente as instruções fornecidas pelo usuário a seguir. Atente-se a todos os detalhes visuais, estilísticos e técnicos mencionados na solicitação do usuário.\"\n          }\n        ]\n      },\n      {\n        \"role\": \"user\",\n        \"parts\": [\n          {\n            \"text\": $json.query\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"responseModalities\": [\n        [\"Text\", \"Image\"]\n      ]\n    }\n  }\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        944
+      ],
+      "id": "27d7502f-0d7f-4898-9e13-82911b9b4b65",
+      "name": "HTTP Request1",
+      "retryOnFail": true,
+      "waitBetweenTries": 1
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"prompt\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        1664
+      ],
+      "id": "ad73515e-0148-4d7f-a8bc-f423ca250f1b",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"prompt\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        1056
+      ],
+      "id": "e364ce87-9408-4487-b7f2-8396fd47cf57",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        352,
+        144
+      ],
+      "id": "9958e2a4-21b1-4c73-b9f8-8062c738320d",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c4c1fa81-e77f-45b1-861b-813abf823721",
+              "name": "REGISTRO",
+              "value": "={{ $json.REGISTRO }}",
+              "type": "string"
+            },
+            {
+              "id": "f1987677-48f7-4b3c-896b-3b723363ef85",
+              "name": "TITLE",
+              "value": "={{ $json.TITLE }}",
+              "type": "string"
+            },
+            {
+              "id": "0a7b1378-6c1b-452d-883b-fe28ac2c150a",
+              "name": "DESCRICAO",
+              "value": "={{ $json.DESCRICAO }}",
+              "type": "string"
+            },
+            {
+              "id": "5fc40f27-fea7-40f2-bb8a-adcf958cd032",
+              "name": "HASHTAGS",
+              "value": "={{ $json.HASHTAGS }}",
+              "type": "string"
+            },
+            {
+              "id": "27741047-c858-41a8-b491-72421092ec7a",
+              "name": "roteiro",
+              "value": "={{ $json.ROTEIRO }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        144
+      ],
+      "id": "c6880aa6-6bae-45b8-8df3-e9416eaf8fb6",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "66e78d88-18e2-4d71-9dd9-c984754217a1",
+              "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        144
+      ],
+      "id": "c808cff7-a958-4031-8836-7a1df1056798",
+      "name": "VERIFICAO POSTAGEM"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "eec12bbf-d79e-4be7-8518-4f0575a37beb",
+              "leftValue": "={{ $json.ROTEIRO }}",
+              "rightValue": "sim",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        912,
+        144
+      ],
+      "id": "3beceeb5-dad4-4527-93e2-a6c7468e8653",
+      "name": "VERIFICAO EXISTENCIA"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $('SET').item.json.roteiro }}"
+            },
+            {
+              "name": "voice_settings",
+              "value": "={{ { stability: 0.5, similarity_boost: 0.23, style: 0.0, use_speaker_boost: true } }}"
+            },
+            {
+              "name": "model_id",
+              "value": "eleven_multilingual_v2"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1408,
+        144
+      ],
+      "id": "83b0dfcc-f36d-48d1-94bf-a684776612aa",
+      "name": "ElevenLabs",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const chars = $input.first().json.normalized_alignment.characters;\nconst startTimes = $input.first().json.normalized_alignment.character_start_times_seconds;\nconst endTimes = $input.first().json.normalized_alignment.character_end_times_seconds;\n\nlet subtitles = [];\nlet buffer = '';\nlet startTime = null;\nlet endTime = null;\nlet wordCounter = 0;\n\nfor (let i = 0; i < chars.length; i++) {\n  const char = chars[i];\n\n  if (buffer === '') {\n    startTime = startTimes[i];\n  }\n\n  buffer += char;\n  endTime = endTimes[i];\n\n  const isWordEnd = char === ' ' || i === chars.length - 1;\n\n  if (isWordEnd) {\n    wordCounter++;\n\n    if (wordCounter >= 3 || i === chars.length - 1) {\n      const text = buffer.replace(/\\b\\d+\\b\\s*/g, '').trim();\n\n      if (text.length > 0) {\n        subtitles.push({\n          start: startTime,\n          end: endTime,\n          text: text\n        });\n      }\n\n      buffer = '';\n      wordCounter = 0;\n      startTime = null;\n      endTime = null;\n    }\n  }\n}\n\n// Função para converter segundos em tempo SRT\nfunction secondsToSRTTime(seconds) {\n  const date = new Date(0);\n  date.setSeconds(Math.floor(seconds));\n  const iso = date.toISOString().substr(11, 8);\n  const milliseconds = Math.round((seconds % 1) * 1000).toString().padStart(3, '0');\n  return `${iso},${milliseconds}`;\n}\n\n// Geração do conteúdo SRT\nconst srtLines = subtitles.map((entry, index) => {\n  return `${index + 1}\\n${secondsToSRTTime(entry.start)} --> ${secondsToSRTTime(entry.end)}\\n${entry.text}\\n\\n`;\n});\n\n// Retorno do conteúdo como JSON\nreturn [\n  {\n    json: {\n      srt: srtLines.join('')\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2208,
+        144
+      ],
+      "id": "497f8b43-b728-4f16-924f-7a44cd221718",
+      "name": "LegendaPorPalavra"
+    },
+    {
+      "parameters": {
+        "jsCode": "const base64Audio = $('ElevenLabs').first().json.audio_base64;\n\nreturn [\n  {\n    binary: {\n      audio: {\n        data: base64Audio,\n        mimeType: 'audio/mpeg',\n        fileName: 'voz.mp3'\n      }\n    },\n    json: {}\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        640
+      ],
+      "id": "f0317ac2-c3e5-4291-a534-b65b2f9ed9c9",
+      "name": "AudioBinario",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        112,
+        144
+      ],
+      "id": "0a141543-c479-4f6d-ad29-71d9abf51e04",
+      "name": "Baserow2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        320
+      ],
+      "id": "eae4b4ac-2b05-48a4-a57d-5f6ecf425b97",
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "378a964b-af48-4684-a531-d278d489022c",
+              "leftValue": "={{ $json.candidates[0].content.parts[0].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "bcac93af-4137-45a8-84dd-a6bd07759ef9",
+              "leftValue": "={{ $json.candidates[0].content.parts[1].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        912,
+        944
+      ],
+      "id": "30728f93-4c7c-4284-95dc-9de621762540",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        1536
+      ],
+      "id": "8d7b2675-3014-4e41-bdb7-fdfa5905e8ac",
+      "name": "Wait"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n   \"prompt\": {\n      \"text\": {{ JSON.stringify($json.querySoundTrack) }}\n   }\n}\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        1504
+      ],
+      "id": "0626aedf-3449-4d0e-9f53-35283bd07ae8",
+      "name": "Create Soundtrack",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1248,
+        1616
+      ],
+      "id": "e76c7699-211a-4531-8e49-2f9182c81fc1",
+      "name": "Verify Soundtrack",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "audio"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1824,
+        1792
+      ],
+      "id": "f1766b79-119b-44fe-aa8c-75a7182200e8",
+      "name": "Get Soundtrack"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "553bb6d1-360b-4598-8122-ad6d694039ab",
+              "leftValue": "={{ $json.error.status }}",
+              "rightValue": "402",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        704,
+        1504
+      ],
+      "id": "e43f7224-78e5-458b-8762-8de9044aff70",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "71735cf1-329f-4991-8af0-165ffd02e71b",
+                    "leftValue": "={{ $json.meta.track_url }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fff0ada8-6829-4e24-a7dd-6e5c789ad074",
+                    "leftValue": "={{ $json.meta.track_url }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notExists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "efaea94a-c71f-4226-b5ef-f605441e949c",
+                    "leftValue": "={{ $json.error.status }}",
+                    "rightValue": "404",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1520,
+        1680
+      ],
+      "id": "9f083a1b-1106-44bd-9c90-72d974b4f8e7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('SET YOUTUBE').item.json.title }}",
+        "regionCode": "BR",
+        "categoryId": "27",
+        "binaryProperty": "video",
+        "options": {
+          "description": "={{ $('SET YOUTUBE').item.json.descricao }}",
+          "privacyStatus": "={{ $('SET YOUTUBE').item.json.status }}",
+          "tags": "={{ $('SET YOUTUBE').item.json.hashtags }}"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        2336
+      ],
+      "id": "372c94ce-a6f9-4e76-8fdb-2943c43ea128",
+      "name": "YouTube"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3673d460-7cf2-4c45-af81-b3e084036d99",
+              "name": "title",
+              "value": "={{ $('SET').item.json.TITLE }}",
+              "type": "string"
+            },
+            {
+              "id": "3c6f05e8-0a52-4479-85a6-02711b4dbd9f",
+              "name": "descricao",
+              "value": "={{ $('SET').item.json.DESCRICAO }}",
+              "type": "string"
+            },
+            {
+              "id": "fdb238d6-a3aa-47f5-9000-2d4277d1097c",
+              "name": "hashtags",
+              "value": "={{ $('SET').item.json.HASHTAGS }}",
+              "type": "string"
+            },
+            {
+              "id": "4e4595cc-f961-40fa-8d9b-cb25afccb260",
+              "name": "status",
+              "value": "public",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        2336
+      ],
+      "id": "bd378b2b-181a-404c-9b9a-4a2a99b9310c",
+      "name": "SET YOUTUBE"
+    },
+    {
+      "parameters": {
+        "jsCode": "// GetAudioDuration (Code node)\n// Extrai a duração total do áudio a partir dos timestamps do ElevenLabs1\nconst alignment = $items('ElevenLabs')[0].json.normalized_alignment;\nif (!alignment || !alignment.character_end_times_seconds) {\n  throw new Error('normalized_alignment não encontrado em ElevenLabs');\n}\n// Pega o último tempo de fim de caractere como duração total\nconst ends = alignment.character_end_times_seconds;\nconst audioDuration = ends[ends.length - 1];\n\n// Retorna no JSON para ser usado adiante\nreturn [{\n  json: {\n    audioDuration,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        2320
+      ],
+      "id": "7f751ae7-7513-4c41-bd68-3896a3951e84",
+      "name": "GetAudioDuration"
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- INPUTS ---\n// Mantemos as entradas originais\nconst srtLink = $('DriveLegenda').first().json.webContentLink;\nconst audioDuration = $('GetAudioDuration').first().json.audioDuration;\nconst audioUrl = $('DriveAudio').first().json.webContentLink;\n\n// --- ENTRADAS PARA O SOUNDTRACK (Conforme sua solicitação) ---\n// 1. A URL da música continua vindo do nó original 'UploadSoundTrack'\nconst musicUrl = $('UploadSoundTrack').first().json.webContentLink;\n\n// 2. A DURAÇÃO da música é a única informação que pegamos do 'Verify Soundtrack'\nconst soundtrackDuration = $('Verify Soundtrack').first().json.meta.duration;\n\n\n// --- LÓGICA DAS IMAGENS (permanece inalterada) ---\nconst imagensGemini = $('UploadCenas').all().map(item => item.json);\nlet tempoAcumulado = 0;\nconst clipesImagem = [];\n\nconst duracaoPorImagem = imagensGemini.length > 0 ? audioDuration / imagensGemini.length : audioDuration;\n\nimagensGemini.forEach((imagem) => {\n  const link = imagem.webContentLink;\n  const restante = audioDuration - tempoAcumulado;\n  if (restante > 0) {\n    clipesImagem.push({\n      asset: { type: \"image\", src: link },\n      start: tempoAcumulado,\n      length: Math.min(duracaoPorImagem, restante),\n      fit: \"cover\",\n      transition: { in: \"fade\", out: \"fade\" }\n    });\n    tempoAcumulado += duracaoPorImagem;\n  }\n});\n\n\n// --- NOVA LÓGICA DE LOOP PARA O SOUNDTRACK (permanece inalterada) ---\nconst soundtrackClips = [];\nlet soundtrackTempoAcumulado = 0;\n\nconst numeroDeLoops = Math.ceil(audioDuration / soundtrackDuration);\n\nfor (let i = 0; i < numeroDeLoops; i++) {\n  const tempoRestanteVideo = audioDuration - soundtrackTempoAcumulado;\n\n  if (tempoRestanteVideo > 0) {\n    const clipe = {\n      asset: {\n        type: \"audio\",\n        src: musicUrl, // Usa a URL do 'UploadSoundTrack'\n        volume: 0.1\n      },\n      start: soundtrackTempoAcumulado,\n      length: Math.min(soundtrackDuration, tempoRestanteVideo) // Usa a duração do 'Verify Soundtrack'\n    };\n    soundtrackClips.push(clipe);\n    soundtrackTempoAcumulado += soundtrackDuration;\n  }\n}\n\n\n// --- CONSTRUÇÃO DA TIMELINE FINAL (permanece inalterada) ---\nconst timeline = {\n  tracks: [\n    // Trilha 1: Legendas\n    {\n      clips: [\n        {\n          asset: {\n            type: \"caption\",\n            src: srtLink,\n            font: {\n              family: \"Open Sans\",\n              color: \"#FFFF00\",\n              size: 40,\n              stroke: \"#000000\",\n              strokeWidth: 2\n            },\n            alignment: {\n              horizontal: \"center\",\n              vertical: \"center\"\n            },\n            margin: {\n              top: 0.6\n            }\n          },\n          start: 0,\n          length: audioDuration\n        }\n      ]\n    },\n    // Trilha 2: Imagens\n    {\n      clips: clipesImagem\n    },\n    // Trilha 3: Áudio Principal/Narração\n    {\n      clips: [\n        {\n          asset: {\n            type: \"audio\",\n            src: audioUrl\n          },\n          start: 0,\n          length: audioDuration\n        }\n      ]\n    },\n    // Trilha 4: Música de fundo em loop\n    {\n      clips: soundtrackClips\n    }\n  ]\n};\n\n\n// --- OUTPUT (permanece inalterado) ---\nconst output = {\n  format: 'mp4',\n  resolution: 'hd',\n  fps: 30,\n  aspectRatio: '16:9'\n};\n\nreturn [\n  {\n    json: {\n      timeline,\n      output\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        2544
+      ],
+      "id": "1c71804c-99cd-4c67-90e1-accdc2ce82b5",
+      "name": "CriarClipes",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"timeline\": {{ JSON.stringify($('CriarClipes').first().json.timeline) }},\n  \"output\": {{ JSON.stringify($('CriarClipes').first().json.output) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        2320
+      ],
+      "id": "21b32a38-cbe4-475b-bbe4-1204ccc3f799",
+      "name": "Editor",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7004e0c3-b6fa-4079-b81f-692320deee9f",
+              "name": "image_base64",
+              "value": "={{ $('Extract from File').item.json.data }}",
+              "type": "string"
+            },
+            {
+              "id": "d7268d01-2ef1-4bbb-9f59-5ebb3518b044",
+              "name": "Geometry",
+              "value": "={{ $json.Geometry }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1600,
+        1152
+      ],
+      "id": "224ba30b-abb2-4ef7-a4b4-3d7c09133d15",
+      "name": "SET IMAGE"
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 1920,
+        "height": 1080,
+        "resizeOption": "ignoreAspectRatio",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        944
+      ],
+      "id": "7fcc66bf-93ee-4ff1-b71d-6da1c2c382cf",
+      "name": "SIZE IMAGE",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "information",
+        "dataPropertyName": "=data"
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        1152
+      ],
+      "id": "34e60239-53df-4870-b6d0-430a0d03da33",
+      "name": "INFO IMAGE"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2192,
+        944
+      ],
+      "id": "b3d35b84-1607-489c-b43f-01db484f88e4",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "inlineData.data",
+        "options": {
+          "fileName": "data",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1712,
+        944
+      ],
+      "id": "3610a84a-649b-44c8-aa2a-083362d55734",
+      "name": "Send Image To Size"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "options": {
+          "fileName": "data",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1152,
+        1152
+      ],
+      "id": "19104d2b-3b4a-48c1-aa1c-a6aa4ead1986",
+      "name": "Send Image To Info Image"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "image_base64",
+        "binaryPropertyName": "cenario",
+        "options": {
+          "fileName": "cenario",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1824,
+        1152
+      ],
+      "id": "0b83a491-98e6-4dda-a6db-8f843cfda87a",
+      "name": "Send Image To View Image"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.error }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras (máximo 60 palavras) o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 10min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1648,
+        2016
+      ],
+      "id": "14284ecb-37b4-411d-907e-b9d9863c1d4a",
+      "name": "ENVIAR ERRO2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1596d045-1e58-4ae2-a8bc-a7366d816e13",
+              "name": "error",
+              "value": "={{ $('Verify Soundtrack').item.json.error.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        2016
+      ],
+      "id": "6c75f655-9c5c-4d62-ac34-6b77003d39ec",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "={{ $json.text }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        864,
+        1920
+      ],
+      "id": "78330bd0-e24f-4b34-b23a-59e5a98c47ff",
+      "name": "Evolution API"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1232,
+        1920
+      ],
+      "id": "fc020e7d-ac7b-448e-8356-3cb90b8c1e23",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        1920
+      ],
+      "id": "ab9dcdef-6e6c-4364-b86d-a3042301a6bd",
+      "name": "Wait6"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.error }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 10min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        512,
+        1920
+      ],
+      "id": "0a1a97fa-00e4-447e-84b2-de626950f082",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        272,
+        2096
+      ],
+      "id": "4c056476-7e39-43ee-a35c-6a85a5127095",
+      "name": "Google Gemini Chat Model5"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        144
+      ],
+      "id": "a1b19b02-7d17-47ee-8114-f2c586323364",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "QrS5d5LyixA2wLxr",
+          "mode": "list",
+          "cachedResultName": "5 - THUMBNAIL - VL - PT-BR"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2272,
+        2576
+      ],
+      "id": "a40fdd55-e087-4d27-9d61-c6fa13a95b5e",
+      "name": "Execute Workflow"
+    }
+  ],
+  "connections": {
+    "DriveLegenda": {
+      "main": [
+        [
+          {
+            "node": "DriveLegenda4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DriveLegenda4": {
+      "main": [
+        [
+          {
+            "node": "AudioBinario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DriveAudio": {
+      "main": [
+        [
+          {
+            "node": "DriveAudio4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DriveAudio4": {
+      "main": [
+        [
+          {
+            "node": "RastreadorImages1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ShareCenas": {
+      "main": [
+        [
+          {
+            "node": "GeradorSoundTrack1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UploadCenas": {
+      "main": [
+        [
+          {
+            "node": "ShareCenas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UploadSoundTrack": {
+      "main": [
+        [
+          {
+            "node": "ShareSoundTrack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ShareSoundTrack": {
+      "main": [
+        [
+          {
+            "node": "GetAudioDuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow": {
+      "main": [
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "DriveLegenda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LimpaSrt1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "LegendaPorPalavra",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys2": {
+      "main": [
+        [
+          {
+            "node": "Create Soundtrack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GeradorSoundTrack1": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "GeradorSoundTrack1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If11": {
+      "main": [
+        [
+          {
+            "node": "Baserow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API2": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Editor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Evolution API2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CheckEditor": {
+      "main": [
+        [
+          {
+            "node": "If18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DownloadVideo": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If18": {
+      "main": [
+        [
+          {
+            "node": "SET YOUTUBE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "CheckEditor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Baserow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API3": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [],
+        [
+          {
+            "node": "ElevenLabs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain3": {
+      "main": [
+        [
+          {
+            "node": "Evolution API3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RastreadorImages1": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RastreadorImages1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Send Image To Size",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys3": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "GeradorSoundTrack1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "RastreadorImages1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAO POSTAGEM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAO POSTAGEM": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAO EXISTENCIA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAO EXISTENCIA": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LegendaPorPalavra": {
+      "main": [
+        [
+          {
+            "node": "LimpaSrt1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AudioBinario": {
+      "main": [
+        [
+          {
+            "node": "DriveAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow2": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Baserow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RastreadorImages1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Verify Soundtrack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Soundtrack": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Soundtrack": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Soundtrack": {
+      "main": [
+        [
+          {
+            "node": "UploadSoundTrack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get Soundtrack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Soundtrack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET YOUTUBE": {
+      "main": [
+        [
+          {
+            "node": "DownloadVideo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetAudioDuration": {
+      "main": [
+        [
+          {
+            "node": "CriarClipes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriarClipes": {
+      "main": [
+        [
+          {
+            "node": "Editor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editor": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET IMAGE": {
+      "main": [
+        [
+          {
+            "node": "Send Image To View Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SIZE IMAGE": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "INFO IMAGE": {
+      "main": [
+        [
+          {
+            "node": "SET IMAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Send Image To Info Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Image To Size": {
+      "main": [
+        [
+          {
+            "node": "SIZE IMAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Image To Info Image": {
+      "main": [
+        [
+          {
+            "node": "INFO IMAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Image To View Image": {
+      "main": [
+        [
+          {
+            "node": "UploadCenas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ENVIAR ERRO2": {
+      "main": [
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "ENVIAR ERRO2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Create Soundtrack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Evolution API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "ENVIAR ERRO2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Baserow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "activeVersionId": "1b64756b-dd83-4ccc-bcbf-99b9bd3e3525",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-11-06T06:16:17.478Z",
+      "createdAt": "2025-11-06T06:16:17.478Z",
+      "role": "workflow:owner",
+      "workflowId": "58shSgDtlMyZ4rkl",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:45.099Z",
+    "createdAt": "2025-12-11T15:43:45.099Z",
+    "versionId": "1b64756b-dd83-4ccc-bcbf-99b9bd3e3525",
+    "workflowId": "58shSgDtlMyZ4rkl",
+    "nodes": [
+      {
+        "parameters": {
+          "inputDataFieldName": "legenda",
+          "name": "legenda",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "15Qbc9G9drbwrU9HLtDM2yIB1gd4mslIi",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1264,
+          640
+        ],
+        "id": "2f7bf953-3a0d-45fe-886b-3b616f69dc89",
+        "name": "DriveLegenda",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "reader",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1520,
+          640
+        ],
+        "id": "8b9e471e-e503-4490-bef1-e4bd826dfe0c",
+        "name": "DriveLegenda4",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "inputDataFieldName": "audio",
+          "name": "audio video",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1qtkqy1R4sZDIhEc5xNZrXk4vK-kfFtNJ",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1984,
+          640
+        ],
+        "id": "a2c96436-77aa-4ba7-a102-ada4c83a7ab0",
+        "name": "DriveAudio",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "reader",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          2224,
+          640
+        ],
+        "id": "7b5d4484-f90d-4a43-8d2a-13a038013a9b",
+        "name": "DriveAudio4",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "reader",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          2304,
+          1216
+        ],
+        "id": "f3b693af-f891-42b2-a52b-c17b38ff2d89",
+        "name": "ShareCenas",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "inputDataFieldName": "cenario",
+          "name": "cenario",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1lVVR3C9LpBQ4_-v83pc9tQiom1_xkKSK",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          2064,
+          1152
+        ],
+        "id": "a3196974-3460-4eb7-b579-8a2b049a3df1",
+        "name": "UploadCenas",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "inputDataFieldName": "=audio",
+          "name": "soundtrack",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1ERydKVNClp9VB7OCENJv2C40trIH-Vey",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          2080,
+          1920
+        ],
+        "id": "c1fe448c-af42-4b67-8f9e-229793aa5575",
+        "name": "UploadSoundTrack",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "reader",
+              "type": "anyone"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          2352,
+          2064
+        ],
+        "id": "e9740138-7bcc-46ac-85a3-5fe6f6bc968d",
+        "name": "ShareSoundTrack",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "databaseId": 229592,
+          "tableId": 546806,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          2576
+        ],
+        "id": "a69307f3-95a0-400c-860c-dc3f604b2cd8",
+        "name": "Baserow"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "databaseId": 229592,
+          "tableId": 546806,
+          "rowId": "={{ $('Limit4').item.json.id }}",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 4370424,
+                "fieldValue": "={{ $('YouTube').item.json.uploadId }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          2048,
+          2576
+        ],
+        "id": "5e84c14f-a228-4566-ae67-61e557c015f4",
+        "name": "Baserow1",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "toText",
+          "sourceProperty": "message.content",
+          "binaryPropertyName": "legenda",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1008,
+          640
+        ],
+        "id": "2d83b813-a678-46d7-8bf8-3da622ed0f76",
+        "name": "Convert to File1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ab14465d-8fc0-4667-8ff6-d978c33fbcbe",
+                "name": "message.content",
+                "value": "=={{ $json.srt.replaceAll(\"```\", \"\").replace(/^\\d+\\s*/gm, '') }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          800,
+          640
+        ],
+        "id": "6f803d9b-7ce1-4f75-8a85-aef85d5f9749",
+        "name": "LimpaSrt1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+                "leftValue": "={{ $json.audio_base64 }}",
+                "rightValue": "true",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1712,
+          144
+        ],
+        "id": "9282f2aa-5d3f-4867-83fe-c98b214abd04",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "content": "# VOZ",
+          "height": 780,
+          "width": 2740,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -240,
+          32
+        ],
+        "typeVersion": 1,
+        "id": "2a102476-9a6e-49eb-9c19-2d195aae161c",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "keys": {
+            "key": [
+              {
+                "currentKey": "output.prompt",
+                "newKey": "querySoundTrack"
+              }
+            ]
+          },
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.renameKeys",
+        "typeVersion": 1,
+        "position": [
+          176,
+          1504
+        ],
+        "id": "e3d53f04-6ac0-4b0b-a452-1a6b7f34ef54",
+        "name": "Rename Keys2"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=VOCÊ DEVE ANALISAR AS FONTES E CRIAR UM PROMPT PARA UMA IA DE SOUNDTRACK PARA CRIAR UMA MÚSICA DE FUNDO NO MEU VIDEO DO YOUTUBE",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=# SYSTEM\nSua função é simples e estratégica: gerar um prompt para a geração do som de fundo. \n\n\nVocê terá acesso a duas ideias principais do roteiro:\n- Roteiro: {{ $('SET').first().json.roteiro }}\n\nCom base nessas informações, pense em um prompt auditivo — algo que represente bem a essência da narrativa. Seja criativo, mas objetivo.\n\n# INSTRUÇÕES\n- Sempre em inglês.\n- Sem aspas ou pontuação.\n- O termo deve remeter ao clima ou energia da mensagem.\n\nResponda com o prompt ideal. Somente ele. Esse prompt será enviado para uma IA de imagem\n\n## IDIOMA\nEspanhol - Espanha\n\n# MODELO\n\"80 seconds of angelic, hopeful cinematic gospel music with ethereal vocals and soft orchestration\""
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          -208,
+          1504
+        ],
+        "id": "3e5eb155-57a4-41ff-ab10-e8236ca28d90",
+        "name": "GeradorSoundTrack1",
+        "executeOnce": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          -208,
+          1664
+        ],
+        "id": "7384794d-c09f-4f67-a0a7-a2d349fde3cc",
+        "name": "Google Gemini Chat Model"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+                "leftValue": "={{ $json.uploadId }}",
+                "rightValue": "true",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1408,
+          2656
+        ],
+        "id": "a1f8202b-5c6b-4621-818a-2acdbe18cd92",
+        "name": "If11"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "testEvolution",
+          "remoteJid": "{{ $env.REDACTED_SECRET }}",
+          "messageText": "={{ $json.text }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          528,
+          2592
+        ],
+        "id": "65dd2752-d55c-4cdf-9b61-2060e715d0c7",
+        "name": "Evolution API2"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          912,
+          2672
+        ],
+        "id": "529f94a9-fd9a-4fe2-9634-69b6fc95d094",
+        "name": "Loop Over Items2"
+      },
+      {
+        "parameters": {
+          "amount": 10,
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          704,
+          2640
+        ],
+        "id": "643b7294-4270-4de0-bc9c-d9c3f48057fb",
+        "name": "Wait4",
+        "webhookId": "548f93d4-051d-4218-9d2e-db311a48bed4"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.error }}",
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 3min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          176,
+          2560
+        ],
+        "id": "a47b390e-3660-4203-b22b-92c965b6acd7",
+        "name": "Basic LLM Chain2"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          0,
+          2672
+        ],
+        "id": "d178375b-a9f4-4257-ac7f-794c989cf220",
+        "name": "Google Gemini Chat Model4"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "testEvolution",
+          "remoteJid": "{{ $env.REDACTED_SECRET }}",
+          "messageText": "=Erro na publicação do video longo em português - Verifique o fluxo",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          2784
+        ],
+        "id": "ed3dc233-7bd3-4298-9c58-fc523090cf27",
+        "name": "Evolution API18"
+      },
+      {
+        "parameters": {
+          "url": "=https://api.shotstack.io/v1/render/{{ $json.response.id }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          688,
+          2336
+        ],
+        "id": "11517cf1-274b-4a7e-b481-17ac042622ad",
+        "name": "CheckEditor",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "={{ $('CheckEditor').item.json.response.url }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file",
+                "outputPropertyName": "video"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1520,
+          2336
+        ],
+        "id": "c757150a-d004-4f37-b0f1-c7206421d7d8",
+        "name": "DownloadVideo",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+                "leftValue": "={{ $json.response.status }}",
+                "rightValue": "done",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          880,
+          2336
+        ],
+        "id": "525d79b0-7852-461c-a252-57817a891320",
+        "name": "If18"
+      },
+      {
+        "parameters": {
+          "amount": 3,
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          512,
+          2336
+        ],
+        "id": "d70e9098-1488-4454-a32e-745a14ac6f63",
+        "name": "Wait10",
+        "webhookId": "592d9081-152c-42f9-a61f-21aabcd1720f"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "79205610-c83e-46c7-b5b0-f1ca12141d39",
+                "leftValue": "={{ $json.success }}",
+                "rightValue": " exceeds one or more plan limits",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          240,
+          2320
+        ],
+        "id": "e5a6ef24-c703-4f27-bdcb-a2897403c5af",
+        "name": "If12"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          1744,
+          2336
+        ],
+        "id": "8598f93d-a9ce-48fd-91e3-47d1414391c1",
+        "name": "Limit"
+      },
+      {
+        "parameters": {
+          "content": "# CENARIO",
+          "height": 580,
+          "width": 2740,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -240,
+          816
+        ],
+        "typeVersion": 1,
+        "id": "8439face-8cea-4c5a-aaeb-91df23facc12",
+        "name": "Sticky Note8"
+      },
+      {
+        "parameters": {
+          "content": "# SOUNDTRACK",
+          "height": 840,
+          "width": 2740,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -240,
+          1392
+        ],
+        "typeVersion": 1,
+        "id": "c044e92c-819a-4063-80b2-1c7144722471",
+        "name": "Sticky Note9"
+      },
+      {
+        "parameters": {
+          "content": "# EDIÇÃO",
+          "height": 700,
+          "width": 1340
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -240,
+          2240
+        ],
+        "typeVersion": 1,
+        "id": "98d9790b-a6bc-47f6-9357-b51ac4abcffc",
+        "name": "Sticky Note10"
+      },
+      {
+        "parameters": {
+          "content": "# POSTAGEM",
+          "height": 700,
+          "width": 1400
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1104,
+          2240
+        ],
+        "typeVersion": 1,
+        "id": "0dea9fce-9de4-414b-a4bf-65b10eb76b29",
+        "name": "Sticky Note11"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          1840,
+          2576
+        ],
+        "id": "b4647a0e-1509-4198-b5c9-d567ec589e79",
+        "name": "Limit4"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "testEvolution",
+          "remoteJid": "{{ $env.REDACTED_SECRET }}",
+          "messageText": "={{ $json.text }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          1744,
+          384
+        ],
+        "id": "b91852a5-bc54-4ec4-83e1-a73ce9c27c58",
+        "name": "Evolution API3"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          2128,
+          384
+        ],
+        "id": "555af943-05cc-4b32-8c3e-eb91f29157d1",
+        "name": "Loop Over Items3"
+      },
+      {
+        "parameters": {
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1920,
+          384
+        ],
+        "id": "99181191-f97f-4f65-8749-cead5dce3dd6",
+        "name": "Wait5",
+        "webhookId": "70316456-c9c2-4ece-b9ac-7f783d023d28"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.error }}",
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 3min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (3min), senão após os 3min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          1424,
+          384
+        ],
+        "id": "ca173484-c9d6-40eb-a875-73a2602dec69",
+        "name": "Basic LLM Chain3"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1232,
+          496
+        ],
+        "id": "3179a0b1-8626-43ae-ba10-63eff876a4bf",
+        "name": "Google Gemini Chat Model6"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=VOCÊ DEVE ANALISAR AS FONTES E CRIAR UM PROMPT PARA UMA IA DE IMAGENS PARA CRIAR O CENARIO DO MEU VIDEO DO YOUTUBE",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=Crie uma imagem ultra-realista, com atmosfera contemplativa, para servir como cenário principal de um vídeo narrado sobre fé e superação.\n\nA cena deve transmitir visualmente a mensagem do roteiro a seguir:\n\n--- INÍCIO DO ROTEIRO ---\n{{ $('SET').first().json.roteiro }}\n--- FIM DO ROTEIRO ---\n\nA imagem deve conter apenas UM ELEMENTO central, relacionado ao cristianismo, como:\n\n• mãos em oração sobre uma bíblia aberta,  \n• vela acesa ao lado da bíblia,  \n• cruz de madeira com luz suave ao fundo,  \n• raio de luz entrando por uma janela simples,  \n• ou uma pomba branca pousada em um altar simples.  \n\nA composição deve ser minimalista, profunda e simbólica.\n\n## Diretrizes Visuais:\n- **Fundo escuro ou difuso**, com iluminação suave destacando o elemento principal. Pode conter sombras suaves para dar profundidade.\n- Paleta de cores: **tons terrosos escuros**, **dourado suave**, **branco quente**, **marrom**, e **tons âmbar** de luz de vela.\n- Iluminação quente e emocional — como luz de vela, ou luz que entra pela janela de uma capela ao amanhecer.\n- A imagem deve transmitir **esperança, consolo, fé e paz interior**.\n\n## Composição:\n- O elemento principal deve estar centralizado ou ligeiramente à esquerda (regra dos terços), com bastante espaço negativo ao redor.\n- Sem textos, logos, objetos modernos, nem elementos que desviem do foco espiritual.\n- A imagem deve ser horizontal (formato 16:9), própria para uso como vídeo de fundo narrado no YouTube.\n\n## Importante:\n- O clima deve ser de **reflexão e serenidade**, como se o espectador estivesse em oração ou num momento íntimo com Deus.\n- Evite cores vibrantes, excesso de detalhes ou qualquer sinal de tecnologia moderna.\n\nFormato final: imagem cinematográfica em 16:9, com foco emocional e religioso.\n\n## IDIOMA\nEspanhol - Espanha\n\n## OUTPUT\n**Gere apenas o prompt final pronto para ser usado por uma IA de geração de imagens. Sem explicações, sem justificativas, sem comentários. Apenas o prompt, direto.**"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          -208,
+          944
+        ],
+        "id": "c406f5cc-8c05-4fdd-a975-b15696cecb94",
+        "name": "RastreadorImages1",
+        "executeOnce": false,
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1000,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          -224,
+          1056
+        ],
+        "id": "fc5016ed-ea44-4ec5-a853-5f65d3a4a950",
+        "name": "Google Gemini Chat Model7"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "7f65739c-492a-4b9c-9af3-9c8b7b07cfc2",
+                "leftValue": "={{ $json.inlineData }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "object",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1504,
+          944
+        ],
+        "id": "9b77cc7e-c18b-4649-a3d8-a6a24c3bd878",
+        "name": "Filter1"
+      },
+      {
+        "parameters": {
+          "keys": {
+            "key": [
+              {
+                "currentKey": "output.prompt",
+                "newKey": "query"
+              }
+            ]
+          },
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.renameKeys",
+        "typeVersion": 1,
+        "position": [
+          176,
+          944
+        ],
+        "id": "47c62318-ff65-4256-b232-104ddc4436be",
+        "name": "Rename Keys3"
+      },
+      {
+        "parameters": {
+          "jsCode": "const query = $json.query || '';\nreturn {\n  json: {\n    query: query.replace(/\\n/g, ' ').trim()\n  }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          432,
+          944
+        ],
+        "id": "370ff039-2f25-480f-8656-ac26b929271d",
+        "name": "Code1"
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "candidates[0].content.parts",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          1264,
+          944
+        ],
+        "id": "bf2087ac-1a28-45ea-9d56-0b1e2d062273",
+        "name": "Split Out1"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": []
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{\n  {\n    \"contents\": [\n      {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"Você é um gerador de imagens AI profissional. Crie uma imagem com aparência ultra-realista e minimalista seguindo estritamente as instruções fornecidas pelo usuário a seguir. Atente-se a todos os detalhes visuais, estilísticos e técnicos mencionados na solicitação do usuário.\"\n          }\n        ]\n      },\n      {\n        \"role\": \"user\",\n        \"parts\": [\n          {\n            \"text\": $json.query\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"responseModalities\": [\n        [\"Text\", \"Image\"]\n      ]\n    }\n  }\n}}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          672,
+          944
+        ],
+        "id": "27d7502f-0d7f-4898-9e13-82911b9b4b65",
+        "name": "HTTP Request1",
+        "retryOnFail": true,
+        "waitBetweenTries": 1
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"prompt\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          -16,
+          1664
+        ],
+        "id": "ad73515e-0148-4d7f-a8bc-f423ca250f1b",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"prompt\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          -16,
+          1056
+        ],
+        "id": "e364ce87-9408-4487-b7f2-8396fd47cf57",
+        "name": "Structured Output Parser1"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          352,
+          144
+        ],
+        "id": "9958e2a4-21b1-4c73-b9f8-8062c738320d",
+        "name": "Limit1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "c4c1fa81-e77f-45b1-861b-813abf823721",
+                "name": "REGISTRO",
+                "value": "={{ $json.REGISTRO }}",
+                "type": "string"
+              },
+              {
+                "id": "f1987677-48f7-4b3c-896b-3b723363ef85",
+                "name": "TITLE",
+                "value": "={{ $json.TITLE }}",
+                "type": "string"
+              },
+              {
+                "id": "0a7b1378-6c1b-452d-883b-fe28ac2c150a",
+                "name": "DESCRICAO",
+                "value": "={{ $json.DESCRICAO }}",
+                "type": "string"
+              },
+              {
+                "id": "5fc40f27-fea7-40f2-bb8a-adcf958cd032",
+                "name": "HASHTAGS",
+                "value": "={{ $json.HASHTAGS }}",
+                "type": "string"
+              },
+              {
+                "id": "27741047-c858-41a8-b491-72421092ec7a",
+                "name": "roteiro",
+                "value": "={{ $json.ROTEIRO }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1184,
+          144
+        ],
+        "id": "c6880aa6-6bae-45b8-8df3-e9416eaf8fb6",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "66e78d88-18e2-4d71-9dd9-c984754217a1",
+                "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "empty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          592,
+          144
+        ],
+        "id": "c808cff7-a958-4031-8836-7a1df1056798",
+        "name": "VERIFICAO POSTAGEM"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "eec12bbf-d79e-4be7-8518-4f0575a37beb",
+                "leftValue": "={{ $json.ROTEIRO }}",
+                "rightValue": "sim",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          912,
+          144
+        ],
+        "id": "3beceeb5-dad4-4527-93e2-a6c7468e8653",
+        "name": "VERIFICAO EXISTENCIA"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.elevenlabs.io/v1/text-to-speech/NOpBlnGInO9m6vDvFkFC/with-timestamps?output_format=mp3_44100_128",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "text",
+                "value": "={{ $('SET').item.json.roteiro }}"
+              },
+              {
+                "name": "voice_settings",
+                "value": "={{ { stability: 0.5, similarity_boost: 0.23, style: 0.0, use_speaker_boost: true } }}"
+              },
+              {
+                "name": "model_id",
+                "value": "eleven_multilingual_v2"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1408,
+          144
+        ],
+        "id": "83b0dfcc-f36d-48d1-94bf-a684776612aa",
+        "name": "ElevenLabs",
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "const chars = $input.first().json.normalized_alignment.characters;\nconst startTimes = $input.first().json.normalized_alignment.character_start_times_seconds;\nconst endTimes = $input.first().json.normalized_alignment.character_end_times_seconds;\n\nlet subtitles = [];\nlet buffer = '';\nlet startTime = null;\nlet endTime = null;\nlet wordCounter = 0;\n\nfor (let i = 0; i < chars.length; i++) {\n  const char = chars[i];\n\n  if (buffer === '') {\n    startTime = startTimes[i];\n  }\n\n  buffer += char;\n  endTime = endTimes[i];\n\n  const isWordEnd = char === ' ' || i === chars.length - 1;\n\n  if (isWordEnd) {\n    wordCounter++;\n\n    if (wordCounter >= 3 || i === chars.length - 1) {\n      const text = buffer.replace(/\\b\\d+\\b\\s*/g, '').trim();\n\n      if (text.length > 0) {\n        subtitles.push({\n          start: startTime,\n          end: endTime,\n          text: text\n        });\n      }\n\n      buffer = '';\n      wordCounter = 0;\n      startTime = null;\n      endTime = null;\n    }\n  }\n}\n\n// Função para converter segundos em tempo SRT\nfunction secondsToSRTTime(seconds) {\n  const date = new Date(0);\n  date.setSeconds(Math.floor(seconds));\n  const iso = date.toISOString().substr(11, 8);\n  const milliseconds = Math.round((seconds % 1) * 1000).toString().padStart(3, '0');\n  return `${iso},${milliseconds}`;\n}\n\n// Geração do conteúdo SRT\nconst srtLines = subtitles.map((entry, index) => {\n  return `${index + 1}\\n${secondsToSRTTime(entry.start)} --> ${secondsToSRTTime(entry.end)}\\n${entry.text}\\n\\n`;\n});\n\n// Retorno do conteúdo como JSON\nreturn [\n  {\n    json: {\n      srt: srtLines.join('')\n    }\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2208,
+          144
+        ],
+        "id": "497f8b43-b728-4f16-924f-7a44cd221718",
+        "name": "LegendaPorPalavra"
+      },
+      {
+        "parameters": {
+          "jsCode": "const base64Audio = $('ElevenLabs').first().json.audio_base64;\n\nreturn [\n  {\n    binary: {\n      audio: {\n        data: base64Audio,\n        mimeType: 'audio/mpeg',\n        fileName: 'voz.mp3'\n      }\n    },\n    json: {}\n  }\n];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1792,
+          640
+        ],
+        "id": "f0317ac2-c3e5-4291-a534-b65b2f9ed9c9",
+        "name": "AudioBinario",
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "databaseId": 229592,
+          "tableId": 546806,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          112,
+          144
+        ],
+        "id": "0a141543-c479-4f6d-ad29-71d9abf51e04",
+        "name": "Baserow2"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -176,
+          320
+        ],
+        "id": "eae4b4ac-2b05-48a4-a57d-5f6ecf425b97",
+        "name": "When clicking ‘Execute workflow’",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "378a964b-af48-4684-a531-d278d489022c",
+                "leftValue": "={{ $json.candidates[0].content.parts[0].inlineData.data }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "bcac93af-4137-45a8-84dd-a6bd07759ef9",
+                "leftValue": "={{ $json.candidates[0].content.parts[1].inlineData.data }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          912,
+          944
+        ],
+        "id": "30728f93-4c7c-4284-95dc-9de621762540",
+        "name": "If1"
+      },
+      {
+        "parameters": {
+          "amount": 2,
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          960,
+          1536
+        ],
+        "id": "8d7b2675-3014-4e41-bdb7-fdfa5905e8ac",
+        "name": "Wait",
+        "webhookId": "082906e5-d74f-4635-b23c-c870163f5571"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://public-api.beatoven.ai/api/v1/tracks/compose",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "content-type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n   \"prompt\": {\n      \"text\": {{ JSON.stringify($json.querySoundTrack) }}\n   }\n}\n\n",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          464,
+          1504
+        ],
+        "id": "0626aedf-3449-4d0e-9f53-35283bd07ae8",
+        "name": "Create Soundtrack",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "alwaysOutputData": false,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "=https://public-api.beatoven.ai/api/v1/tasks/{{ $('Create Soundtrack').item.json.task_id }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "content-type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "json"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1248,
+          1616
+        ],
+        "id": "e76c7699-211a-4531-8e49-2f9182c81fc1",
+        "name": "Verify Soundtrack",
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "url": "={{$json[\"meta\"][\"track_url\"]}}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file",
+                "outputPropertyName": "audio"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1824,
+          1792
+        ],
+        "id": "f1766b79-119b-44fe-aa8c-75a7182200e8",
+        "name": "Get Soundtrack"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "553bb6d1-360b-4598-8122-ad6d694039ab",
+                "leftValue": "={{ $json.error.status }}",
+                "rightValue": "402",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          704,
+          1504
+        ],
+        "id": "e43f7224-78e5-458b-8762-8de9044aff70",
+        "name": "If4"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "71735cf1-329f-4991-8af0-165ffd02e71b",
+                      "leftValue": "={{ $json.meta.track_url }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "URL EXIST"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "fff0ada8-6829-4e24-a7dd-6e5c789ad074",
+                      "leftValue": "={{ $json.meta.track_url }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "notExists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "URL NOT EXIST"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "efaea94a-c71f-4226-b5ef-f605441e949c",
+                      "leftValue": "={{ $json.error.status }}",
+                      "rightValue": "404",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "erro"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1520,
+          1680
+        ],
+        "id": "9f083a1b-1106-44bd-9c90-72d974b4f8e7",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "resource": "video",
+          "operation": "upload",
+          "title": "={{ $('SET YOUTUBE').item.json.title }}",
+          "regionCode": "BR",
+          "categoryId": "27",
+          "binaryProperty": "video",
+          "options": {
+            "description": "={{ $('SET YOUTUBE').item.json.descricao }}",
+            "privacyStatus": "={{ $('SET YOUTUBE').item.json.status }}",
+            "tags": "={{ $('SET YOUTUBE').item.json.hashtags }}"
+          }
+        },
+        "type": "n8n-nodes-base.youTube",
+        "typeVersion": 1,
+        "position": [
+          1984,
+          2336
+        ],
+        "id": "372c94ce-a6f9-4e76-8fdb-2943c43ea128",
+        "name": "YouTube"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "3673d460-7cf2-4c45-af81-b3e084036d99",
+                "name": "title",
+                "value": "={{ $('SET').item.json.TITLE }}",
+                "type": "string"
+              },
+              {
+                "id": "3c6f05e8-0a52-4479-85a6-02711b4dbd9f",
+                "name": "descricao",
+                "value": "={{ $('SET').item.json.DESCRICAO }}",
+                "type": "string"
+              },
+              {
+                "id": "fdb238d6-a3aa-47f5-9000-2d4277d1097c",
+                "name": "hashtags",
+                "value": "={{ $('SET').item.json.HASHTAGS }}",
+                "type": "string"
+              },
+              {
+                "id": "4e4595cc-f961-40fa-8d9b-cb25afccb260",
+                "name": "status",
+                "value": "public",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1280,
+          2336
+        ],
+        "id": "bd378b2b-181a-404c-9b9a-4a2a99b9310c",
+        "name": "SET YOUTUBE"
+      },
+      {
+        "parameters": {
+          "jsCode": "// GetAudioDuration (Code node)\n// Extrai a duração total do áudio a partir dos timestamps do ElevenLabs1\nconst alignment = $items('ElevenLabs')[0].json.normalized_alignment;\nif (!alignment || !alignment.character_end_times_seconds) {\n  throw new Error('normalized_alignment não encontrado em ElevenLabs');\n}\n// Pega o último tempo de fim de caractere como duração total\nconst ends = alignment.character_end_times_seconds;\nconst audioDuration = ends[ends.length - 1];\n\n// Retorna no JSON para ser usado adiante\nreturn [{\n  json: {\n    audioDuration,\n  },\n}];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -208,
+          2320
+        ],
+        "id": "7f751ae7-7513-4c41-bd68-3896a3951e84",
+        "name": "GetAudioDuration"
+      },
+      {
+        "parameters": {
+          "jsCode": "// --- INPUTS ---\n// Mantemos as entradas originais\nconst srtLink = $('DriveLegenda').first().json.webContentLink;\nconst audioDuration = $('GetAudioDuration').first().json.audioDuration;\nconst audioUrl = $('DriveAudio').first().json.webContentLink;\n\n// --- ENTRADAS PARA O SOUNDTRACK (Conforme sua solicitação) ---\n// 1. A URL da música continua vindo do nó original 'UploadSoundTrack'\nconst musicUrl = $('UploadSoundTrack').first().json.webContentLink;\n\n// 2. A DURAÇÃO da música é a única informação que pegamos do 'Verify Soundtrack'\nconst soundtrackDuration = $('Verify Soundtrack').first().json.meta.duration;\n\n\n// --- LÓGICA DAS IMAGENS (permanece inalterada) ---\nconst imagensGemini = $('UploadCenas').all().map(item => item.json);\nlet tempoAcumulado = 0;\nconst clipesImagem = [];\n\nconst duracaoPorImagem = imagensGemini.length > 0 ? audioDuration / imagensGemini.length : audioDuration;\n\nimagensGemini.forEach((imagem) => {\n  const link = imagem.webContentLink;\n  const restante = audioDuration - tempoAcumulado;\n  if (restante > 0) {\n    clipesImagem.push({\n      asset: { type: \"image\", src: link },\n      start: tempoAcumulado,\n      length: Math.min(duracaoPorImagem, restante),\n      fit: \"cover\",\n      transition: { in: \"fade\", out: \"fade\" }\n    });\n    tempoAcumulado += duracaoPorImagem;\n  }\n});\n\n\n// --- NOVA LÓGICA DE LOOP PARA O SOUNDTRACK (permanece inalterada) ---\nconst soundtrackClips = [];\nlet soundtrackTempoAcumulado = 0;\n\nconst numeroDeLoops = Math.ceil(audioDuration / soundtrackDuration);\n\nfor (let i = 0; i < numeroDeLoops; i++) {\n  const tempoRestanteVideo = audioDuration - soundtrackTempoAcumulado;\n\n  if (tempoRestanteVideo > 0) {\n    const clipe = {\n      asset: {\n        type: \"audio\",\n        src: musicUrl, // Usa a URL do 'UploadSoundTrack'\n        volume: 0.1\n      },\n      start: soundtrackTempoAcumulado,\n      length: Math.min(soundtrackDuration, tempoRestanteVideo) // Usa a duração do 'Verify Soundtrack'\n    };\n    soundtrackClips.push(clipe);\n    soundtrackTempoAcumulado += soundtrackDuration;\n  }\n}\n\n\n// --- CONSTRUÇÃO DA TIMELINE FINAL (permanece inalterada) ---\nconst timeline = {\n  tracks: [\n    // Trilha 1: Legendas\n    {\n      clips: [\n        {\n          asset: {\n            type: \"caption\",\n            src: srtLink,\n            font: {\n              family: \"Open Sans\",\n              color: \"#FFFF00\",\n              size: 40,\n              stroke: \"#000000\",\n              strokeWidth: 2\n            },\n            alignment: {\n              horizontal: \"center\",\n              vertical: \"center\"\n            },\n            margin: {\n              top: 0.6\n            }\n          },\n          start: 0,\n          length: audioDuration\n        }\n      ]\n    },\n    // Trilha 2: Imagens\n    {\n      clips: clipesImagem\n    },\n    // Trilha 3: Áudio Principal/Narração\n    {\n      clips: [\n        {\n          asset: {\n            type: \"audio\",\n            src: audioUrl\n          },\n          start: 0,\n          length: audioDuration\n        }\n      ]\n    },\n    // Trilha 4: Música de fundo em loop\n    {\n      clips: soundtrackClips\n    }\n  ]\n};\n\n\n// --- OUTPUT (permanece inalterado) ---\nconst output = {\n  format: 'mp4',\n  resolution: 'hd',\n  fps: 30,\n  aspectRatio: '16:9'\n};\n\nreturn [\n  {\n    json: {\n      timeline,\n      output\n    }\n  }\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -208,
+          2544
+        ],
+        "id": "1c71804c-99cd-4c67-90e1-accdc2ce82b5",
+        "name": "CriarClipes",
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.shotstack.io/edit/v1/render",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"timeline\": {{ JSON.stringify($('CriarClipes').first().json.timeline) }},\n  \"output\": {{ JSON.stringify($('CriarClipes').first().json.output) }}\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          32,
+          2320
+        ],
+        "id": "21b32a38-cbe4-475b-bbe4-1204ccc3f799",
+        "name": "Editor",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "waitBetweenTries": 1,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7004e0c3-b6fa-4079-b81f-692320deee9f",
+                "name": "image_base64",
+                "value": "={{ $('Extract from File').item.json.data }}",
+                "type": "string"
+              },
+              {
+                "id": "d7268d01-2ef1-4bbb-9f59-5ebb3518b044",
+                "name": "Geometry",
+                "value": "={{ $json.Geometry }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1600,
+          1152
+        ],
+        "id": "224ba30b-abb2-4ef7-a4b4-3d7c09133d15",
+        "name": "SET IMAGE"
+      },
+      {
+        "parameters": {
+          "operation": "resize",
+          "width": 1920,
+          "height": 1080,
+          "resizeOption": "ignoreAspectRatio",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.editImage",
+        "typeVersion": 1,
+        "position": [
+          1952,
+          944
+        ],
+        "id": "7fcc66bf-93ee-4ff1-b71d-6da1c2c382cf",
+        "name": "SIZE IMAGE",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "operation": "information",
+          "dataPropertyName": "=data"
+        },
+        "type": "n8n-nodes-base.editImage",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          1152
+        ],
+        "id": "34e60239-53df-4870-b6d0-430a0d03da33",
+        "name": "INFO IMAGE"
+      },
+      {
+        "parameters": {
+          "operation": "binaryToPropery",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          2192,
+          944
+        ],
+        "id": "b3d35b84-1607-489c-b43f-01db484f88e4",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "inlineData.data",
+          "options": {
+            "fileName": "data",
+            "mimeType": "image/jpeg"
+          }
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1712,
+          944
+        ],
+        "id": "3610a84a-649b-44c8-aa2a-083362d55734",
+        "name": "Send Image To Size"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "data",
+          "options": {
+            "fileName": "data",
+            "mimeType": "image/jpeg"
+          }
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1152,
+          1152
+        ],
+        "id": "19104d2b-3b4a-48c1-aa1c-a6aa4ead1986",
+        "name": "Send Image To Info Image"
+      },
+      {
+        "parameters": {
+          "operation": "toBinary",
+          "sourceProperty": "image_base64",
+          "binaryPropertyName": "cenario",
+          "options": {
+            "fileName": "cenario",
+            "mimeType": "image/jpeg"
+          }
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1824,
+          1152
+        ],
+        "id": "0b83a491-98e6-4dda-a6db-8f843cfda87a",
+        "name": "Send Image To View Image"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.error }}",
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras (máximo 60 palavras) o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 10min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          1648,
+          2016
+        ],
+        "id": "14284ecb-37b4-411d-907e-b9d9863c1d4a",
+        "name": "ENVIAR ERRO2"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "1596d045-1e58-4ae2-a8bc-a7366d816e13",
+                "name": "error",
+                "value": "={{ $('Verify Soundtrack').item.json.error.message }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1472,
+          2016
+        ],
+        "id": "6c75f655-9c5c-4d62-ac34-6b77003d39ec",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "testEvolution",
+          "remoteJid": "{{ $env.REDACTED_SECRET }}",
+          "messageText": "={{ $json.text }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          864,
+          1920
+        ],
+        "id": "78330bd0-e24f-4b34-b23a-59e5a98c47ff",
+        "name": "Evolution API"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1232,
+          1920
+        ],
+        "id": "fc020e7d-ac7b-448e-8356-3cb90b8c1e23",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "amount": 10,
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1040,
+          1920
+        ],
+        "id": "ab9dcdef-6e6c-4364-b86d-a3042301a6bd",
+        "name": "Wait6",
+        "webhookId": "c543112f-fe9f-416a-80a9-7fb93537938c"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.error }}",
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 10min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          512,
+          1920
+        ],
+        "id": "0a1a97fa-00e4-447e-84b2-de626950f082",
+        "name": "Basic LLM Chain"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          272,
+          2096
+        ],
+        "id": "4c056476-7e39-43ee-a35c-6a85a5127095",
+        "name": "Google Gemini Chat Model5"
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -160,
+          144
+        ],
+        "id": "a1b19b02-7d17-47ee-8114-f2c586323364",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "QrS5d5LyixA2wLxr",
+            "mode": "list",
+            "cachedResultName": "5 - THUMBNAIL - VL - PT-BR"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          2272,
+          2576
+        ],
+        "id": "a40fdd55-e087-4d27-9d61-c6fa13a95b5e",
+        "name": "Execute Workflow"
+      }
+    ],
+    "connections": {
+      "DriveLegenda": {
+        "main": [
+          [
+            {
+              "node": "DriveLegenda4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DriveLegenda4": {
+        "main": [
+          [
+            {
+              "node": "AudioBinario",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DriveAudio": {
+        "main": [
+          [
+            {
+              "node": "DriveAudio4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DriveAudio4": {
+        "main": [
+          [
+            {
+              "node": "RastreadorImages1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ShareCenas": {
+        "main": [
+          [
+            {
+              "node": "GeradorSoundTrack1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UploadCenas": {
+        "main": [
+          [
+            {
+              "node": "ShareCenas",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UploadSoundTrack": {
+        "main": [
+          [
+            {
+              "node": "ShareSoundTrack",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ShareSoundTrack": {
+        "main": [
+          [
+            {
+              "node": "GetAudioDuration",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow": {
+        "main": [
+          [
+            {
+              "node": "Limit4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow1": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File1": {
+        "main": [
+          [
+            {
+              "node": "DriveLegenda",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "LimpaSrt1": {
+        "main": [
+          [
+            {
+              "node": "Convert to File1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "LegendaPorPalavra",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Basic LLM Chain3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Rename Keys2": {
+        "main": [
+          [
+            {
+              "node": "Create Soundtrack",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GeradorSoundTrack1": {
+        "main": [
+          [
+            {
+              "node": "Rename Keys2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "GeradorSoundTrack1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If11": {
+        "main": [
+          [
+            {
+              "node": "Baserow",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Evolution API18",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Evolution API2": {
+        "main": [
+          [
+            {
+              "node": "Wait4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items2": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Editor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait4": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain2": {
+        "main": [
+          [
+            {
+              "node": "Evolution API2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model4": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain2",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CheckEditor": {
+        "main": [
+          [
+            {
+              "node": "If18",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DownloadVideo": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If18": {
+        "main": [
+          [
+            {
+              "node": "SET YOUTUBE",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Wait10",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait10": {
+        "main": [
+          [
+            {
+              "node": "CheckEditor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If12": {
+        "main": [
+          [
+            {
+              "node": "Wait10",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Basic LLM Chain2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit": {
+        "main": [
+          [
+            {
+              "node": "YouTube",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit4": {
+        "main": [
+          [
+            {
+              "node": "Baserow1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Evolution API3": {
+        "main": [
+          [
+            {
+              "node": "Wait5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items3": {
+        "main": [
+          [],
+          [
+            {
+              "node": "ElevenLabs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait5": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain3": {
+        "main": [
+          [
+            {
+              "node": "Evolution API3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model6": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain3",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "RastreadorImages1": {
+        "main": [
+          [
+            {
+              "node": "Rename Keys3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model7": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "RastreadorImages1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter1": {
+        "main": [
+          [
+            {
+              "node": "Send Image To Size",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Rename Keys3": {
+        "main": [
+          [
+            {
+              "node": "Code1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code1": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out1": {
+        "main": [
+          [
+            {
+              "node": "Filter1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "GeradorSoundTrack1",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser1": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "RastreadorImages1",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit1": {
+        "main": [
+          [
+            {
+              "node": "VERIFICAO POSTAGEM",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "ElevenLabs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "VERIFICAO POSTAGEM": {
+        "main": [
+          [
+            {
+              "node": "VERIFICAO EXISTENCIA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "VERIFICAO EXISTENCIA": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ElevenLabs": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "LegendaPorPalavra": {
+        "main": [
+          [
+            {
+              "node": "LimpaSrt1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AudioBinario": {
+        "main": [
+          [
+            {
+              "node": "DriveAudio",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Baserow2": {
+        "main": [
+          [
+            {
+              "node": "Limit1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "Baserow2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Split Out1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "RastreadorImages1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Verify Soundtrack",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Soundtrack": {
+        "main": [
+          [
+            {
+              "node": "If4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verify Soundtrack": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Soundtrack": {
+        "main": [
+          [
+            {
+              "node": "UploadSoundTrack",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If4": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "Get Soundtrack",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create Soundtrack",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "YouTube": {
+        "main": [
+          [
+            {
+              "node": "If11",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET YOUTUBE": {
+        "main": [
+          [
+            {
+              "node": "DownloadVideo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GetAudioDuration": {
+        "main": [
+          [
+            {
+              "node": "CriarClipes",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CriarClipes": {
+        "main": [
+          [
+            {
+              "node": "Editor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Editor": {
+        "main": [
+          [
+            {
+              "node": "If12",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET IMAGE": {
+        "main": [
+          [
+            {
+              "node": "Send Image To View Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SIZE IMAGE": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "INFO IMAGE": {
+        "main": [
+          [
+            {
+              "node": "SET IMAGE",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "Send Image To Info Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Image To Size": {
+        "main": [
+          [
+            {
+              "node": "SIZE IMAGE",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Image To Info Image": {
+        "main": [
+          [
+            {
+              "node": "INFO IMAGE",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Image To View Image": {
+        "main": [
+          [
+            {
+              "node": "UploadCenas",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ENVIAR ERRO2": {
+        "main": [
+          [
+            {
+              "node": "Evolution API",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "ENVIAR ERRO2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Evolution API": {
+        "main": [
+          [
+            {
+              "node": "Wait6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Create Soundtrack",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait6": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain": {
+        "main": [
+          [
+            {
+              "node": "Evolution API",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model5": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "ENVIAR ERRO2",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Baserow2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-11-06T06:22:55.916Z",
+        "id": 53,
+        "workflowId": "58shSgDtlMyZ4rkl",
+        "versionId": "1b64756b-dd83-4ccc-bcbf-99b9bd3e3525",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
