@@ -1,0 +1,1295 @@
+{
+  "id": "cbUed2NfJvgFdKNn",
+  "name": "3 - PRODUÇÃO - VL - SP - PT copy",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "inputDataFieldName": "saida.mp3",
+        "name": "audio video",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1qtkqy1R4sZDIhEc5xNZrXk4vK-kfFtNJ",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1296,
+        96
+      ],
+      "id": "8f67e7b8-a0a5-4fcf-b88f-f12e114d91b5",
+      "name": "DriveAudio",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1536,
+        96
+      ],
+      "id": "995be172-3dc5-4f3e-a7dc-e71a9a4a0598",
+      "name": "DriveAudio4",
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        624
+      ],
+      "id": "176ddaff-7bee-4dda-aa2f-43c159dabcb7",
+      "name": "Baserow"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 229592,
+        "tableId": 546806,
+        "rowId": "={{ $('Limit4').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 4370424,
+              "fieldValue": "={{ $('YouTube').item.json.uploadId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        624
+      ],
+      "id": "cb41d37f-18e6-4381-861d-82116ea23447",
+      "name": "Baserow1",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "# VOZ",
+        "height": 260,
+        "width": 680,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1008,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "718bd9ca-0e55-4bf6-b34a-c72c23102edb",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+              "leftValue": "={{ $json.uploadId }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1312,
+        704
+      ],
+      "id": "1b33868e-4176-451f-ae13-4d23b35f4f52",
+      "name": "If11"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "={{ $json.text }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        432,
+        640
+      ],
+      "id": "6050d41c-297b-455a-91ba-03067c501a2b",
+      "name": "Evolution API2"
+    },
+    {
+      "parameters": {
+        "batchSize": 2,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        624,
+        720
+      ],
+      "id": "2bb3bdd4-e0a3-40bb-864c-12fcaaa08fca",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        864,
+        800
+      ],
+      "id": "e2a3e88b-71bc-4fa0-9d62-314e0ca285c9",
+      "name": "Wait4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.error }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua tarefa é analisa a mensagem recebida e resumir em poucas palavras o que está acontecendo, não exiba código, link...\n\nInforme ao user que o sistema tentara em 3min uma nova tentativa de execução do sistema.\n\nRecomende o user a verificar o fluxo antes do sistema tentar novamente (10min), senão após os 10min o user deve fazer manualmente dali em diante ou ele deve reiniciar o sistema."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        96,
+        608
+      ],
+      "id": "d10d9b73-ba5d-4b32-a8f0-b18590a3b982",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        720
+      ],
+      "id": "4193ce67-8e3c-40ed-b3ed-4bfa524a65ec",
+      "name": "Google Gemini Chat Model4"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "=Erro na publicação do video longo em português - Verifique o fluxo",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        816
+      ],
+      "id": "fafb64ff-9c79-462c-9f12-2bdf0cc2e124",
+      "name": "Evolution API18"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        592,
+        384
+      ],
+      "id": "5c20b2e5-682c-4973-be48-6d53c6a638a6",
+      "name": "CheckEditor",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "video"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1424,
+        384
+      ],
+      "id": "94e72969-86d5-4893-8a21-133d2f49a1b3",
+      "name": "DownloadVideo",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d4f669e1-b6e2-4a32-88b2-90857d9d4d44",
+              "leftValue": "={{ $json.response.status }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        784,
+        384
+      ],
+      "id": "2e6df398-a862-414a-aef9-7d159d3e82da",
+      "name": "If18"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        384
+      ],
+      "id": "9e056fac-5369-480a-859e-e9b1e6c5a2a8",
+      "name": "Wait10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "79205610-c83e-46c7-b5b0-f1ca12141d39",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": " exceeds one or more plan limits",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        368
+      ],
+      "id": "cb84bb42-236a-4f7a-931e-ec0fa898fedb",
+      "name": "If12"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        384
+      ],
+      "id": "3726ac9e-fc9f-40a6-a3b4-0c0871451402",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "content": "# EDIÇÃO",
+        "height": 700,
+        "width": 1340
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "71642949-f7e0-4b6e-84a4-3c20e659f874",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "# POSTAGEM",
+        "height": 700,
+        "width": 1560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1008,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "47d0638c-eca8-40aa-9081-e52e839b5bcc",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        624
+      ],
+      "id": "a35314ee-2959-4c48-8e1a-9f70f5044ebe",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {
+        "databaseId": 229592,
+        "tableId": 546806,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        96
+      ],
+      "id": "5f033a6c-3b19-413d-8b59-9c0693acb7f3",
+      "name": "Baserow2"
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('SET YOUTUBE').item.json.title }}",
+        "regionCode": "BR",
+        "categoryId": "24",
+        "binaryProperty": "video",
+        "options": {
+          "description": "={{ $('SET YOUTUBE').item.json.descricao }}",
+          "privacyStatus": "={{ $('SET YOUTUBE').item.json.status }}",
+          "tags": "={{ $('SET YOUTUBE').item.json.hashtags }}"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        384
+      ],
+      "id": "c6e3326b-75bc-4d3e-95a0-9c182df0672c",
+      "name": "YouTube"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3673d460-7cf2-4c45-af81-b3e084036d99",
+              "name": "title",
+              "value": "={{ $('SET').item.json.TITLE }}",
+              "type": "string"
+            },
+            {
+              "id": "3c6f05e8-0a52-4479-85a6-02711b4dbd9f",
+              "name": "descricao",
+              "value": "={{ $('SET').item.json.DESCRICAO }}",
+              "type": "string"
+            },
+            {
+              "id": "fdb238d6-a3aa-47f5-9000-2d4277d1097c",
+              "name": "hashtags",
+              "value": "={{ $('SET').item.json.HASHTAGS }}",
+              "type": "string"
+            },
+            {
+              "id": "4e4595cc-f961-40fa-8d9b-cb25afccb260",
+              "name": "status",
+              "value": "public",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        384
+      ],
+      "id": "5ed21244-a809-4240-8036-d4d06ac45f47",
+      "name": "SET YOUTUBE"
+    },
+    {
+      "parameters": {
+        "jsCode": "// GetAudioDuration (Code node) - Kokoro Local\n// Usamos a mesma lógica de contagem de palavras usada para gerar as legendas\n\nconst text = $items('Kokoro')[0].json.ROTEIRO; // texto enviado para Kokoro\nif (!text) {\n  throw new Error('ROTEIRO não encontrado no output do Kokoro');\n}\n\nconst words = text.split(/\\s+/);\n\n// Estimativa: 0.4s por palavra (~150 palavras/min)\nconst audioDuration = words.length * 0.4;\n\n// Retorna a duração total do áudio (estimada)\nreturn [{\n  json: {\n    audioDuration,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        368
+      ],
+      "id": "685d7b19-07b7-40f1-b3d8-c4760140f166",
+      "name": "GetAudioDuration"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "genericAuthType": "{{ $env.GENERICAUTHTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"timeline\": {{ JSON.stringify($('CriarClipes').first().json.timeline) }},\n  \"output\": {{ JSON.stringify($('CriarClipes').first().json.output) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        368
+      ],
+      "id": "8a108ec6-e25e-430f-b375-30c09a25ec9b",
+      "name": "Editor",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "{{ $env.NAME }}",
+              "value": "{{ $env.VALUE }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "model_q8f16"
+            },
+            {
+              "name": "voice",
+              "value": "pm_santa*0.8 + pm_alex*0.2"
+            },
+            {
+              "name": "input",
+              "value": "={{ $json.ROTEIRO }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "saida.mp3"
+            }
+          },
+          "timeout": 1000000000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1056,
+        96
+      ],
+      "id": "070d8d0f-e9e8-4826-a43f-21ba4d0a0989",
+      "name": "Kokoro"
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- INPUTS ---\n// Entradas para o vídeo principal e narração\nconst audioDuration = $('GetAudioDuration').first().json.audioDuration;\nconst audioUrl = $('DriveAudio').first().json.webContentLink;\nconst videoUrl = $('SET').first().json[\"VIDEO DOWNLOAD\"];\n\n// Duração do vídeo base que será repetido.\n// É importante ter esse valor. Se não vier de outro nó, defina um valor aproximado.\nconst videoBaseDuration = 12; // Duração em segundos do seu arquivo de vídeo\n\n// --- LÓGICA DE LOOP ROBUSTA PARA O VÍDEO ---\nconst videoClips = [];\nlet videoTempoAcumulado = 0;\n\n// Calcula o número de repetições necessárias, arredondando para cima\nconst numeroDeLoops = Math.ceil(audioDuration / videoBaseDuration);\n\nfor (let i = 0; i < numeroDeLoops; i++) {\n  // Calcula quanto tempo ainda falta preencher no vídeo final\n  const tempoRestante = audioDuration - videoTempoAcumulado;\n\n  // Garante que não adicionamos clipes desnecessários se o tempo já foi preenchido\n  if (tempoRestante > 0) {\n    const clipe = {\n      asset: {\n        type: \"video\",\n        src: videoUrl,\n        volume: 0\n      },\n      start: videoTempoAcumulado,\n      // O clipe terá a duração do vídeo base ou o tempo que falta, o que for menor\n      length: Math.min(videoBaseDuration, tempoRestante),\n      fit: \"cover\"\n    };\n    videoClips.push(clipe);\n    // Incrementa o tempo acumulado para o próximo clipe\n    videoTempoAcumulado += videoBaseDuration;\n  }\n}\n\n// --- CONSTRUÇÃO DA TIMELINE FINAL ---\nconst timeline = {\n  tracks: [\n    // Trilha 1: Vídeo de fundo em loop\n    {\n      clips: videoClips // Array de clipes de vídeo que criamos\n    },\n    // Trilha 2: Áudio Principal/Narração\n    {\n      clips: [\n        {\n          asset: {\n            type: \"audio\",\n            src: audioUrl\n          },\n          start: 0,\n          length: audioDuration\n        }\n      ]\n    }\n  ]\n};\n\n// --- OUTPUT ---\nconst output = {\n  format: 'mp4',\n  resolution: 'hd',\n  fps: 30,\n  aspectRatio: '16:9'\n};\n\nreturn [\n  {\n    json: {\n      timeline,\n      output\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        560
+      ],
+      "id": "7241239b-f1b6-4eaf-8c88-9ee58e2f2b4e",
+      "name": "CriarClipes",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c4c1fa81-e77f-45b1-861b-813abf823721",
+              "name": "REGISTRO",
+              "value": "={{ $json.REGISTRO }}",
+              "type": "string"
+            },
+            {
+              "id": "f1987677-48f7-4b3c-896b-3b723363ef85",
+              "name": "TITLE",
+              "value": "={{ $json.TITLE }}",
+              "type": "string"
+            },
+            {
+              "id": "0a7b1378-6c1b-452d-883b-fe28ac2c150a",
+              "name": "DESCRICAO",
+              "value": "={{ $json.DESCRICAO }}",
+              "type": "string"
+            },
+            {
+              "id": "5fc40f27-fea7-40f2-bb8a-adcf958cd032",
+              "name": "HASHTAGS",
+              "value": "={{ $json.HASHTAGS }}",
+              "type": "string"
+            },
+            {
+              "id": "27741047-c858-41a8-b491-72421092ec7a",
+              "name": "ROTEIRO",
+              "value": "={{ $json.ROTEIRO }}",
+              "type": "string"
+            },
+            {
+              "id": "8eee523c-0521-4085-bab0-4a06b141578c",
+              "name": "VIDEO DOWNLOAD",
+              "value": "={{ $json['VIDEO DOWNLOAD'] }}",
+              "type": "string"
+            },
+            {
+              "id": "79c7b4bb-95aa-444c-9abd-2a4f7437b9fd",
+              "name": "THUMBNAIL DOWNLOAD",
+              "value": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        96
+      ],
+      "id": "307f8f83-a39b-403c-94a0-8b02fbded2bd",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "content": "CONTA",
+        "height": 200,
+        "width": 200,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1856,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "42a4a767-ff17-414a-a432-926152204f19",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "STATUS",
+        "height": 200,
+        "width": 220,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1136,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "6353590b-4e26-4ec7-a68a-a2079a6ea0af",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "NUMERO",
+        "height": 200,
+        "width": 220,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1488,
+        784
+      ],
+      "typeVersion": 1,
+      "id": "d48f0018-d035-4413-ac6f-e2fc62ec07c1",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testEvolution",
+        "remoteJid": "{{ $env.REDACTED_SECRET }}",
+        "messageText": "=*Video longo em português postado com sucesso!*\n\nhttps://www.youtube.com/watch?v={{ $('YouTube').item.json.uploadId }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2144,
+        624
+      ],
+      "id": "119e0b5b-6954-4709-8807-b17aad265194",
+      "name": "Evolution API3",
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "TEMPO DO CLIP",
+        "height": 200,
+        "width": 200,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        496
+      ],
+      "typeVersion": 1,
+      "id": "09c58b6a-e2fe-4d72-80d2-8046f4d1cceb",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 11
+            },
+            {
+              "triggerAtHour": 19
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        96
+      ],
+      "id": "3a5d8940-fdb3-4f9b-918b-db41db15327f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "# PRODUÇÃO",
+        "height": 960,
+        "width": 2900,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "9fcb4485-5aa9-4ec1-8432-99f060ef6033",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "cALOxV5WDvVbuDTp",
+          "mode": "list",
+          "cachedResultName": "3 - PRODUÇÃO - VL - HV"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2368,
+        624
+      ],
+      "id": "1025be80-ac57-4a34-a542-17ab6355a4f6",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd0681cd-b615-431f-83eb-1c1241580fd0",
+              "leftValue": "={{ $json[\"VIDEO DOWNLOAD\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "4eb632ce-3f3a-4f31-be7e-be0361f1800e",
+              "leftValue": "={{ $json.POSTAGEMCOMPLETA }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "36aff8a8-a726-4620-b54e-ebae03027cee",
+              "leftValue": "={{ $json.ROTEIRO }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7c599ccb-9587-4d61-b44e-9ca7c22822ef",
+              "leftValue": "={{ $json['THUMBNAIL DOWNLOAD'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7bfa6b07-04eb-470d-9cb6-6c50931fbb7e",
+              "leftValue": "={{ $json.IDIOMA }}",
+              "rightValue": "Português",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "8d205a35-3cb6-452f-ad6f-85688408d38c",
+              "leftValue": "={{ $json.CANAL }}",
+              "rightValue": "Salmos Profeticos",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        96
+      ],
+      "id": "9fcbe9e3-760c-4f6b-8d3e-0c7eb1b7bb59",
+      "name": "VERIFICAO EXISTENCIA"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        528,
+        96
+      ],
+      "id": "f780ee2f-8453-4e8b-aeed-d7290b1a4f90",
+      "name": "Limit1"
+    }
+  ],
+  "connections": {
+    "DriveAudio": {
+      "main": [
+        [
+          {
+            "node": "DriveAudio4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DriveAudio4": {
+      "main": [
+        [
+          {
+            "node": "GetAudioDuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow": {
+      "main": [
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow1": {
+      "main": [
+        [
+          {
+            "node": "Evolution API3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If11": {
+      "main": [
+        [
+          {
+            "node": "Baserow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Evolution API18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "CriarClipes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Evolution API2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CheckEditor": {
+      "main": [
+        [
+          {
+            "node": "If18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DownloadVideo": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If18": {
+      "main": [
+        [
+          {
+            "node": "SET YOUTUBE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "CheckEditor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Baserow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baserow2": {
+      "main": [
+        [
+          {
+            "node": "VERIFICAO EXISTENCIA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET YOUTUBE": {
+      "main": [
+        [
+          {
+            "node": "DownloadVideo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetAudioDuration": {
+      "main": [
+        [
+          {
+            "node": "CriarClipes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editor": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kokoro": {
+      "main": [
+        [
+          {
+            "node": "DriveAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriarClipes": {
+      "main": [
+        [
+          {
+            "node": "Editor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Kokoro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API3": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Baserow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFICAO EXISTENCIA": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-24T18:30:25.703Z",
+      "createdAt": "2025-10-24T18:30:25.703Z",
+      "role": "workflow:owner",
+      "workflowId": "cbUed2NfJvgFdKNn",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
