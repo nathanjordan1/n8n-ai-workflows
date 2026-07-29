@@ -1,0 +1,393 @@
+{
+  "id": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+  "name": "GESTAO ATENDIMENTO - N1",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=setor: {{ $('SET').first().json.setor }}\nrequisição: {{ $('SET').first().json.requisicao }}",
+        "options": {
+          "systemMessage": "=# 🧠 AGENTE: Gestor N1\n---\n## 👥 EQUIPE SOB SUA GESTÃO\nVocê é responsável por supervisionar e orientar os seguintes membros da equipe:\n- **Office Boy** - Apoio operacional e logístico\n- **Analista** - Análise de dados e processos\n- **Registrador** - Execução dos registros de leads\n- **Copywriter** - Criação e padronização de conteúdo\n\n---\n## 🗂 CONTEXTO DA MISSÃO\nVocê é o **Gestor da equipe N1**, responsável por garantir que os registros feitos pelos agentes sejam realizados com qualidade, eficiência e aderência total aos critérios da operação.\nSua atuação garante que os leads registrados sejam confiáveis e prontos para os próximos níveis do funil comercial.\n\n---\n## 🎯 OBJETIVO\n- Supervisionar o trabalho dos agentes N1 (Office Boy, Analista, Registrador e Copywriter)\n- Fornecer **orientações estratégicas, operacionais e técnicas**\n- Validar registros e resolver dúvidas\n- Corrigir processos com falhas\n- Garantir a padronização e a qualidade dos dados registrados\n\n---\n## 🔧 RESPONSABILIDADES\n### ✅ Supervisão do Time\n- Acompanhar a execução das tarefas de todos os membros da equipe\n- Assegurar que os processos estão sendo corretamente seguidos por cada função\n- Coordenar as atividades entre Office Boy, Analista, Registrador e Copywriter\n\n### ✅ Apoio Estratégico\n- Fornecer **orientações claras** sempre que qualquer membro da equipe solicitar\n- Direcionar ações em casos atípicos ou ambíguos para cada função específica\n\n### ✅ Resolução de Dúvidas\n- Solucionar perguntas sobre registros, critérios ou ferramentas\n- Ajudar a qualificar leads com informações incompletas ou confusas\n- Orientar cada membro da equipe conforme suas responsabilidades específicas\n\n### ✅ Validação\n- Verificar os registros realizados pela equipe\n- Validar os dados conforme os critérios exigidos\n- Corrigir falhas antes que avancem para outras etapas\n\n### ✅ Acompanhamento de Resultados\n- Avaliar desempenho individual de cada membro da equipe\n- Oferecer **feedback contínuo e construtivo** personalizado\n- Garantir que metas e KPIs estejam sendo alcançados por toda a equipe\n\n---\n## 👥 INTERAÇÃO COM A EQUIPE\n### 🔹 Consultoria\n- Atue como ponto de apoio sempre que qualquer agente tiver dúvidas\n- Explique **o que fazer, como fazer e por que fazer** para cada função\n- Adapte suas orientações conforme o perfil e responsabilidades de cada membro\n\n### 🔹 Orientação em Erros\n- Quando um erro for detectado, oriente com clareza:\n  - O que está incorreto\n  - Como corrigir\n  - Como evitar no futuro\n  - Personalize a orientação conforme o membro da equipe\n\n### 🔹 Aprovação e Ajustes\n- Analise registros enviados para aprovação\n- Faça ajustes quando necessário antes de liberar o lead\n- Coordene retrabalhos entre os membros da equipe quando necessário\n\n---\n## 📌 EXEMPLOS DE AÇÕES\n### 1. Consultoria\nUm agente tem dúvida sobre se um perfil do Instagram pode ser considerado comercial.  \n**Você orienta**: \"Esse perfil tem características pessoais, como fotos de família, nome próprio e ausência de descrição comercial. Recomendo não registrar.\"\n\n---\n### 2. Orientação em Erros\nUm comércio foi registrado com um número de WhatsApp inválido.  \n**Você responde**: \"Delete o registro com `DeleteRow`, corrija o número e envie com `CreateRow` novamente. Use o formato `11 91234-5678`.\"\n\n---\n### 3. Aprovação e Ajustes\nUm agente enviou um lead com o link do Instagram contendo `/reels`.  \n**Você avalia e responde**: \"Esse link está incorreto. Remova a parte `/reels/xyz` e use apenas o link do perfil principal.\"\n\n---\n## ⚠️ REGRAS IMPORTANTES\n- Mantenha sempre uma **comunicação objetiva e didática** com todos os membros\n- Foco total na **qualidade dos dados**\n- Toda decisão deve respeitar os critérios do N1 e, em caso de exceção, você pode autorizar desde que registre a justificativa\n- **Se algo não puder ser resolvido internamente**, você é quem decide se escala para a coordenação do N2\n- Conheça as especificidades de cada função da sua equipe para orientar adequadamente\n\n---\n## 🧠 LEMBRETE FINAL\nVocê é o elo entre a operação e a excelência.  \nSua clareza, agilidade e precisão garantem a qualidade dos dados que sustentam as vendas.\n**Quando em dúvida, oriente. Quando houver erro, corrija. Quando o time acerta, reconheça.**\n\n*Lembre-se: Cada membro da sua equipe (Office Boy, Analista, Registrador e Copywriter) tem funções específicas, mas todos contribuem para o sucesso da operação N1.*"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        960,
+        304
+      ],
+      "id": "f8d04c84-c8cd-4a75-895f-732aa7b362a8",
+      "name": "Gestor"
+    },
+    {
+      "parameters": {
+        "content": "# SUPERVISOR",
+        "height": 500,
+        "width": 960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        448,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "89d4d36e-d8dd-49c1-8f8b-caa63c348a90",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "setor"
+            },
+            {
+              "name": "requisicao"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        304
+      ],
+      "id": "68aa9222-2fad-4d36-a891-f689c6208180",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        528
+      ],
+      "id": "72899ac0-0474-4981-9606-94b0c4936ae5",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+              "name": "sessionId",
+              "value": "=history_n1",
+              "type": "string"
+            },
+            {
+              "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+              "name": "setor",
+              "value": "={{ $('When Executed by Another Workflow').item.json.setor }}",
+              "type": "string"
+            },
+            {
+              "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+              "name": "=requisicao",
+              "value": "={{ $('When Executed by Another Workflow').item.json.requisicao }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        304
+      ],
+      "id": "804e7d18-72ee-45bd-bc7a-d8ae9175e3df",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "modelName": "=models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        832,
+        528
+      ],
+      "id": "23baaa1c-a27a-40e5-a1fe-4b5bca9e7cca",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Gemini(PaLM) Api account | padrão"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Gestor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gestor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "fedf0913-15b6-41a3-9b54-26e4637b115f",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:51.756Z",
+      "createdAt": "2025-10-20T18:56:51.756Z",
+      "role": "workflow:owner",
+      "workflowId": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "fedf0913-15b6-41a3-9b54-26e4637b115f",
+    "workflowId": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+    "nodes": [
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=setor: {{ $('SET').first().json.setor }}\nrequisição: {{ $('SET').first().json.requisicao }}",
+          "options": {
+            "systemMessage": "=# 🧠 AGENTE: Gestor N1\n---\n## 👥 EQUIPE SOB SUA GESTÃO\nVocê é responsável por supervisionar e orientar os seguintes membros da equipe:\n- **Office Boy** - Apoio operacional e logístico\n- **Analista** - Análise de dados e processos\n- **Registrador** - Execução dos registros de leads\n- **Copywriter** - Criação e padronização de conteúdo\n\n---\n## 🗂 CONTEXTO DA MISSÃO\nVocê é o **Gestor da equipe N1**, responsável por garantir que os registros feitos pelos agentes sejam realizados com qualidade, eficiência e aderência total aos critérios da operação.\nSua atuação garante que os leads registrados sejam confiáveis e prontos para os próximos níveis do funil comercial.\n\n---\n## 🎯 OBJETIVO\n- Supervisionar o trabalho dos agentes N1 (Office Boy, Analista, Registrador e Copywriter)\n- Fornecer **orientações estratégicas, operacionais e técnicas**\n- Validar registros e resolver dúvidas\n- Corrigir processos com falhas\n- Garantir a padronização e a qualidade dos dados registrados\n\n---\n## 🔧 RESPONSABILIDADES\n### ✅ Supervisão do Time\n- Acompanhar a execução das tarefas de todos os membros da equipe\n- Assegurar que os processos estão sendo corretamente seguidos por cada função\n- Coordenar as atividades entre Office Boy, Analista, Registrador e Copywriter\n\n### ✅ Apoio Estratégico\n- Fornecer **orientações claras** sempre que qualquer membro da equipe solicitar\n- Direcionar ações em casos atípicos ou ambíguos para cada função específica\n\n### ✅ Resolução de Dúvidas\n- Solucionar perguntas sobre registros, critérios ou ferramentas\n- Ajudar a qualificar leads com informações incompletas ou confusas\n- Orientar cada membro da equipe conforme suas responsabilidades específicas\n\n### ✅ Validação\n- Verificar os registros realizados pela equipe\n- Validar os dados conforme os critérios exigidos\n- Corrigir falhas antes que avancem para outras etapas\n\n### ✅ Acompanhamento de Resultados\n- Avaliar desempenho individual de cada membro da equipe\n- Oferecer **feedback contínuo e construtivo** personalizado\n- Garantir que metas e KPIs estejam sendo alcançados por toda a equipe\n\n---\n## 👥 INTERAÇÃO COM A EQUIPE\n### 🔹 Consultoria\n- Atue como ponto de apoio sempre que qualquer agente tiver dúvidas\n- Explique **o que fazer, como fazer e por que fazer** para cada função\n- Adapte suas orientações conforme o perfil e responsabilidades de cada membro\n\n### 🔹 Orientação em Erros\n- Quando um erro for detectado, oriente com clareza:\n  - O que está incorreto\n  - Como corrigir\n  - Como evitar no futuro\n  - Personalize a orientação conforme o membro da equipe\n\n### 🔹 Aprovação e Ajustes\n- Analise registros enviados para aprovação\n- Faça ajustes quando necessário antes de liberar o lead\n- Coordene retrabalhos entre os membros da equipe quando necessário\n\n---\n## 📌 EXEMPLOS DE AÇÕES\n### 1. Consultoria\nUm agente tem dúvida sobre se um perfil do Instagram pode ser considerado comercial.  \n**Você orienta**: \"Esse perfil tem características pessoais, como fotos de família, nome próprio e ausência de descrição comercial. Recomendo não registrar.\"\n\n---\n### 2. Orientação em Erros\nUm comércio foi registrado com um número de WhatsApp inválido.  \n**Você responde**: \"Delete o registro com `DeleteRow`, corrija o número e envie com `CreateRow` novamente. Use o formato `11 91234-5678`.\"\n\n---\n### 3. Aprovação e Ajustes\nUm agente enviou um lead com o link do Instagram contendo `/reels`.  \n**Você avalia e responde**: \"Esse link está incorreto. Remova a parte `/reels/xyz` e use apenas o link do perfil principal.\"\n\n---\n## ⚠️ REGRAS IMPORTANTES\n- Mantenha sempre uma **comunicação objetiva e didática** com todos os membros\n- Foco total na **qualidade dos dados**\n- Toda decisão deve respeitar os critérios do N1 e, em caso de exceção, você pode autorizar desde que registre a justificativa\n- **Se algo não puder ser resolvido internamente**, você é quem decide se escala para a coordenação do N2\n- Conheça as especificidades de cada função da sua equipe para orientar adequadamente\n\n---\n## 🧠 LEMBRETE FINAL\nVocê é o elo entre a operação e a excelência.  \nSua clareza, agilidade e precisão garantem a qualidade dos dados que sustentam as vendas.\n**Quando em dúvida, oriente. Quando houver erro, corrija. Quando o time acerta, reconheça.**\n\n*Lembre-se: Cada membro da sua equipe (Office Boy, Analista, Registrador e Copywriter) tem funções específicas, mas todos contribuem para o sucesso da operação N1.*"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          960,
+          304
+        ],
+        "id": "f8d04c84-c8cd-4a75-895f-732aa7b362a8",
+        "name": "Gestor"
+      },
+      {
+        "parameters": {
+          "content": "# SUPERVISOR",
+          "height": 500,
+          "width": 960,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          448,
+          208
+        ],
+        "typeVersion": 1,
+        "id": "89d4d36e-d8dd-49c1-8f8b-caa63c348a90",
+        "name": "Sticky Note4"
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "setor"
+              },
+              {
+                "name": "requisicao"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          560,
+          304
+        ],
+        "id": "68aa9222-2fad-4d36-a891-f689c6208180",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolThink",
+        "typeVersion": 1,
+        "position": [
+          1152,
+          528
+        ],
+        "id": "72899ac0-0474-4981-9606-94b0c4936ae5",
+        "name": "Think"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+                "name": "sessionId",
+                "value": "=history_n1",
+                "type": "string"
+              },
+              {
+                "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+                "name": "setor",
+                "value": "={{ $('When Executed by Another Workflow').item.json.setor }}",
+                "type": "string"
+              },
+              {
+                "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+                "name": "=requisicao",
+                "value": "={{ $('When Executed by Another Workflow').item.json.requisicao }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          768,
+          304
+        ],
+        "id": "804e7d18-72ee-45bd-bc7a-d8ae9175e3df",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "modelName": "=models/gemini-2.5-flash",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          832,
+          528
+        ],
+        "id": "23baaa1c-a27a-40e5-a1fe-4b5bca9e7cca",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "2frNUhHR1wicJVhl",
+            "name": "Google Gemini(PaLM) Api account | padrão"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Think": {
+        "ai_tool": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "Gestor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Gestor",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-28T01:11:51.400Z",
+        "id": 8,
+        "workflowId": "2a5d15fd-1158-4577-b457-898c4322a5d7",
+        "versionId": "fedf0913-15b6-41a3-9b54-26e4637b115f",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
