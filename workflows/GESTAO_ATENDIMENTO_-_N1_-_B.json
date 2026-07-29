@@ -1,9 +1,9 @@
 {
-  "id": "31c9a965-4f5d-46f3-b9ff-afe11d82276e",
+  "id": "66d64ced-63af-490b-be6b-8922e6bfafdf",
   "name": "GESTAO ATENDIMENTO - N1 - B",
   "description": null,
   "active": true,
-  "isArchived": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -183,15 +183,15 @@
     "timezone": "America/Sao_Paulo",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "4aeb90cf-4f98-47f9-bcc0-0b50af3c87a6",
+  "activeVersionId": "18ee7f36-a8ef-4955-bdb1-886171e845b2",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:55:47.867Z",
-      "createdAt": "2025-10-20T18:55:47.867Z",
+      "updatedAt": "2025-10-20T18:56:37.913Z",
+      "createdAt": "2025-10-20T18:56:37.913Z",
       "role": "workflow:owner",
-      "workflowId": "31c9a965-4f5d-46f3-b9ff-afe11d82276e",
+      "workflowId": "66d64ced-63af-490b-be6b-8922e6bfafdf",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -209,8 +209,8 @@
   "activeVersion": {
     "updatedAt": "2025-12-11T15:43:43.845Z",
     "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "4aeb90cf-4f98-47f9-bcc0-0b50af3c87a6",
-    "workflowId": "31c9a965-4f5d-46f3-b9ff-afe11d82276e",
+    "versionId": "18ee7f36-a8ef-4955-bdb1-886171e845b2",
+    "workflowId": "66d64ced-63af-490b-be6b-8922e6bfafdf",
     "nodes": [
       {
         "parameters": {
@@ -391,10 +391,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-28T01:10:09.326Z",
-        "id": 24,
-        "workflowId": "31c9a965-4f5d-46f3-b9ff-afe11d82276e",
-        "versionId": "4aeb90cf-4f98-47f9-bcc0-0b50af3c87a6",
+        "createdAt": "2025-10-27T21:43:35.409Z",
+        "id": 26,
+        "workflowId": "66d64ced-63af-490b-be6b-8922e6bfafdf",
+        "versionId": "18ee7f36-a8ef-4955-bdb1-886171e845b2",
         "event": "activated",
         "userId": null
       }
