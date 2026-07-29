@@ -1,9 +1,9 @@
 {
-  "id": "549c9d28-a36c-482d-8e99-07cdbbb22f82",
+  "id": "48e07e61-5d6f-4cb7-9903-1228c2887f1e",
   "name": "REGISTRADOR - N1 - D",
   "description": null,
   "active": true,
-  "isArchived": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -419,15 +419,15 @@
     "executionOrder": "v1",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "54089116-0f9e-4447-aebe-dd3d502d8f88",
+  "activeVersionId": "6d12b635-c1ee-4f68-841b-a105279d8977",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:57:08.403Z",
-      "createdAt": "2025-10-20T18:57:08.403Z",
+      "updatedAt": "2025-10-20T18:56:18.690Z",
+      "createdAt": "2025-10-20T18:56:18.690Z",
       "role": "workflow:owner",
-      "workflowId": "549c9d28-a36c-482d-8e99-07cdbbb22f82",
+      "workflowId": "48e07e61-5d6f-4cb7-9903-1228c2887f1e",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -445,8 +445,8 @@
   "activeVersion": {
     "updatedAt": "2025-12-11T15:43:43.845Z",
     "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "54089116-0f9e-4447-aebe-dd3d502d8f88",
-    "workflowId": "549c9d28-a36c-482d-8e99-07cdbbb22f82",
+    "versionId": "6d12b635-c1ee-4f68-841b-a105279d8977",
+    "workflowId": "48e07e61-5d6f-4cb7-9903-1228c2887f1e",
     "nodes": [
       {
         "parameters": {
@@ -864,10 +864,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-28T01:09:43.339Z",
-        "id": 45,
-        "workflowId": "549c9d28-a36c-482d-8e99-07cdbbb22f82",
-        "versionId": "54089116-0f9e-4447-aebe-dd3d502d8f88",
+        "createdAt": "2025-10-27T21:52:07.051Z",
+        "id": 25,
+        "workflowId": "48e07e61-5d6f-4cb7-9903-1228c2887f1e",
+        "versionId": "6d12b635-c1ee-4f68-841b-a105279d8977",
         "event": "activated",
         "userId": null
       }
