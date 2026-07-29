@@ -1,0 +1,933 @@
+{
+  "id": "404410b5-d788-4b6a-b18a-d6cc680cf165",
+  "name": "REGISTRADOR - N1 - C",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -224,
+        128
+      ],
+      "id": "9e67d597-2e9f-43d2-b91f-c9df326a97fe",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "content": "# REGISTRADOR",
+        "height": 508,
+        "width": 2084
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "8fda7b52-935b-42fd-84b8-25e538111ff5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+              "name": "sessionId",
+              "value": "=history_n1",
+              "type": "string"
+            },
+            {
+              "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+              "name": "comercio",
+              "value": "={{ $('When Executed by Another Workflow').first().json.comercio }}",
+              "type": "string"
+            },
+            {
+              "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+              "name": "=site",
+              "value": "={{ $('When Executed by Another Workflow').first().json.site }}",
+              "type": "string"
+            },
+            {
+              "id": "6033d420-6eed-4126-bc86-4193df25dc86",
+              "name": "whatsapp",
+              "value": "={{ $('When Executed by Another Workflow').first().json.whatsapp }}",
+              "type": "string"
+            },
+            {
+              "id": "14a8862d-cdd5-41fe-937d-dd578d6d7ba3",
+              "name": "descricao",
+              "value": "={{ $('When Executed by Another Workflow').first().json.descricao }}",
+              "type": "string"
+            },
+            {
+              "id": "f05e8c55-1ae0-4fa8-bb83-d57ed9cf0aa6",
+              "name": "seguidores",
+              "value": "={{ $('When Executed by Another Workflow').first().json.seguidores }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        736,
+        128
+      ],
+      "id": "56877f97-6631-4d4b-8520-9eed145f74c5",
+      "name": "SET1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ao6SMoJuG2SQkOKA",
+          "mode": "list",
+          "cachedResultName": "N2 - A"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1520,
+        128
+      ],
+      "id": "345a916a-b989-4050-b900-d4bc7726ecb3",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "databaseId": 269448,
+        "tableId": 632022,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        16,
+        128
+      ],
+      "id": "d4cba3d4-6c92-4d1d-b4a4-e7ec3ed02230",
+      "name": "Get many rows",
+      "alwaysOutputData": true,
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "databaseId": 269448,
+        "tableId": 632022,
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 5152510,
+              "fieldValue": "={{ $json.comercio }}"
+            },
+            {
+              "fieldId": 5152511,
+              "fieldValue": "={{ $json.site }}"
+            },
+            {
+              "fieldId": 5152520,
+              "fieldValue": "={{ $json.whatsapp }}"
+            },
+            {
+              "fieldId": 5152522,
+              "fieldValue": "={{ $json.descricao }}"
+            },
+            {
+              "fieldId": 5152523,
+              "fieldValue": "={{ $json.seguidores }}"
+            },
+            {
+              "fieldId": 5152524,
+              "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        976,
+        128
+      ],
+      "id": "55250c66-e22f-4a89-9ea6-bc193b8c2c56",
+      "name": "Create a row",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "46ee0913-05ca-4df7-8579-d7ed883674ac",
+              "leftValue": "={{ $json.comercio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1f0fe7f2-c275-445a-b3df-88cbd784596f",
+              "leftValue": "={{ $json.redeSocial }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0f5dde30-3797-4e69-b854-55ab9d3ce2ca",
+              "leftValue": "={{ $json.telefone }}",
+              "rightValue": "Incompleto",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "76dd81f1-2a98-4233-bd4b-8dbf9a3d29f9",
+              "leftValue": "={{ $json.descricao }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "5ea8b083-2067-4be1-98aa-97c84e34ed11",
+              "leftValue": "={{ $json.seguidores.toString() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "09333458-ccb3-4635-8b8c-212897186025",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1232,
+        128
+      ],
+      "id": "e724514d-2802-4595-9e3e-b3b11c435b07",
+      "name": "If Not Empty"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b7eb67cc-5995-4c6b-8082-e2951397afff",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.site }}",
+              "rightValue": "={{ $json.telefone }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "7e2b7bd6-19ad-49c1-9c43-9555854d2d5d",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.whatsapp }}",
+              "rightValue": "Incompleto",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        128
+      ],
+      "id": "5aa388b5-3555-49b5-bfc2-76428817955b",
+      "name": "Filter",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8c45d925-87f4-4dd1-972f-b2933d7d829c",
+              "leftValue": "={{ $json.telefone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        128
+      ],
+      "id": "c680b8b6-a079-47f7-a6a4-cffccca66a85",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        336
+      ],
+      "id": "a8bc0127-78c5-4801-8eb3-fb2960dc53c9",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET1": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
+            "node": "If Not Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Not Empty": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "SET1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "707b9846-e4d1-47da-a19c-d4c7d477816c",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:11.236Z",
+      "createdAt": "2025-10-20T18:56:11.236Z",
+      "role": "workflow:owner",
+      "workflowId": "404410b5-d788-4b6a-b18a-d6cc680cf165",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "707b9846-e4d1-47da-a19c-d4c7d477816c",
+    "workflowId": "404410b5-d788-4b6a-b18a-d6cc680cf165",
+    "nodes": [
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -224,
+          128
+        ],
+        "id": "9e67d597-2e9f-43d2-b91f-c9df326a97fe",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "content": "# REGISTRADOR",
+          "height": 508,
+          "width": 2084
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -320,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "8fda7b52-935b-42fd-84b8-25e538111ff5",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+                "name": "sessionId",
+                "value": "=history_n1",
+                "type": "string"
+              },
+              {
+                "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+                "name": "comercio",
+                "value": "={{ $('When Executed by Another Workflow').first().json.comercio }}",
+                "type": "string"
+              },
+              {
+                "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+                "name": "=site",
+                "value": "={{ $('When Executed by Another Workflow').first().json.site }}",
+                "type": "string"
+              },
+              {
+                "id": "6033d420-6eed-4126-bc86-4193df25dc86",
+                "name": "whatsapp",
+                "value": "={{ $('When Executed by Another Workflow').first().json.whatsapp }}",
+                "type": "string"
+              },
+              {
+                "id": "14a8862d-cdd5-41fe-937d-dd578d6d7ba3",
+                "name": "descricao",
+                "value": "={{ $('When Executed by Another Workflow').first().json.descricao }}",
+                "type": "string"
+              },
+              {
+                "id": "f05e8c55-1ae0-4fa8-bb83-d57ed9cf0aa6",
+                "name": "seguidores",
+                "value": "={{ $('When Executed by Another Workflow').first().json.seguidores }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          736,
+          128
+        ],
+        "id": "56877f97-6631-4d4b-8520-9eed145f74c5",
+        "name": "SET1"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "ao6SMoJuG2SQkOKA",
+            "mode": "list",
+            "cachedResultName": "N2 - A"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          1520,
+          128
+        ],
+        "id": "345a916a-b989-4050-b900-d4bc7726ecb3",
+        "name": "Execute Workflow1"
+      },
+      {
+        "parameters": {
+          "databaseId": 269448,
+          "tableId": 632022,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          16,
+          128
+        ],
+        "id": "d4cba3d4-6c92-4d1d-b4a4-e7ec3ed02230",
+        "name": "Get many rows",
+        "alwaysOutputData": true,
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "databaseId": 269448,
+          "tableId": 632022,
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 5152510,
+                "fieldValue": "={{ $json.comercio }}"
+              },
+              {
+                "fieldId": 5152511,
+                "fieldValue": "={{ $json.site }}"
+              },
+              {
+                "fieldId": 5152520,
+                "fieldValue": "={{ $json.whatsapp }}"
+              },
+              {
+                "fieldId": 5152522,
+                "fieldValue": "={{ $json.descricao }}"
+              },
+              {
+                "fieldId": 5152523,
+                "fieldValue": "={{ $json.seguidores }}"
+              },
+              {
+                "fieldId": 5152524,
+                "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          976,
+          128
+        ],
+        "id": "55250c66-e22f-4a89-9ea6-bc193b8c2c56",
+        "name": "Create a row",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "46ee0913-05ca-4df7-8579-d7ed883674ac",
+                "leftValue": "={{ $json.comercio }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "1f0fe7f2-c275-445a-b3df-88cbd784596f",
+                "leftValue": "={{ $json.redeSocial }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "0f5dde30-3797-4e69-b854-55ab9d3ce2ca",
+                "leftValue": "={{ $json.telefone }}",
+                "rightValue": "Incompleto",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              },
+              {
+                "id": "76dd81f1-2a98-4233-bd4b-8dbf9a3d29f9",
+                "leftValue": "={{ $json.descricao }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "5ea8b083-2067-4be1-98aa-97c84e34ed11",
+                "leftValue": "={{ $json.seguidores.toString() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "09333458-ccb3-4635-8b8c-212897186025",
+                "leftValue": "={{ $json.data }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1232,
+          128
+        ],
+        "id": "e724514d-2802-4595-9e3e-b3b11c435b07",
+        "name": "If Not Empty"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b7eb67cc-5995-4c6b-8082-e2951397afff",
+                "leftValue": "={{ $('When Executed by Another Workflow').item.json.site }}",
+                "rightValue": "={{ $json.telefone }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "7e2b7bd6-19ad-49c1-9c43-9555854d2d5d",
+                "leftValue": "={{ $('When Executed by Another Workflow').item.json.whatsapp }}",
+                "rightValue": "Incompleto",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          256,
+          128
+        ],
+        "id": "5aa388b5-3555-49b5-bfc2-76428817955b",
+        "name": "Filter",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "8c45d925-87f4-4dd1-972f-b2933d7d829c",
+                "leftValue": "={{ $json.telefone }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notExists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          464,
+          128
+        ],
+        "id": "c680b8b6-a079-47f7-a6a4-cffccca66a85",
+        "name": "If"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          736,
+          336
+        ],
+        "id": "a8bc0127-78c5-4801-8eb3-fb2960dc53c9",
+        "name": "No Operation, do nothing"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Get many rows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET1": {
+        "main": [
+          [
+            {
+              "node": "Create a row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many rows": {
+        "main": [
+          [
+            {
+              "node": "Filter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a row": {
+        "main": [
+          [
+            {
+              "node": "If Not Empty",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Not Empty": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "SET1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:53:41.831Z",
+        "id": 36,
+        "workflowId": "404410b5-d788-4b6a-b18a-d6cc680cf165",
+        "versionId": "707b9846-e4d1-47da-a19c-d4c7d477816c",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
