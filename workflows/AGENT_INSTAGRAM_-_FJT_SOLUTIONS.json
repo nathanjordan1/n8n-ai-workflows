@@ -1,0 +1,2617 @@
+{
+  "id": "e4797526-f274-4c66-a4f2-0e50f3b1fa33",
+  "name": "AGENT INSTAGRAM - FJT SOLUTIONS",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.query[\"hub.challenge\"] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        -1664,
+        176
+      ],
+      "id": "cbdaf2f7-b248-40ee-9a9e-414f29692a3e",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "{{ $env.NAME }}",
+              "value": "{{ $env.VALUE }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=recipient.id",
+              "value": "={{ $('SET DADOS MESSAGE').item.json.users }}"
+            },
+            {
+              "name": "message.text",
+              "value": "={{ $json.output.mensagem1 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2496,
+        64
+      ],
+      "id": "da759bf6-1876-401d-9d7b-27b0402bd3df",
+      "name": "SEND MESSAGE",
+      "retryOnFail": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c5943a19-edc1-46df-99a6-7ade82781112",
+                    "leftValue": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+                    "rightValue": "message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+                    "rightValue": "comment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "1d1311d2-4c81-4abd-8869-7b2006b9df50"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -720,
+        384
+      ],
+      "id": "d7764a89-f7dc-4d6b-b101-8de1c9131fa6",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{ $('Agent Comment').item.json.output.removeMarkdown() }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $('CREDENCIAL').item.json.acess_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        384,
+        1056
+      ],
+      "id": "ea92b1af-0e38-4275-bb4b-98c9097b5156",
+      "name": "REPLY COMMENT",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const entry = items[0].json.body.entry[0];\n\nif ('messaging' in entry) {\n  return [{ json: { ...items[0].json, eventType: 'message' } }];\n} \n\nif ('changes' in entry && entry.changes[0].field === 'comments') {\n  return [{ json: { ...items[0].json, eventType: 'comment' } }];\n}\n\nreturn [{ json: { ...items[0].json, eventType: 'unknown' } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1664,
+        384
+      ],
+      "id": "5573a0a0-1a5d-4dc4-8dc6-244dc69b1bba",
+      "name": "TRATAR DADOS WEBHOOK"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "adeae7e3-8f2a-493b-af5b-00a88cc5c6c9",
+              "name": "acess_token",
+              "value": "IGAAjJvXSgWodBZAGJhNGdnV3Rvdmw2RWdFdERlMUU2WDUwaEhpWU5kRkhTRERWWm1kelNtRXB4ZAGFWNUFPNlBZAQUdxUU9CLVphNGNoTEFTRG5STnpSSC1Tb2hsazhMUVF5QWNldFUyTlJaQnJyQm9vUk84SW45ZAHRSTklUVjdGOAZDZD",
+              "type": "string"
+            },
+            {
+              "id": "2ab63481-0f40-4b95-a340-a7f1786775d4",
+              "name": "acess_token_graph",
+              "value": "EAAZAYvsq8fnsBRBZACdKYDUOBGBmD156I79RsyKtHaqwrP7rsZBk7YbsKKiUKwZACUJXQMtyBTNUT6XBqPJ0xSOVDLSUpWenBWGyFc972E55lo7myxTZAUh1DE2gzc3CZCHXoXqVkyPJu6ku9rvXfyp7WbhRqfzTbxF11DChcdCesFQj6TplGHehUske7YvrXcG8kMaQLLzsh96PBHF2TkZCClbgtHOZCZCphzntQV0UZD",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -928,
+        384
+      ],
+      "id": "8a8ac3ef-4775-4f78-999d-cafb2b1f3bb8",
+      "name": "CREDENCIAL"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c9a1587e-0a7a-48af-9921-473297f430f1",
+              "name": "type",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+              "type": "string"
+            },
+            {
+              "id": "c4c78e5c-b72b-4b13-8812-c7f53c8ca039",
+              "name": "idComment",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].changes[0].value.id }}",
+              "type": "string"
+            },
+            {
+              "id": "545f7de6-f1b1-4c50-8cc2-9ce04574ac22",
+              "name": "nameUser",
+              "value": "{{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].changes[0].value.from.username }}",
+              "type": "string"
+            },
+            {
+              "id": "ac256e2a-c40d-43d8-86a3-719e985f39ee",
+              "name": "textUser",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].changes[0].value.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        1056
+      ],
+      "id": "d34bab33-37cb-43d8-9818-51f374904a4e",
+      "name": "SET DADOS COMMENT"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c9a1587e-0a7a-48af-9921-473297f430f1",
+              "name": "type",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+              "type": "string"
+            },
+            {
+              "id": "065daef9-6542-4a60-ac2b-d342e31bfeee",
+              "name": "me",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].id }}",
+              "type": "string"
+            },
+            {
+              "id": "2de60487-1150-4dae-97b7-4edaba6526ba",
+              "name": "users",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].messaging[0].sender.id }}",
+              "type": "string"
+            },
+            {
+              "id": "ac256e2a-c40d-43d8-86a3-719e985f39ee",
+              "name": "textUser",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].messaging[0].message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -496,
+        368
+      ],
+      "id": "555037c2-7fcb-46b5-95eb-6931696a1bb7",
+      "name": "SET DADOS MESSAGE"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8ddf5b3b-f941-4438-b747-083dbf693d6a",
+              "leftValue": "={{ $json.body[0].entry[0].changes[0].value.from.id }}",
+              "rightValue": "17841473321112579",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "7ac78e31-59e7-4f9f-b94c-d2e947a62543",
+              "leftValue": "={{ $json.body[0].entry[0].messaging[0].sender.id }}",
+              "rightValue": "17841473321112579",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -1152,
+        384
+      ],
+      "id": "2326e349-c315-4507-bb57-f2ecbefd4bb3",
+      "name": "FROM ME"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "body"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        384
+      ],
+      "id": "275d10db-c872-4159-90d9-b667c6a704f7",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "{{ $env.KEY }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        624
+      ],
+      "id": "c7042bd6-ed3e-4160-8c54-d25fc7b20519",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "=contaFJT_{{ $('SET BUFFER').item.json.msg.telefone }}",
+        "messageData": "={{ $('SET BUFFER').item.json.msg.toJsonString() }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        368
+      ],
+      "id": "1f2c2774-99d0-4b6d-b658-a7a9373dacdc",
+      "name": "SEND",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "LIST_ARRAY",
+        "key": "{{ $env.KEY }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        192,
+        304
+      ],
+      "id": "5199b262-dd27-472a-b92b-0c5dfbe053c3",
+      "name": "SEARCH",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "{{ $env.KEY }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        640,
+        208
+      ],
+      "id": "9a68483b-99dd-4eca-8a23-ece3f16c2d28",
+      "name": "DELETE LIST",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a278ed7-292a-4a2e-a5ab-ffd42fcee7ff",
+              "name": "LIST_ARRAY",
+              "value": "={{ $('SWITCH1').item.json.LIST_ARRAY.map(text => JSON.parse(text).text).join('\\n') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        80
+      ],
+      "id": "59b96cec-a6c5-4ab8-891d-367b8abf4de1",
+      "name": "SET TEXT"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        384
+      ],
+      "id": "ce269a40-6c48-4a16-a2a2-a384092e8966",
+      "name": "WAIT 5'"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "291b7280-8ff5-4b0d-b527-9d8e9152524a",
+                    "leftValue": "={{ JSON.parse($json.LIST_ARRAY.first()).idMsg }}",
+                    "rightValue": "={{ $('SET BUFFER').item.json.msg.idMsg }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "END"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f1704035-9476-476a-90c4-f59527e60e76",
+                    "leftValue": "={{ JSON.parse($json.LIST_ARRAY.last()).timeStamp }}",
+                    "rightValue": "={{ $now.minus(2, 'minutes') }}",
+                    "operator": {
+                      "type": "dateTime",
+                      "operation": "before"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "GO"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "WAIT"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        208
+      ],
+      "id": "549beacf-ef67-4eee-9053-a7746c1ba66c",
+      "name": "SWITCH1"
+    },
+    {
+      "parameters": {
+        "content": "## BUFFER MENSAGENS",
+        "height": 620,
+        "width": 1520
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "276c7abc-11b6-4949-b7c7-b20eb7849490",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        640,
+        0
+      ],
+      "id": "adb1dcab-9cbb-48c6-aecd-3502d98388c2",
+      "name": "NOTHING"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "53dcdd72-e00e-4ffe-a16e-693fd510958b",
+              "name": "msg.telefone",
+              "value": "={{ $json.users }}",
+              "type": "string"
+            },
+            {
+              "id": "89953d41-72d6-4739-b9c3-ca1bfbde77bd",
+              "name": "msg.idMsg",
+              "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].messaging[0].message.mid }}",
+              "type": "string"
+            },
+            {
+              "id": "4840db83-ed4c-4cc3-9161-9e016518c976",
+              "name": "msg.text",
+              "value": "={{ $json.textUser }}",
+              "type": "string"
+            },
+            {
+              "id": "e4a7df18-3d69-4aab-9c95-f9d2fb20442e",
+              "name": "msg.timeStamp",
+              "value": "={{ $('Webhook').item.json.body.entry[0].messaging[0].timestamp.toDateTime().toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -256,
+        368
+      ],
+      "id": "978d2dd7-bec6-49fb-9a38-68bcae65e5dc",
+      "name": "SET BUFFER"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"mensagem1\": \"\",\n  \"mensagem2\": \"\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1856,
+        320
+      ],
+      "id": "c2af9973-79a1-4360-b098-f1d6d76f836d",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "errorMessage": "please check your plan and billing details"
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2496,
+        240
+      ],
+      "id": "b54c5861-b28d-44af-be1e-dd4d52a5d8cf",
+      "name": "ERROR"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "{{ $env.NAME }}",
+              "value": "{{ $env.VALUE }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=recipient.id",
+              "value": "={{ $('SET DADOS MESSAGE').item.json.users }}"
+            },
+            {
+              "name": "message.text",
+              "value": "={{ $('IF MSG EXIST').item.json.output.mensagem2 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2736,
+        64
+      ],
+      "id": "92f643af-bc43-4092-acab-ee0c07d2cc9c",
+      "name": "SEND MESSAGE1",
+      "retryOnFail": false,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.mensagem1 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "id": "4846159c-212f-4ab7-93f2-64c866d1eda2"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1a99087e-7fed-4f89-bff5-c4cfeab553ea",
+                    "leftValue": "={{ $json.output.mensagem1 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "90adca6f-6c39-4c42-930a-5a182625bec1",
+                    "leftValue": "={{ $('Agent DM').item.json.output.toJsonString() }}",
+                    "rightValue": "You exceeded your current quota, please check your plan and billing details",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2112,
+        64
+      ],
+      "id": "998b63c7-ca22-448a-ad4a-fa9a5c910373",
+      "name": "IF MSG EXIST"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Chame essa tool quando for necessario realizar um agendamento",
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "solicitacao",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Campo especifico para a solicitação do vendedor`, 'string') }}"
+            },
+            {
+              "name": "titulo",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `Campo especifico para aplicar o titulo da reunião`, 'string') }}"
+            },
+            {
+              "name": "descricao",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `Campo especifico para aplicar a descrição da reunião`, 'string') }}"
+            },
+            {
+              "name": "data",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters5_Value', `Campo especifico para aplicar a data da reunião`, 'string') }}"
+            },
+            {
+              "name": "hora",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters6_Value', `Campo especifico para aplicar o horário da reunião`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1664,
+        320
+      ],
+      "id": "ac7d4a1b-a1ee-4793-b55d-8ed10e52b7c3",
+      "name": "AGENT_AGENDAMENTO"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('SET DADOS COMMENT').item.json.textUser }}",
+        "options": {
+          "systemMessage": "=# FUNÇÃO\nSua função é responder aos comentários nas publicações do Instagram da **FJT Solutions**.\n\n# IDENTIDADE\nVocê é **Amanda**, representante da **FJT Solutions**, empresa especializada em automações com inteligência artificial.  \nAmanda é comunicativa, clara e objetiva, mas sempre acolhedora. Sua missão é mostrar o valor das soluções da FJT Solutions, engajar nos comentários e estimular o público a conhecer melhor os serviços via DM.\n\n# TOM DE VOZ\n- Profissional, mas próximo\n- Acolhedor e humano\n- Inspirador (mostrar benefícios da IA de forma simples)\n- Incentivador (convida a continuar a conversa na DM)\n\n# REGRAS\n1. Você **sempre** deve trazer a resposta final, e nada mais. Nunca diga sua análise sobre o comentário, apenas a resposta.  \n2. Você **nunca** deve dizer que é uma IA. Você está respondendo como Amanda da FJT Solutions.  \n3. Não forneça explicações técnicas complexas nos comentários.  \n4. Sempre estimule a pessoa a continuar a conversa na DM.  \n\n# OUTPUT\nTraga o output apenas com a resposta para o comentário."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        1056
+      ],
+      "id": "e3628ec7-00cc-4ffd-983e-9afa0aedadfb",
+      "name": "Agent Comment"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 1136,
+        "width": 3408,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2016,
+        144
+      ],
+      "typeVersion": 1,
+      "id": "bd242699-a470-4e17-b321-c19a7d4cc202",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{ $env.SESSIONKEY }}",
+        "tableName": "=contaFJTMemory_{{ $('TRATAR DADOS WEBHOOK').first().json.body.entry[0].messaging[0].sender.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1424,
+        320
+      ],
+      "id": "165c8e94-8b8a-4320-9ed4-cd2c99ab2091",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "{{ $env.REDACTED_SECRET }}",
+          "mode": "list",
+          "cachedResultName": "{{ $env.REDACTED_SECRET }}"
+        },
+        "deleteCommand": "delete",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        848,
+        640
+      ],
+      "id": "ba513a21-4860-476c-8e69-ce8b5a7e3940",
+      "name": "Delete table or rows",
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "agentFJT",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1952,
+        176
+      ],
+      "id": "1b57cda3-4957-4c41-8b11-a9136f047aca",
+      "name": "Webhook Validação",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        1264
+      ],
+      "id": "e3b60a6f-84e6-4cec-b4ea-d704de58dfb6",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | Jordan"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agentFJT",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1952,
+        384
+      ],
+      "id": "26015f47-16d2-4cf9-9240-834e011f32ac",
+      "name": "Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('SET DADOS MESSAGE').item.json.textUser }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# AMANDA - FJT SOLUTIONS\n\n# DATA ATUAL: {{ $now.format('dd-MM-yyyy HH:mm:ss') }}\n\n## 🎭 IDENTIDADE E PAPEL\n\nVocê representa **Amanda**, responsável por responder mensagens diretas do Instagram da **FJT Solutions**, empresa especializada em **automações com inteligência artificial** para negócios.  \n\nAmanda é comunicativa, clara e objetiva, mas sempre acolhedora. Sua missão é mostrar o valor das soluções da FJT Solutions, orientar os interessados e facilitar o contato comercial.\n\nVocê acredita que a IA pode transformar empresas, otimizando tempo, reduzindo custos e aumentando resultados.  \n\n## 🎯 FUNÇÃO\n\nResponder mensagens diretas no Instagram da FJT Solutions com empatia, precisão e tom humano, mantendo a identidade de Amanda.  \nO objetivo é:\n- Entender o interesse do lead\n- Explicar brevemente como a FJT pode ajudar\n- Qualificar o contato\n- Quando o lead demonstrar interesse claro, **facilitar IMEDIATAMENTE o agendamento com a equipe comercial**, usando as tools disponíveis.\n\n## ⚙️ ESTILO DE RESPOSTA — RIGOR\n\n- Ajuste o tamanho e profundidade da resposta proporcionalmente ao que o usuário escreveu.\n- Use emojis apenas se a pessoa enviar mensagem amigável ou mais descontraída (ex: \"Oi\", \"Olá\", \"Bom dia\").\n- Para mensagens muito curtas ou neutras, responda de forma breve e sem emoji.\n- Evite explicações técnicas longas antes de entender o contexto do lead.\n\n## 📏 EXEMPLOS DE AJUSTE POR RAPPORT\n\n- Pessoa: \"Oi\"  \n  Resposta: \"Oi! Tudo bem? 😊\"\n\n- Pessoa: \"Boa tarde\"  \n  Resposta: \"Boa tarde! Como posso te ajudar? 😊\"\n\n- Pessoa: \"...\" ou mensagem sem conteúdo  \n  Resposta: \"Olá!\"\n\n- Pessoa: \"Quero entender melhor sobre automação\"  \n  Resposta: \"Claro! Me conta rapidinho qual área do seu negócio você gostaria de automatizar.\"\n\n- Pessoa: \"Quanto custa uma automação de WhatsApp?\"  \n  Resposta: \"Ótima pergunta! Os valores variam conforme a necessidade de cada empresa. Podemos marcar uma conversa rápida com nosso time comercial para entender seu caso. Qual dia e horário seria melhor para você?\" **[PERGUNTAR DIA E HORA]**\n\n## 📌 QUANDO CHAMAR A TOOL DE AGENDAMENTO\n\n### FERRAMENTAS DISPONÍVEIS\n- Nome da Tool: AGENT_AGENDAMENTO\n- Função: Agendar reunião comercial automaticamente quando o lead confirma interesse explícito\n\n**SINAIS DE INTERESSE (PERGUNTE DIA E HORA):**\n- \"Quero saber valores\"\n- \"Tenho interesse\"\n- \"Quero uma reunião\"\n- \"Podemos conversar?\"\n- \"Preciso de automação\"\n- \"Me manda mais detalhes\"\n- Perguntas sobre preço, valor, horários ou como funciona\n\n**QUANDO DETECTAR INTERESSE → PERGUNTE:**\n- \"Qual dia e horário seria melhor para você?\"\n- \"Que dia da semana funciona melhor? E qual horário?\"\n- \"Me conta qual dia e hora você prefere para conversar com nosso time.\"\n\n**APENAS CHAME A TOOL QUANDO O LEAD INFORMAR DIA/HORA:**\n- \"Segunda-feira de manhã\"\n- \"Terça às 14h\"\n- \"Quinta-feira à tarde\"\n- \"Sexta às 10h\"\n\n**FLUXO CORRETO:**\n1. **Detecta interesse** → Pergunta dia e hora  \n2. **Lead informa dia/hora** → USA A TOOL DE AGENDAMENTO → Envie o link da reunião após êxito  \n3. **Lead não informa** → Continue a conversa de forma natural  \n\n## FUNCIONALIDADE DE CANCELAMENTO E GESTÃO DE REUNIÕES\n\n### CANCELAMENTO E REAGENDAMENTO\n\nQuando o lead solicitar cancelamento, reagendamento ou alteração de reunião:\n- \"Preciso cancelar\"\n- \"Podemos reagendar?\"\n- \"Não consigo no horário marcado\"\n- \"Surgiu um imprevisto\"\n\n**PROCESSO:**\n- Confirme sempre com empatia e ofereça opção de reagendar:\n  - \"Sem problema! Vou cancelar e podemos reagendar quando for melhor pra você.\"\n  - \"Entendo perfeitamente, imprevistos acontecem! Podemos reagendar em outro horário.\"\n\n## PROCESSO DE ANÁLISE (Execute nesta ordem)\n\n### 1. ANÁLISE DE INTERESSE E CONFIRMAÇÃO\n- Se há sinais de interesse em reunião → PERGUNTE dia e hora\n- Se não há → Continue explorando a necessidade\n\n### 2. ANÁLISE DE CONTEXTO E ESTÁGIO DA CONVERSA\n- É a primeira interação? Já houve troca antes?\n- Saudação personalizada só na primeira vez (\"Olá [nome]!\")\n\n### 3. ANÁLISE DE FLUIDEZ\n- Responda sempre referenciando a última mensagem do lead\n\n### 4. CLASSIFICAÇÃO DE HUMOR E PERFIL\n- Humor: Positivo, Neutro, Negativo\n- Perfil: Expansivo, Conciso, Equilibrado\n\n### 5. ESTRATÉGIA DE RESPOSTA\n- Adapte tom e profundidade\n- Se detectar interesse: pergunte dia/hora **imediatamente**\n\n## INSTRUÇÕES DE EXECUÇÃO\n\n- Seja autônoma: Amanda decide títulos, descrições e horários das reuniões\n- Nunca peça ao lead detalhes técnicos sobre ferramentas\n- Sempre pergunte dia/hora antes de usar a tool\n- Use o AGENT_AGENDAMENTO após receber dia/hora\n- Para cancelamentos: use a tool de cancelamento conforme necessário\n\n## 🚫 NUNCA\n- Responda com blocos longos se o lead falou pouco\n- Use linguagem robótica\n- Demore para perguntar dia/hora quando há interesse claro\n- Use a tool sem antes confirmar dia/hora\n\n**IMPORTANTE:** A tool só pode ser chamada quando o lead informar dia e hora específicos.\n\nFORMATO DE SAÍDA OBRIGATÓRIO\nSua resposta final DEVE SER estritamente um objeto JSON válido.\n\nFormato:\n{\n  \"mensagem1\": \"\",\n  \"mensagem2\": \"\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1376,
+        80
+      ],
+      "id": "433910b2-b10d-4ef9-9a6f-0b7fab1147fe",
+      "name": "Agent DM",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "Mudar ID conta remetente",
+        "height": 224,
+        "width": 208,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1200,
+        304
+      ],
+      "typeVersion": 1,
+      "id": "95e94ff6-9601-49e2-ba34-5052f49c79e8",
+      "name": "Sticky Note1"
+    }
+  ],
+  "connections": {
+    "SEND MESSAGE": {
+      "main": [
+        [
+          {
+            "node": "SEND MESSAGE1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "SET DADOS MESSAGE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SET DADOS COMMENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TRATAR DADOS WEBHOOK": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREDENCIAL": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET DADOS COMMENT": {
+      "main": [
+        [
+          {
+            "node": "Agent Comment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET DADOS MESSAGE": {
+      "main": [
+        [
+          {
+            "node": "SET BUFFER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FROM ME": {
+      "main": [
+        [
+          {
+            "node": "CREDENCIAL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "FROM ME",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEND": {
+      "main": [
+        [
+          {
+            "node": "SEARCH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEARCH": {
+      "main": [
+        [
+          {
+            "node": "SWITCH1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DELETE LIST": {
+      "main": [
+        [
+          {
+            "node": "SET TEXT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET TEXT": {
+      "main": [
+        [
+          {
+            "node": "Agent DM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAIT 5'": {
+      "main": [
+        [
+          {
+            "node": "SEARCH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SWITCH1": {
+      "main": [
+        [
+          {
+            "node": "NOTHING",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DELETE LIST",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WAIT 5'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET BUFFER": {
+      "main": [
+        [
+          {
+            "node": "SEND",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent DM",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF MSG EXIST": {
+      "main": [
+        [
+          {
+            "node": "SEND MESSAGE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agent DM",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ERROR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AGENT_AGENDAMENTO": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent DM",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent Comment": {
+      "main": [
+        [
+          {
+            "node": "REPLY COMMENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agent DM",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Validação": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent Comment",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agent DM",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "TRATAR DADOS WEBHOOK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent DM": {
+      "main": [
+        [
+          {
+            "node": "IF MSG EXIST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "8d4e4a54-d90d-4056-9d56-938de410141f",
+  "versionCounter": 108,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:30.358Z",
+      "createdAt": "2025-10-20T18:56:30.358Z",
+      "role": "workflow:owner",
+      "workflowId": "e4797526-f274-4c66-a4f2-0e50f3b1fa33",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-04-08T05:56:03.911Z",
+    "createdAt": "2026-04-08T05:55:51.318Z",
+    "versionId": "8d4e4a54-d90d-4056-9d56-938de410141f",
+    "workflowId": "e4797526-f274-4c66-a4f2-0e50f3b1fa33",
+    "nodes": [
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "={{ $json.query[\"hub.challenge\"] }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.3,
+        "position": [
+          -1664,
+          176
+        ],
+        "id": "cbdaf2f7-b248-40ee-9a9e-414f29692a3e",
+        "name": "Respond to Webhook"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://graph.instagram.com/v22.0/{{ $('SET DADOS MESSAGE').item.json.me }}/messages",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $('CREDENCIAL').item.json.acess_token }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "=recipient.id",
+                "value": "={{ $('SET DADOS MESSAGE').item.json.users }}"
+              },
+              {
+                "name": "message.text",
+                "value": "={{ $json.output.mensagem1 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2496,
+          64
+        ],
+        "id": "da759bf6-1876-401d-9d7b-27b0402bd3df",
+        "name": "SEND MESSAGE",
+        "retryOnFail": false,
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "c5943a19-edc1-46df-99a6-7ade82781112",
+                      "leftValue": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+                      "rightValue": "message",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "messages"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+                      "rightValue": "comment",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      },
+                      "id": "1d1311d2-4c81-4abd-8869-7b2006b9df50"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "comments"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -720,
+          384
+        ],
+        "id": "d7764a89-f7dc-4d6b-b101-8de1c9131fa6",
+        "name": "Switch"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://graph.instagram.com/v21.0/{{ $('SET DADOS COMMENT').item.json.idComment }}/replies",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "message",
+                "value": "={{ $('Agent Comment').item.json.output.removeMarkdown() }}"
+              },
+              {
+                "name": "access_token",
+                "value": "={{ $('CREDENCIAL').item.json.acess_token }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          384,
+          1056
+        ],
+        "id": "ea92b1af-0e38-4275-bb4b-98c9097b5156",
+        "name": "REPLY COMMENT",
+        "retryOnFail": true,
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "jsCode": "const entry = items[0].json.body.entry[0];\n\nif ('messaging' in entry) {\n  return [{ json: { ...items[0].json, eventType: 'message' } }];\n} \n\nif ('changes' in entry && entry.changes[0].field === 'comments') {\n  return [{ json: { ...items[0].json, eventType: 'comment' } }];\n}\n\nreturn [{ json: { ...items[0].json, eventType: 'unknown' } }];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -1664,
+          384
+        ],
+        "id": "5573a0a0-1a5d-4dc4-8dc6-244dc69b1bba",
+        "name": "TRATAR DADOS WEBHOOK"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "adeae7e3-8f2a-493b-af5b-00a88cc5c6c9",
+                "name": "acess_token",
+                "value": "IGAAjJvXSgWodBZAGJhNGdnV3Rvdmw2RWdFdERlMUU2WDUwaEhpWU5kRkhTRERWWm1kelNtRXB4ZAGFWNUFPNlBZAQUdxUU9CLVphNGNoTEFTRG5STnpSSC1Tb2hsazhMUVF5QWNldFUyTlJaQnJyQm9vUk84SW45ZAHRSTklUVjdGOAZDZD",
+                "type": "string"
+              },
+              {
+                "id": "2ab63481-0f40-4b95-a340-a7f1786775d4",
+                "name": "acess_token_graph",
+                "value": "EAAZAYvsq8fnsBRBZACdKYDUOBGBmD156I79RsyKtHaqwrP7rsZBk7YbsKKiUKwZACUJXQMtyBTNUT6XBqPJ0xSOVDLSUpWenBWGyFc972E55lo7myxTZAUh1DE2gzc3CZCHXoXqVkyPJu6ku9rvXfyp7WbhRqfzTbxF11DChcdCesFQj6TplGHehUske7YvrXcG8kMaQLLzsh96PBHF2TkZCClbgtHOZCZCphzntQV0UZD",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -928,
+          384
+        ],
+        "id": "8a8ac3ef-4775-4f78-999d-cafb2b1f3bb8",
+        "name": "CREDENCIAL"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "c9a1587e-0a7a-48af-9921-473297f430f1",
+                "name": "type",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+                "type": "string"
+              },
+              {
+                "id": "c4c78e5c-b72b-4b13-8812-c7f53c8ca039",
+                "name": "idComment",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].changes[0].value.id }}",
+                "type": "string"
+              },
+              {
+                "id": "545f7de6-f1b1-4c50-8cc2-9ce04574ac22",
+                "name": "nameUser",
+                "value": "{{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].changes[0].value.from.username }}",
+                "type": "string"
+              },
+              {
+                "id": "ac256e2a-c40d-43d8-86a3-719e985f39ee",
+                "name": "textUser",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].changes[0].value.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -304,
+          1056
+        ],
+        "id": "d34bab33-37cb-43d8-9818-51f374904a4e",
+        "name": "SET DADOS COMMENT"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "c9a1587e-0a7a-48af-9921-473297f430f1",
+                "name": "type",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.eventType }}",
+                "type": "string"
+              },
+              {
+                "id": "065daef9-6542-4a60-ac2b-d342e31bfeee",
+                "name": "me",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].id }}",
+                "type": "string"
+              },
+              {
+                "id": "2de60487-1150-4dae-97b7-4edaba6526ba",
+                "name": "users",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].messaging[0].sender.id }}",
+                "type": "string"
+              },
+              {
+                "id": "ac256e2a-c40d-43d8-86a3-719e985f39ee",
+                "name": "textUser",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].messaging[0].message.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -496,
+          368
+        ],
+        "id": "555037c2-7fcb-46b5-95eb-6931696a1bb7",
+        "name": "SET DADOS MESSAGE"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "8ddf5b3b-f941-4438-b747-083dbf693d6a",
+                "leftValue": "={{ $json.body[0].entry[0].changes[0].value.from.id }}",
+                "rightValue": "17841473321112579",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              },
+              {
+                "id": "7ac78e31-59e7-4f9f-b94c-d2e947a62543",
+                "leftValue": "={{ $json.body[0].entry[0].messaging[0].sender.id }}",
+                "rightValue": "17841473321112579",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          -1152,
+          384
+        ],
+        "id": "2326e349-c315-4507-bb57-f2ecbefd4bb3",
+        "name": "FROM ME"
+      },
+      {
+        "parameters": {
+          "fieldsToAggregate": {
+            "fieldToAggregate": [
+              {
+                "fieldToAggregate": "body"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          -1440,
+          384
+        ],
+        "id": "275d10db-c872-4159-90d9-b667c6a704f7",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "key": "contaFJT_1329401948583835"
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          1056,
+          624
+        ],
+        "id": "c7042bd6-ed3e-4160-8c54-d25fc7b20519",
+        "name": "Redis",
+        "credentials": {
+          "redis": {
+            "id": "pA9GTQUsH9RXmwh0",
+            "name": "Redis account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "push",
+          "list": "=contaFJT_{{ $('SET BUFFER').item.json.msg.telefone }}",
+          "messageData": "={{ $('SET BUFFER').item.json.msg.toJsonString() }}",
+          "tail": true
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          -64,
+          368
+        ],
+        "id": "1f2c2774-99d0-4b6d-b658-a7a9373dacdc",
+        "name": "SEND",
+        "credentials": {
+          "redis": {
+            "id": "pA9GTQUsH9RXmwh0",
+            "name": "Redis account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "propertyName": "LIST_ARRAY",
+          "key": "=contaFJT_{{ $('SET BUFFER').item.json.msg.telefone }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          192,
+          304
+        ],
+        "id": "5199b262-dd27-472a-b92b-0c5dfbe053c3",
+        "name": "SEARCH",
+        "credentials": {
+          "redis": {
+            "id": "pA9GTQUsH9RXmwh0",
+            "name": "Redis account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "key": "=contaFJT_{{ $('SET BUFFER').item.json.msg.telefone }}"
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          640,
+          208
+        ],
+        "id": "9a68483b-99dd-4eca-8a23-ece3f16c2d28",
+        "name": "DELETE LIST",
+        "credentials": {
+          "redis": {
+            "id": "pA9GTQUsH9RXmwh0",
+            "name": "Redis account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "2a278ed7-292a-4a2e-a5ab-ffd42fcee7ff",
+                "name": "LIST_ARRAY",
+                "value": "={{ $('SWITCH1').item.json.LIST_ARRAY.map(text => JSON.parse(text).text).join('\\n') }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1024,
+          80
+        ],
+        "id": "59b96cec-a6c5-4ab8-891d-367b8abf4de1",
+        "name": "SET TEXT"
+      },
+      {
+        "parameters": {
+          "amount": 2,
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          640,
+          384
+        ],
+        "id": "ce269a40-6c48-4a16-a2a2-a384092e8966",
+        "name": "WAIT 5'",
+        "webhookId": "70401fe1-ca5c-4fa8-a914-59684e2f9829"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "291b7280-8ff5-4b0d-b527-9d8e9152524a",
+                      "leftValue": "={{ JSON.parse($json.LIST_ARRAY.first()).idMsg }}",
+                      "rightValue": "={{ $('SET BUFFER').item.json.msg.idMsg }}",
+                      "operator": {
+                        "type": "string",
+                        "operation": "notEquals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "END"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "f1704035-9476-476a-90c4-f59527e60e76",
+                      "leftValue": "={{ JSON.parse($json.LIST_ARRAY.last()).timeStamp }}",
+                      "rightValue": "={{ $now.minus(2, 'minutes') }}",
+                      "operator": {
+                        "type": "dateTime",
+                        "operation": "before"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "GO"
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra",
+            "renameFallbackOutput": "WAIT"
+          }
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          416,
+          208
+        ],
+        "id": "549beacf-ef67-4eee-9053-a7746c1ba66c",
+        "name": "SWITCH1"
+      },
+      {
+        "parameters": {
+          "content": "## BUFFER MENSAGENS",
+          "height": 620,
+          "width": 1520
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -336,
+          -16
+        ],
+        "typeVersion": 1,
+        "id": "276c7abc-11b6-4949-b7c7-b20eb7849490",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          640,
+          0
+        ],
+        "id": "adb1dcab-9cbb-48c6-aecd-3502d98388c2",
+        "name": "NOTHING"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "53dcdd72-e00e-4ffe-a16e-693fd510958b",
+                "name": "msg.telefone",
+                "value": "={{ $json.users }}",
+                "type": "string"
+              },
+              {
+                "id": "89953d41-72d6-4739-b9c3-ca1bfbde77bd",
+                "name": "msg.idMsg",
+                "value": "={{ $('TRATAR DADOS WEBHOOK').item.json.body.entry[0].messaging[0].message.mid }}",
+                "type": "string"
+              },
+              {
+                "id": "4840db83-ed4c-4cc3-9161-9e016518c976",
+                "name": "msg.text",
+                "value": "={{ $json.textUser }}",
+                "type": "string"
+              },
+              {
+                "id": "e4a7df18-3d69-4aab-9c95-f9d2fb20442e",
+                "name": "msg.timeStamp",
+                "value": "={{ $('Webhook').item.json.body.entry[0].messaging[0].timestamp.toDateTime().toISO() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -256,
+          368
+        ],
+        "id": "978d2dd7-bec6-49fb-9a38-68bcae65e5dc",
+        "name": "SET BUFFER"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n  \"mensagem1\": \"\",\n  \"mensagem2\": \"\"\n}",
+          "autoFix": true
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1856,
+          320
+        ],
+        "id": "c2af9973-79a1-4360-b098-f1d6d76f836d",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "errorMessage": "please check your plan and billing details"
+        },
+        "type": "n8n-nodes-base.stopAndError",
+        "typeVersion": 1,
+        "position": [
+          2496,
+          240
+        ],
+        "id": "b54c5861-b28d-44af-be1e-dd4d52a5d8cf",
+        "name": "ERROR"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://graph.instagram.com/v22.0/{{ $('SET DADOS MESSAGE').item.json.me }}/messages",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $('CREDENCIAL').item.json.acess_token }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "=recipient.id",
+                "value": "={{ $('SET DADOS MESSAGE').item.json.users }}"
+              },
+              {
+                "name": "message.text",
+                "value": "={{ $('IF MSG EXIST').item.json.output.mensagem2 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2736,
+          64
+        ],
+        "id": "92f643af-bc43-4092-acab-ee0c07d2cc9c",
+        "name": "SEND MESSAGE1",
+        "retryOnFail": false,
+        "alwaysOutputData": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.output.mensagem1 }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "notEmpty",
+                        "singleValue": true
+                      },
+                      "id": "4846159c-212f-4ab7-93f2-64c866d1eda2"
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "CONTINUE"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "1a99087e-7fed-4f89-bff5-c4cfeab553ea",
+                      "leftValue": "={{ $json.output.mensagem1 }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "empty",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "REPEAT"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "90adca6f-6c39-4c42-930a-5a182625bec1",
+                      "leftValue": "={{ $('Agent DM').item.json.output.toJsonString() }}",
+                      "rightValue": "You exceeded your current quota, please check your plan and billing details",
+                      "operator": {
+                        "type": "string",
+                        "operation": "contains"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "LIMITE RATE"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          2112,
+          64
+        ],
+        "id": "998b63c7-ca22-448a-ad4a-fa9a5c910373",
+        "name": "IF MSG EXIST"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Chame essa tool quando for necessario realizar um agendamento",
+          "method": "POST",
+          "url": "https://develop.n8n.fjt-solutions.com/webhook/agendamento2",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "solicitacao",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Campo especifico para a solicitação do vendedor`, 'string') }}"
+              },
+              {
+                "name": "titulo",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters3_Value', `Campo especifico para aplicar o titulo da reunião`, 'string') }}"
+              },
+              {
+                "name": "descricao",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `Campo especifico para aplicar a descrição da reunião`, 'string') }}"
+              },
+              {
+                "name": "data",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters5_Value', `Campo especifico para aplicar a data da reunião`, 'string') }}"
+              },
+              {
+                "name": "hora",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters6_Value', `Campo especifico para aplicar o horário da reunião`, 'string') }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          1664,
+          320
+        ],
+        "id": "ac7d4a1b-a1ee-4793-b55d-8ed10e52b7c3",
+        "name": "AGENT_AGENDAMENTO"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('SET DADOS COMMENT').item.json.textUser }}",
+          "options": {
+            "systemMessage": "=# FUNÇÃO\nSua função é responder aos comentários nas publicações do Instagram da **FJT Solutions**.\n\n# IDENTIDADE\nVocê é **Amanda**, representante da **FJT Solutions**, empresa especializada em automações com inteligência artificial.  \nAmanda é comunicativa, clara e objetiva, mas sempre acolhedora. Sua missão é mostrar o valor das soluções da FJT Solutions, engajar nos comentários e estimular o público a conhecer melhor os serviços via DM.\n\n# TOM DE VOZ\n- Profissional, mas próximo\n- Acolhedor e humano\n- Inspirador (mostrar benefícios da IA de forma simples)\n- Incentivador (convida a continuar a conversa na DM)\n\n# REGRAS\n1. Você **sempre** deve trazer a resposta final, e nada mais. Nunca diga sua análise sobre o comentário, apenas a resposta.  \n2. Você **nunca** deve dizer que é uma IA. Você está respondendo como Amanda da FJT Solutions.  \n3. Não forneça explicações técnicas complexas nos comentários.  \n4. Sempre estimule a pessoa a continuar a conversa na DM.  \n\n# OUTPUT\nTraga o output apenas com a resposta para o comentário."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          -48,
+          1056
+        ],
+        "id": "e3628ec7-00cc-4ffd-983e-9afa0aedadfb",
+        "name": "Agent Comment"
+      },
+      {
+        "parameters": {
+          "content": "",
+          "height": 1136,
+          "width": 3408,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -2016,
+          144
+        ],
+        "typeVersion": 1,
+        "id": "bd242699-a470-4e17-b321-c19a7d4cc202",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "=contaFJTMemory_{{ $('TRATAR DADOS WEBHOOK').first().json.body.entry[0].messaging[0].sender.id }}",
+          "tableName": "=contaFJTMemory_{{ $('TRATAR DADOS WEBHOOK').first().json.body.entry[0].messaging[0].sender.id }}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          1424,
+          320
+        ],
+        "id": "165c8e94-8b8a-4320-9ed4-cd2c99ab2091",
+        "name": "Postgres Chat Memory",
+        "credentials": {
+          "postgres": {
+            "id": "P4JMbcmfsHFR3DkO",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "deleteTable",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "{{ $env.REDACTED_SECRET }}@s.whatsapp.net",
+            "mode": "list",
+            "cachedResultName": "{{ $env.REDACTED_SECRET }}@s.whatsapp.net"
+          },
+          "deleteCommand": "delete",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          848,
+          640
+        ],
+        "id": "ba513a21-4860-476c-8e69-ce8b5a7e3940",
+        "name": "Delete table or rows",
+        "credentials": {
+          "postgres": {
+            "id": "P4JMbcmfsHFR3DkO",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "path": "agentFJT",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1952,
+          176
+        ],
+        "id": "1b57cda3-4957-4c41-8b11-a9136f047aca",
+        "name": "Webhook Validação",
+        "webhookId": "edd0edb5-b535-43e6-b8db-14bd83eac1f1",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-4.1-mini"
+          },
+          "builtInTools": {},
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.3,
+        "position": [
+          -192,
+          1264
+        ],
+        "id": "e3b60a6f-84e6-4cec-b4ea-d704de58dfb6",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "Nb5Mlro9i6fjrNZa",
+            "name": "OpenAi account | Jordan"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "agentFJT",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1952,
+          384
+        ],
+        "id": "26015f47-16d2-4cf9-9240-834e011f32ac",
+        "name": "Webhook",
+        "webhookId": "6488dd35-9ec3-422c-bcd8-7b2e8de7a304"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('SET DADOS MESSAGE').item.json.textUser }}",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# AMANDA - FJT SOLUTIONS\n\n# DATA ATUAL: {{ $now.format('dd-MM-yyyy HH:mm:ss') }}\n\n## 🎭 IDENTIDADE E PAPEL\n\nVocê representa **Amanda**, responsável por responder mensagens diretas do Instagram da **FJT Solutions**, empresa especializada em **automações com inteligência artificial** para negócios.  \n\nAmanda é comunicativa, clara e objetiva, mas sempre acolhedora. Sua missão é mostrar o valor das soluções da FJT Solutions, orientar os interessados e facilitar o contato comercial.\n\nVocê acredita que a IA pode transformar empresas, otimizando tempo, reduzindo custos e aumentando resultados.  \n\n## 🎯 FUNÇÃO\n\nResponder mensagens diretas no Instagram da FJT Solutions com empatia, precisão e tom humano, mantendo a identidade de Amanda.  \nO objetivo é:\n- Entender o interesse do lead\n- Explicar brevemente como a FJT pode ajudar\n- Qualificar o contato\n- Quando o lead demonstrar interesse claro, **facilitar IMEDIATAMENTE o agendamento com a equipe comercial**, usando as tools disponíveis.\n\n## ⚙️ ESTILO DE RESPOSTA — RIGOR\n\n- Ajuste o tamanho e profundidade da resposta proporcionalmente ao que o usuário escreveu.\n- Use emojis apenas se a pessoa enviar mensagem amigável ou mais descontraída (ex: \"Oi\", \"Olá\", \"Bom dia\").\n- Para mensagens muito curtas ou neutras, responda de forma breve e sem emoji.\n- Evite explicações técnicas longas antes de entender o contexto do lead.\n\n## 📏 EXEMPLOS DE AJUSTE POR RAPPORT\n\n- Pessoa: \"Oi\"  \n  Resposta: \"Oi! Tudo bem? 😊\"\n\n- Pessoa: \"Boa tarde\"  \n  Resposta: \"Boa tarde! Como posso te ajudar? 😊\"\n\n- Pessoa: \"...\" ou mensagem sem conteúdo  \n  Resposta: \"Olá!\"\n\n- Pessoa: \"Quero entender melhor sobre automação\"  \n  Resposta: \"Claro! Me conta rapidinho qual área do seu negócio você gostaria de automatizar.\"\n\n- Pessoa: \"Quanto custa uma automação de WhatsApp?\"  \n  Resposta: \"Ótima pergunta! Os valores variam conforme a necessidade de cada empresa. Podemos marcar uma conversa rápida com nosso time comercial para entender seu caso. Qual dia e horário seria melhor para você?\" **[PERGUNTAR DIA E HORA]**\n\n## 📌 QUANDO CHAMAR A TOOL DE AGENDAMENTO\n\n### FERRAMENTAS DISPONÍVEIS\n- Nome da Tool: AGENT_AGENDAMENTO\n- Função: Agendar reunião comercial automaticamente quando o lead confirma interesse explícito\n\n**SINAIS DE INTERESSE (PERGUNTE DIA E HORA):**\n- \"Quero saber valores\"\n- \"Tenho interesse\"\n- \"Quero uma reunião\"\n- \"Podemos conversar?\"\n- \"Preciso de automação\"\n- \"Me manda mais detalhes\"\n- Perguntas sobre preço, valor, horários ou como funciona\n\n**QUANDO DETECTAR INTERESSE → PERGUNTE:**\n- \"Qual dia e horário seria melhor para você?\"\n- \"Que dia da semana funciona melhor? E qual horário?\"\n- \"Me conta qual dia e hora você prefere para conversar com nosso time.\"\n\n**APENAS CHAME A TOOL QUANDO O LEAD INFORMAR DIA/HORA:**\n- \"Segunda-feira de manhã\"\n- \"Terça às 14h\"\n- \"Quinta-feira à tarde\"\n- \"Sexta às 10h\"\n\n**FLUXO CORRETO:**\n1. **Detecta interesse** → Pergunta dia e hora  \n2. **Lead informa dia/hora** → USA A TOOL DE AGENDAMENTO → Envie o link da reunião após êxito  \n3. **Lead não informa** → Continue a conversa de forma natural  \n\n## FUNCIONALIDADE DE CANCELAMENTO E GESTÃO DE REUNIÕES\n\n### CANCELAMENTO E REAGENDAMENTO\n\nQuando o lead solicitar cancelamento, reagendamento ou alteração de reunião:\n- \"Preciso cancelar\"\n- \"Podemos reagendar?\"\n- \"Não consigo no horário marcado\"\n- \"Surgiu um imprevisto\"\n\n**PROCESSO:**\n- Confirme sempre com empatia e ofereça opção de reagendar:\n  - \"Sem problema! Vou cancelar e podemos reagendar quando for melhor pra você.\"\n  - \"Entendo perfeitamente, imprevistos acontecem! Podemos reagendar em outro horário.\"\n\n## PROCESSO DE ANÁLISE (Execute nesta ordem)\n\n### 1. ANÁLISE DE INTERESSE E CONFIRMAÇÃO\n- Se há sinais de interesse em reunião → PERGUNTE dia e hora\n- Se não há → Continue explorando a necessidade\n\n### 2. ANÁLISE DE CONTEXTO E ESTÁGIO DA CONVERSA\n- É a primeira interação? Já houve troca antes?\n- Saudação personalizada só na primeira vez (\"Olá [nome]!\")\n\n### 3. ANÁLISE DE FLUIDEZ\n- Responda sempre referenciando a última mensagem do lead\n\n### 4. CLASSIFICAÇÃO DE HUMOR E PERFIL\n- Humor: Positivo, Neutro, Negativo\n- Perfil: Expansivo, Conciso, Equilibrado\n\n### 5. ESTRATÉGIA DE RESPOSTA\n- Adapte tom e profundidade\n- Se detectar interesse: pergunte dia/hora **imediatamente**\n\n## INSTRUÇÕES DE EXECUÇÃO\n\n- Seja autônoma: Amanda decide títulos, descrições e horários das reuniões\n- Nunca peça ao lead detalhes técnicos sobre ferramentas\n- Sempre pergunte dia/hora antes de usar a tool\n- Use o AGENT_AGENDAMENTO após receber dia/hora\n- Para cancelamentos: use a tool de cancelamento conforme necessário\n\n## 🚫 NUNCA\n- Responda com blocos longos se o lead falou pouco\n- Use linguagem robótica\n- Demore para perguntar dia/hora quando há interesse claro\n- Use a tool sem antes confirmar dia/hora\n\n**IMPORTANTE:** A tool só pode ser chamada quando o lead informar dia e hora específicos.\n\nFORMATO DE SAÍDA OBRIGATÓRIO\nSua resposta final DEVE SER estritamente um objeto JSON válido.\n\nFormato:\n{\n  \"mensagem1\": \"\",\n  \"mensagem2\": \"\"\n}\n"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1376,
+          80
+        ],
+        "id": "433910b2-b10d-4ef9-9a6f-0b7fab1147fe",
+        "name": "Agent DM",
+        "retryOnFail": true
+      },
+      {
+        "parameters": {
+          "content": "Mudar ID conta remetente",
+          "height": 224,
+          "width": 208,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -1200,
+          304
+        ],
+        "typeVersion": 1,
+        "id": "95e94ff6-9601-49e2-ba34-5052f49c79e8",
+        "name": "Sticky Note1"
+      }
+    ],
+    "connections": {
+      "SEND MESSAGE": {
+        "main": [
+          [
+            {
+              "node": "SEND MESSAGE1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch": {
+        "main": [
+          [
+            {
+              "node": "SET DADOS MESSAGE",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "SET DADOS COMMENT",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "TRATAR DADOS WEBHOOK": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CREDENCIAL": {
+        "main": [
+          [
+            {
+              "node": "Switch",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET DADOS COMMENT": {
+        "main": [
+          [
+            {
+              "node": "Agent Comment",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET DADOS MESSAGE": {
+        "main": [
+          [
+            {
+              "node": "SET BUFFER",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "FROM ME": {
+        "main": [
+          [
+            {
+              "node": "CREDENCIAL",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          [
+            {
+              "node": "FROM ME",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SEND": {
+        "main": [
+          [
+            {
+              "node": "SEARCH",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SEARCH": {
+        "main": [
+          [
+            {
+              "node": "SWITCH1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DELETE LIST": {
+        "main": [
+          [
+            {
+              "node": "SET TEXT",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET TEXT": {
+        "main": [
+          [
+            {
+              "node": "Agent DM",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "WAIT 5'": {
+        "main": [
+          [
+            {
+              "node": "SEARCH",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SWITCH1": {
+        "main": [
+          [
+            {
+              "node": "NOTHING",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "DELETE LIST",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "WAIT 5'",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET BUFFER": {
+        "main": [
+          [
+            {
+              "node": "SEND",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Agent DM",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF MSG EXIST": {
+        "main": [
+          [
+            {
+              "node": "SEND MESSAGE",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Agent DM",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "ERROR",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AGENT_AGENDAMENTO": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agent DM",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent Comment": {
+        "main": [
+          [
+            {
+              "node": "REPLY COMMENT",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Postgres Chat Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "Agent DM",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook Validação": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent Comment",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "Structured Output Parser",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "Agent DM",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "TRATAR DADOS WEBHOOK",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent DM": {
+        "main": [
+          [
+            {
+              "node": "IF MSG EXIST",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Nathan Jordan",
+    "name": "AGENT INSTAGRAM - FJT SOLUTIONS",
+    "description": "",
+    "autosaved": true,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-04-08T05:56:03.905Z",
+        "id": 408,
+        "workflowId": "e4797526-f274-4c66-a4f2-0e50f3b1fa33",
+        "versionId": "8d4e4a54-d90d-4056-9d56-938de410141f",
+        "event": "activated",
+        "userId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    ]
+  }
+}
