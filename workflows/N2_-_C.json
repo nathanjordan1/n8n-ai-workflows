@@ -1,0 +1,787 @@
+{
+  "id": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+  "name": "N2 - C",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+        "height": 508,
+        "width": 1368,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        80
+      ],
+      "typeVersion": 1,
+      "id": "c26afbed-04bc-47aa-b006-72440968d891",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# Prompt de Qualificação de Leads (WhatsApp) no n8n\n\n### 📅 Dados do Comércio\n- **Data e Hora**: {{ $now.format('HH:mm:ss dd-MM-yyyy') }}\n- **ID do Lead**: {{ $json.body.items[0].id }}\n- **Comércio**: {{ $json.body.items[0].comercio }}\n- **Site**: {{ $json.body.items[0].redeSocial }}\n- **Telefone**: {{ $json.body.items[0].telefone }}\n- **Descrição**: {{ $json.body.items[0].descricao }}\n- **Seguidores**: {{ $json.body.items[0].seguidores }}",
+        "options": {
+          "systemMessage": "=Language\nPT-BR\n\n🤖 N2 — Validador de Leads (WhatsApp)\n🎯 Objetivo\nValidar e registrar comércios com números de WhatsApp válidos.\n\n🛠 Ferramentas\nCreateRow: Registra um novo comércio se qualificado.\n\nGestor: Apoio para tirar dúvidas durante o processo.\n\n✅ Critérios de Qualificação\nO número de telefone deve ser um WhatsApp válido, com formato correto.\n\n📏 Regras\nO número deve ter o dígito \"9\" após o DDD (ex: 11 92354-9871).\n\nNúmeros inválidos ou não localizados devem ser descartados.\n\n🔄 Processo Atualizado\n1. Verificar WhatsApp\nValidar se o número tem o formato correto e possui o dígito 9 após o DDD.\n\nSe for válido → registre o comércio.\n\n🧪 Exemplo de WhatsApp Válido\n11 92354-9871\n\n21 98765-4321\n\n55 11 9 4567-5474\n\n📐 Formato Esperado\nDDD 9 XXXX-XXXX\n\n❓ Em Caso de Dúvidas\nConsulte o Gestor apenas para esclarecimentos.\nA responsabilidade de validação e decisão final é do próprio N2."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        256,
+        192
+      ],
+      "id": "d1e1ed79-cae5-41bd-aebe-3a3ec743ac50",
+      "name": "Qualificação de Leads",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "description": "Chame essa tool quando estiver em dúvida e precise de ajuda do gestor",
+        "workflowId": {
+          "__rl": true,
+          "value": "GCLIP3zFzCs8wseu",
+          "mode": "list",
+          "cachedResultName": "GESTAO ATENDIMENTO - N1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "setor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('setor', `Campo especifico para informar seu setor`, 'string') }}",
+            "requisicao": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('requisicao', `Campo especifico para informar sua solicitação`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "setor",
+              "displayName": "setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "requisicao",
+              "displayName": "requisicao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        416
+      ],
+      "id": "ea57abb1-b18d-49f5-b493-83fe176093b5",
+      "name": "gestor"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "databaseId": 269448,
+        "tableId": 632023,
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 5152514,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `nome do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152515,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `rede social do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152527,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `celular do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152529,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues3_Field_Value', `descricao do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152530,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `numero de seguidores`, 'string') }}"
+            },
+            {
+              "fieldId": 5152532,
+              "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserowTool",
+      "typeVersion": 1,
+      "position": [
+        432,
+        416
+      ],
+      "id": "ebed07cf-f1fa-45f6-b6aa-369d1717a659",
+      "name": "CreateRow",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        544,
+        416
+      ],
+      "id": "09c58664-e9c1-432e-b13d-cd71077597b9",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "Comércio"
+            },
+            {
+              "name": "Site"
+            },
+            {
+              "name": "Telefone"
+            },
+            {
+              "name": "Descrição"
+            },
+            {
+              "name": "Seguidores"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        192
+      ],
+      "id": "0837eaf2-a23e-4134-ae9f-335ed250d35f",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "cgk46Y8YkGnIzzfX",
+          "mode": "list",
+          "cachedResultName": "FIRST MESSAGE  - N3 - B"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        192
+      ],
+      "id": "e2199051-9ed6-49fc-affa-fe24884e507e",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "394e989d-4be1-4345-a285-3b39e55f55fa",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "sucesso",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        192
+      ],
+      "id": "311c4566-9624-47b9-8bd3-c2e23ab360bc",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "o3-mini",
+          "mode": "list",
+          "cachedResultName": "o3-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        416
+      ],
+      "id": "3da227f1-d8ff-4114-a5bd-cec75d793220",
+      "name": "o3-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        432
+      ],
+      "id": "d1302fea-4413-44e2-bf78-c4c736249aa2",
+      "name": "2.5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Gemini(PaLM) | Phoenix"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "gestor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateRow": {
+      "ai_tool": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qualificação de Leads": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "o3-mini": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "2.5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "e6eda67f-97e8-4bb0-b2b4-3cd41f0a2bc3",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:55:43.261Z",
+      "createdAt": "2025-10-20T18:55:43.261Z",
+      "role": "workflow:owner",
+      "workflowId": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "e6eda67f-97e8-4bb0-b2b4-3cd41f0a2bc3",
+    "workflowId": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+          "height": 508,
+          "width": 1368,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -112,
+          80
+        ],
+        "typeVersion": 1,
+        "id": "c26afbed-04bc-47aa-b006-72440968d891",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=# Prompt de Qualificação de Leads (WhatsApp) no n8n\n\n### 📅 Dados do Comércio\n- **Data e Hora**: {{ $now.format('HH:mm:ss dd-MM-yyyy') }}\n- **ID do Lead**: {{ $json.body.items[0].id }}\n- **Comércio**: {{ $json.body.items[0].comercio }}\n- **Site**: {{ $json.body.items[0].redeSocial }}\n- **Telefone**: {{ $json.body.items[0].telefone }}\n- **Descrição**: {{ $json.body.items[0].descricao }}\n- **Seguidores**: {{ $json.body.items[0].seguidores }}",
+          "options": {
+            "systemMessage": "=Language\nPT-BR\n\n🤖 N2 — Validador de Leads (WhatsApp)\n🎯 Objetivo\nValidar e registrar comércios com números de WhatsApp válidos.\n\n🛠 Ferramentas\nCreateRow: Registra um novo comércio se qualificado.\n\nGestor: Apoio para tirar dúvidas durante o processo.\n\n✅ Critérios de Qualificação\nO número de telefone deve ser um WhatsApp válido, com formato correto.\n\n📏 Regras\nO número deve ter o dígito \"9\" após o DDD (ex: 11 92354-9871).\n\nNúmeros inválidos ou não localizados devem ser descartados.\n\n🔄 Processo Atualizado\n1. Verificar WhatsApp\nValidar se o número tem o formato correto e possui o dígito 9 após o DDD.\n\nSe for válido → registre o comércio.\n\n🧪 Exemplo de WhatsApp Válido\n11 92354-9871\n\n21 98765-4321\n\n55 11 9 4567-5474\n\n📐 Formato Esperado\nDDD 9 XXXX-XXXX\n\n❓ Em Caso de Dúvidas\nConsulte o Gestor apenas para esclarecimentos.\nA responsabilidade de validação e decisão final é do próprio N2."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          256,
+          192
+        ],
+        "id": "d1e1ed79-cae5-41bd-aebe-3a3ec743ac50",
+        "name": "Qualificação de Leads",
+        "alwaysOutputData": true,
+        "retryOnFail": true,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "description": "Chame essa tool quando estiver em dúvida e precise de ajuda do gestor",
+          "workflowId": {
+            "__rl": true,
+            "value": "GCLIP3zFzCs8wseu",
+            "mode": "list",
+            "cachedResultName": "GESTAO ATENDIMENTO - N1"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "setor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('setor', `Campo especifico para informar seu setor`, 'string') }}",
+              "requisicao": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('requisicao', `Campo especifico para informar sua solicitação`, 'string') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "setor",
+                "displayName": "setor",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "requisicao",
+                "displayName": "requisicao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          320,
+          416
+        ],
+        "id": "ea57abb1-b18d-49f5-b493-83fe176093b5",
+        "name": "gestor"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "databaseId": 269448,
+          "tableId": 632023,
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 5152514,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `nome do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152515,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `rede social do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152527,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `celular do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152529,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues3_Field_Value', `descricao do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152530,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `numero de seguidores`, 'string') }}"
+              },
+              {
+                "fieldId": 5152532,
+                "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserowTool",
+        "typeVersion": 1,
+        "position": [
+          432,
+          416
+        ],
+        "id": "ebed07cf-f1fa-45f6-b6aa-369d1717a659",
+        "name": "CreateRow",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolThink",
+        "typeVersion": 1,
+        "position": [
+          544,
+          416
+        ],
+        "id": "09c58664-e9c1-432e-b13d-cd71077597b9",
+        "name": "Think"
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "Comércio"
+              },
+              {
+                "name": "Site"
+              },
+              {
+                "name": "Telefone"
+              },
+              {
+                "name": "Descrição"
+              },
+              {
+                "name": "Seguidores"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          192
+        ],
+        "id": "0837eaf2-a23e-4134-ae9f-335ed250d35f",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "cgk46Y8YkGnIzzfX",
+            "mode": "list",
+            "cachedResultName": "FIRST MESSAGE  - N3 - B"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          976,
+          192
+        ],
+        "id": "e2199051-9ed6-49fc-affa-fe24884e507e",
+        "name": "Execute Workflow"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "394e989d-4be1-4345-a285-3b39e55f55fa",
+                "leftValue": "={{ $json.output }}",
+                "rightValue": "sucesso",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          672,
+          192
+        ],
+        "id": "311c4566-9624-47b9-8bd3-c2e23ab360bc",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "o3-mini",
+            "mode": "list",
+            "cachedResultName": "o3-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          192,
+          416
+        ],
+        "id": "3da227f1-d8ff-4114-a5bd-cec75d793220",
+        "name": "o3-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          64,
+          432
+        ],
+        "id": "d1302fea-4413-44e2-bf78-c4c736249aa2",
+        "name": "2.5",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "kWazsxECDMKAPqJi",
+            "name": "Google Gemini(PaLM) | Phoenix"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "gestor": {
+        "ai_tool": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateRow": {
+        "ai_tool": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Think": {
+        "ai_tool": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Qualificação de Leads": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "o3-mini": {
+        "ai_languageModel": [
+          []
+        ]
+      },
+      "2.5": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:52:53.879Z",
+        "id": 10,
+        "workflowId": "fb5eec1f-1a2a-484d-9b09-c82aedd1fc83",
+        "versionId": "e6eda67f-97e8-4bb0-b2b4-3cd41f0a2bc3",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
