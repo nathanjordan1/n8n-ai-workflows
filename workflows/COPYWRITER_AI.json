@@ -1,80 +1,10 @@
 {
-  "id": "c7e9e35d-3a27-4562-b659-9b11dc0abb35",
+  "id": "2571a9ec-8cdb-4513-a96a-9417d1d904c0",
   "name": "COPYWRITER AI",
   "description": null,
   "active": true,
-  "isArchived": true,
+  "isArchived": false,
   "nodes": [
-    {
-      "parameters": {
-        "tableId": "copy",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "descricao_video",
-              "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para a descricao do video`, 'string') }}"
-            },
-            {
-              "fieldId": "titulo",
-              "fieldValue": "={{ $fromAI('fieldValues1_Field_Value', `campo para o titulo da copy`, 'string') }}"
-            },
-            {
-              "fieldId": "roteiro",
-              "fieldValue": "={{ $fromAI('fieldValues3_Field_Value', `campo para o roteiro da copy`, 'string') }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        304,
-        288
-      ],
-      "id": "6d58bf0c-486d-4721-a46f-7937e7990afe",
-      "name": "SaveCopy",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "tableId": "criativos",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "nome",
-              "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para o nome do criativo (AD)`, 'string') }}"
-            },
-            {
-              "fieldId": "url_download",
-              "fieldValue": "={{ $('Upload file').item.json.webContentLink }}"
-            },
-            {
-              "fieldId": "status",
-              "fieldValue": "={{ $fromAI('fieldValues2_Field_Value', `campo para o status do criativo (AD)`, 'string') }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.supabaseTool",
-      "typeVersion": 1,
-      "position": [
-        464,
-        288
-      ],
-      "id": "c2fd9209-35c8-42af-a4c3-961eff4542d2",
-      "name": "SaveAd",
-      "credentials": {
-        "supabaseApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Supabase | T.Pago AI"
-        }
-      }
-    },
     {
       "parameters": {
         "promptType": "define",
@@ -163,6 +93,164 @@
     },
     {
       "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Trafego Pago",
+        "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
+        "messageText": "=Texto sendo criado",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        16,
+        64
+      ],
+      "id": "a73d6941-f35c-4eae-9dbd-c11a26c4ddc9",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "copy",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "descricao_video",
+              "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para a descricao do video`, 'string') }}"
+            },
+            {
+              "fieldId": "titulo",
+              "fieldValue": "={{ $fromAI('fieldValues1_Field_Value', `campo para o titulo da copy`, 'string') }}"
+            },
+            {
+              "fieldId": "roteiro",
+              "fieldValue": "={{ $fromAI('fieldValues3_Field_Value', `campo para o roteiro da copy`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        304,
+        288
+      ],
+      "id": "d44e511a-d214-47fe-a3de-168bc77768bb",
+      "name": "SaveCopy",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "criativos",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para o nome do criativo (AD)`, 'string') }}"
+            },
+            {
+              "fieldId": "url_download",
+              "fieldValue": "={{ $('Upload file').item.json.webContentLink }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $fromAI('fieldValues2_Field_Value', `campo para o status do criativo (AD)`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        464,
+        288
+      ],
+      "id": "cc414fb2-1de1-43ae-bad1-6aafd19161f8",
+      "name": "SaveAd",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account | Trafego Pago AI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        176,
+        288
+      ],
+      "id": "43f96ba9-56ed-4a19-8673-d866509dbd08",
+      "name": "5.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | Jordan"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "keys",
+        "keyPattern": "{{ $env.KEYPATTERN }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        64
+      ],
+      "id": "84a16ff0-bb97-4a72-aee2-789dc9d25354",
+      "name": "Get Base",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "keys",
+        "keyPattern": "{{ $env.KEYPATTERN }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1056,
+        64
+      ],
+      "id": "c76441f2-c97c-4bb6-bed5-542b51397df9",
+      "name": "Get Text Video",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
         "name": "={{ $binary.data.fileName }}",
         "driveId": {
           "__rl": true,
@@ -182,52 +270,12 @@
         -432,
         64
       ],
-      "id": "bba533e2-9cb3-42f3-a9c8-df566743c0af",
+      "id": "87396609-113f-4aec-ba81-38a28cd1e52a",
       "name": "Upload file",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "YOUR_CREDENTIAL_ID",
-          "name": "Google Drive account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "keys",
-        "keyPattern": "{{ $env.KEYPATTERN }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        -1072,
-        64
-      ],
-      "id": "52351206-1b58-4135-9b78-8c4775c9328b",
-      "name": "Get Text Video",
-      "credentials": {
-        "redis": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Redis account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "keys",
-        "keyPattern": "{{ $env.KEYPATTERN }}"
-      },
-      "type": "n8n-nodes-base.redis",
-      "typeVersion": 1,
-      "position": [
-        -848,
-        64
-      ],
-      "id": "db862e26-c46d-45c6-987c-96cccdef9fa5",
-      "name": "Get Base64",
-      "credentials": {
-        "redis": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Redis account 2"
+          "name": "GOOGLE DRIVE API"
         }
       }
     },
@@ -254,87 +302,17 @@
         -224,
         64
       ],
-      "id": "aad55174-7791-4e97-a538-4e487e18fb5a",
+      "id": "93704466-dde8-4ff9-9ef0-680af04ddd33",
       "name": "Share file",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "YOUR_CREDENTIAL_ID",
-          "name": "Google Drive account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "messages-api",
-        "instanceName": "EvolutionNathan",
-        "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
-        "messageText": "=Texto sendo criado",
-        "options_message": {}
-      },
-      "type": "n8n-nodes-evolution-api.evolutionApi",
-      "typeVersion": 1,
-      "position": [
-        0,
-        64
-      ],
-      "id": "ddc8bd0a-c8f6-4d72-8145-910bbc7001a3",
-      "name": "Enviar texto",
-      "credentials": {
-        "evolutionApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "Evolution account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        176,
-        288
-      ],
-      "id": "15b5c281-2a06-41f5-a3f6-2b2df05f68e1",
-      "name": "4.1-mini",
-      "credentials": {
-        "openAiApi": {
-          "id": "YOUR_CREDENTIAL_ID",
-          "name": "OpenAi account 2"
+          "name": "GOOGLE DRIVE API"
         }
       }
     }
   ],
   "connections": {
-    "SaveCopy": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Copywriter Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "SaveAd": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Copywriter Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "AI Copywriter Agent": {
       "main": [
         []
@@ -373,11 +351,55 @@
         ]
       ]
     },
-    "Upload file": {
+    "Enviar texto": {
       "main": [
         [
           {
-            "node": "Share file",
+            "node": "AI Copywriter Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SaveCopy": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Copywriter Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SaveAd": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Copywriter Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Copywriter Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Base": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
             "type": "main",
             "index": 0
           }
@@ -388,18 +410,18 @@
       "main": [
         [
           {
-            "node": "Get Base64",
+            "node": "Get Base",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Base64": {
+    "Upload file": {
       "main": [
         [
           {
-            "node": "Convert to File",
+            "node": "Share file",
             "type": "main",
             "index": 0
           }
@@ -416,43 +438,22 @@
           }
         ]
       ]
-    },
-    "Enviar texto": {
-      "main": [
-        [
-          {
-            "node": "AI Copywriter Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "4.1-mini": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Copywriter Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
     "executionOrder": "v1",
-    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+    "errorWorkflow": "CRnDoVvUKB8NtpCj",
+    "binaryMode": "separate"
   },
-  "activeVersionId": "1cbbad66-7a09-4f35-b5c9-9cd49598438d",
-  "versionCounter": 48,
+  "activeVersionId": "9972fed5-401d-4112-a9f8-26def833fc73",
+  "versionCounter": 84,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:56:34.976Z",
-      "createdAt": "2025-10-20T18:56:34.976Z",
+      "updatedAt": "2025-10-20T18:55:44.647Z",
+      "createdAt": "2025-10-20T18:55:44.647Z",
       "role": "workflow:owner",
-      "workflowId": "c7e9e35d-3a27-4562-b659-9b11dc0abb35",
+      "workflowId": "2571a9ec-8cdb-4513-a96a-9417d1d904c0",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -468,81 +469,11 @@
   ],
   "tags": [],
   "activeVersion": {
-    "updatedAt": "2025-12-11T15:43:43.845Z",
-    "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "1cbbad66-7a09-4f35-b5c9-9cd49598438d",
-    "workflowId": "c7e9e35d-3a27-4562-b659-9b11dc0abb35",
+    "updatedAt": "2026-05-05T18:52:54.901Z",
+    "createdAt": "2026-05-05T13:54:04.890Z",
+    "versionId": "9972fed5-401d-4112-a9f8-26def833fc73",
+    "workflowId": "2571a9ec-8cdb-4513-a96a-9417d1d904c0",
     "nodes": [
-      {
-        "parameters": {
-          "tableId": "copy",
-          "fieldsUi": {
-            "fieldValues": [
-              {
-                "fieldId": "descricao_video",
-                "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para a descricao do video`, 'string') }}"
-              },
-              {
-                "fieldId": "titulo",
-                "fieldValue": "={{ $fromAI('fieldValues1_Field_Value', `campo para o titulo da copy`, 'string') }}"
-              },
-              {
-                "fieldId": "roteiro",
-                "fieldValue": "={{ $fromAI('fieldValues3_Field_Value', `campo para o roteiro da copy`, 'string') }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          304,
-          288
-        ],
-        "id": "6d58bf0c-486d-4721-a46f-7937e7990afe",
-        "name": "SaveCopy",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "tableId": "criativos",
-          "fieldsUi": {
-            "fieldValues": [
-              {
-                "fieldId": "nome",
-                "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para o nome do criativo (AD)`, 'string') }}"
-              },
-              {
-                "fieldId": "url_download",
-                "fieldValue": "={{ $('Upload file').item.json.webContentLink }}"
-              },
-              {
-                "fieldId": "status",
-                "fieldValue": "={{ $fromAI('fieldValues2_Field_Value', `campo para o status do criativo (AD)`, 'string') }}"
-              }
-            ]
-          }
-        },
-        "type": "n8n-nodes-base.supabaseTool",
-        "typeVersion": 1,
-        "position": [
-          464,
-          288
-        ],
-        "id": "c2fd9209-35c8-42af-a4c3-961eff4542d2",
-        "name": "SaveAd",
-        "credentials": {
-          "supabaseApi": {
-            "id": "IUcqED4yk7LjndhQ",
-            "name": "Supabase | T.Pago AI"
-          }
-        }
-      },
       {
         "parameters": {
           "promptType": "define",
@@ -631,6 +562,164 @@
       },
       {
         "parameters": {
+          "resource": "messages-api",
+          "instanceName": "Trafego Pago",
+          "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
+          "messageText": "=Texto sendo criado",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          16,
+          64
+        ],
+        "id": "a73d6941-f35c-4eae-9dbd-c11a26c4ddc9",
+        "name": "Enviar texto",
+        "credentials": {
+          "evolutionApi": {
+            "id": "gpobE0e5T9fgY8wL",
+            "name": "Evolution API"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "tableId": "copy",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "descricao_video",
+                "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para a descricao do video`, 'string') }}"
+              },
+              {
+                "fieldId": "titulo",
+                "fieldValue": "={{ $fromAI('fieldValues1_Field_Value', `campo para o titulo da copy`, 'string') }}"
+              },
+              {
+                "fieldId": "roteiro",
+                "fieldValue": "={{ $fromAI('fieldValues3_Field_Value', `campo para o roteiro da copy`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          304,
+          288
+        ],
+        "id": "d44e511a-d214-47fe-a3de-168bc77768bb",
+        "name": "SaveCopy",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "tableId": "criativos",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "nome",
+                "fieldValue": "={{ $fromAI('fieldValues0_Field_Value', `campo para o nome do criativo (AD)`, 'string') }}"
+              },
+              {
+                "fieldId": "url_download",
+                "fieldValue": "={{ $('Upload file').item.json.webContentLink }}"
+              },
+              {
+                "fieldId": "status",
+                "fieldValue": "={{ $fromAI('fieldValues2_Field_Value', `campo para o status do criativo (AD)`, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          464,
+          288
+        ],
+        "id": "cc414fb2-1de1-43ae-bad1-6aafd19161f8",
+        "name": "SaveAd",
+        "credentials": {
+          "supabaseApi": {
+            "id": "fvElQpUSrhOSZl2M",
+            "name": "Supabase account | Trafego Pago AI"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-5-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-5-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          176,
+          288
+        ],
+        "id": "43f96ba9-56ed-4a19-8673-d866509dbd08",
+        "name": "5.1-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "Nb5Mlro9i6fjrNZa",
+            "name": "OpenAi account | Jordan"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "keys",
+          "keyPattern": "database"
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          -832,
+          64
+        ],
+        "id": "84a16ff0-bb97-4a72-aee2-789dc9d25354",
+        "name": "Get Base",
+        "credentials": {
+          "redis": {
+            "id": "pA9GTQUsH9RXmwh0",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "keys",
+          "keyPattern": "text_video"
+        },
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          -1056,
+          64
+        ],
+        "id": "c76441f2-c97c-4bb6-bed5-542b51397df9",
+        "name": "Get Text Video",
+        "credentials": {
+          "redis": {
+            "id": "pA9GTQUsH9RXmwh0",
+            "name": "Redis account"
+          }
+        }
+      },
+      {
+        "parameters": {
           "name": "={{ $binary.data.fileName }}",
           "driveId": {
             "__rl": true,
@@ -650,52 +739,12 @@
           -432,
           64
         ],
-        "id": "bba533e2-9cb3-42f3-a9c8-df566743c0af",
+        "id": "87396609-113f-4aec-ba81-38a28cd1e52a",
         "name": "Upload file",
         "credentials": {
           "googleDriveOAuth2Api": {
-            "id": "Spx4j1z1eOgEqeO9",
-            "name": "Google Drive account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "operation": "keys",
-          "keyPattern": "text_video"
-        },
-        "type": "n8n-nodes-base.redis",
-        "typeVersion": 1,
-        "position": [
-          -1072,
-          64
-        ],
-        "id": "52351206-1b58-4135-9b78-8c4775c9328b",
-        "name": "Get Text Video",
-        "credentials": {
-          "redis": {
-            "id": "uYfOAlgoMimvv8sj",
-            "name": "Redis account 2"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "operation": "keys",
-          "keyPattern": "database"
-        },
-        "type": "n8n-nodes-base.redis",
-        "typeVersion": 1,
-        "position": [
-          -848,
-          64
-        ],
-        "id": "db862e26-c46d-45c6-987c-96cccdef9fa5",
-        "name": "Get Base64",
-        "credentials": {
-          "redis": {
-            "id": "uYfOAlgoMimvv8sj",
-            "name": "Redis account 2"
+            "id": "1NpTa4asp0LyJsOc",
+            "name": "GOOGLE DRIVE API"
           }
         }
       },
@@ -722,87 +771,17 @@
           -224,
           64
         ],
-        "id": "aad55174-7791-4e97-a538-4e487e18fb5a",
+        "id": "93704466-dde8-4ff9-9ef0-680af04ddd33",
         "name": "Share file",
         "credentials": {
           "googleDriveOAuth2Api": {
-            "id": "Spx4j1z1eOgEqeO9",
-            "name": "Google Drive account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "resource": "messages-api",
-          "instanceName": "EvolutionNathan",
-          "remoteJid": "={{ $('When Executed by Another Workflow').item.json.numero }}",
-          "messageText": "=Texto sendo criado",
-          "options_message": {}
-        },
-        "type": "n8n-nodes-evolution-api.evolutionApi",
-        "typeVersion": 1,
-        "position": [
-          0,
-          64
-        ],
-        "id": "ddc8bd0a-c8f6-4d72-8145-910bbc7001a3",
-        "name": "Enviar texto",
-        "credentials": {
-          "evolutionApi": {
-            "id": "b3mpy5RQEarqZZLq",
-            "name": "Evolution account 2"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "model": {
-            "__rl": true,
-            "value": "gpt-4.1-mini",
-            "mode": "list",
-            "cachedResultName": "gpt-4.1-mini"
-          },
-          "options": {}
-        },
-        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-        "typeVersion": 1.2,
-        "position": [
-          176,
-          288
-        ],
-        "id": "15b5c281-2a06-41f5-a3f6-2b2df05f68e1",
-        "name": "4.1-mini",
-        "credentials": {
-          "openAiApi": {
-            "id": "S4nX8HNif1ccfc47",
-            "name": "OpenAi account 2"
+            "id": "1NpTa4asp0LyJsOc",
+            "name": "GOOGLE DRIVE API"
           }
         }
       }
     ],
     "connections": {
-      "SaveCopy": {
-        "ai_tool": [
-          [
-            {
-              "node": "AI Copywriter Agent",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "SaveAd": {
-        "ai_tool": [
-          [
-            {
-              "node": "AI Copywriter Agent",
-              "type": "ai_tool",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "AI Copywriter Agent": {
         "main": [
           []
@@ -841,11 +820,55 @@
           ]
         ]
       },
-      "Upload file": {
+      "Enviar texto": {
         "main": [
           [
             {
-              "node": "Share file",
+              "node": "AI Copywriter Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SaveCopy": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Copywriter Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SaveAd": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Copywriter Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "5.1-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Copywriter Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Base": {
+        "main": [
+          [
+            {
+              "node": "Convert to File",
               "type": "main",
               "index": 0
             }
@@ -856,18 +879,18 @@
         "main": [
           [
             {
-              "node": "Get Base64",
+              "node": "Get Base",
               "type": "main",
               "index": 0
             }
           ]
         ]
       },
-      "Get Base64": {
+      "Upload file": {
         "main": [
           [
             {
-              "node": "Convert to File",
+              "node": "Share file",
               "type": "main",
               "index": 0
             }
@@ -884,42 +907,20 @@
             }
           ]
         ]
-      },
-      "Enviar texto": {
-        "main": [
-          [
-            {
-              "node": "AI Copywriter Agent",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "4.1-mini": {
-        "ai_languageModel": [
-          [
-            {
-              "node": "AI Copywriter Agent",
-              "type": "ai_languageModel",
-              "index": 0
-            }
-          ]
-        ]
       }
     },
-    "authors": "system migration",
-    "name": null,
-    "description": null,
-    "autosaved": false,
+    "authors": "Nathan Jordan",
+    "name": "COPYWRITER AI",
+    "description": "",
+    "autosaved": true,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-27T21:43:41.433Z",
-        "id": 63,
-        "workflowId": "c7e9e35d-3a27-4562-b659-9b11dc0abb35",
-        "versionId": "1cbbad66-7a09-4f35-b5c9-9cd49598438d",
+        "createdAt": "2026-05-05T18:52:54.881Z",
+        "id": 640,
+        "workflowId": "2571a9ec-8cdb-4513-a96a-9417d1d904c0",
+        "versionId": "9972fed5-401d-4112-a9f8-26def833fc73",
         "event": "activated",
-        "userId": null
+        "userId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
       }
     ]
   }
