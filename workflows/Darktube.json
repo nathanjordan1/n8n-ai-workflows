@@ -1,0 +1,505 @@
+{
+  "id": "7p80QtdVYIP3FDv8",
+  "name": "Darktube",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "darktube_producao",
+        "options": {}
+      },
+      "name": "Webhook Darktube",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        208,
+        1968
+      ],
+      "id": "8ccccbd5-e9b1-4e54-b0f3-f20e291ab6b5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ── Normaliza payload e DECIDE o motor automaticamente ──\nconst body = $input.item.json.body || $input.item.json;\nconst tpl  = body.template || {};\n\nconst sessionId    = `dt_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;\nconst captionStyle = tpl.caption_style || 'pop';\nconst animationMix = tpl.animation_mix || 'varied';\nconst language     = tpl.language     || 'pt';\nconst voice        = tpl.voice        || 'pt-BR-FranciscaNeural';\nconst format       = tpl.format       || 'vertical';\n\n// Decisão automática do motor\nconst renderEngine = (captionStyle === 'pop' || captionStyle === 'karaoke')\n  ? 'remotion'\n  : 'hyperframes';\n\nreturn [{\n  json: {\n    session_id:     sessionId,\n    render_engine:  renderEngine,\n    caption_style:  captionStyle,\n    animation_mix:  animationMix,\n    language,\n    voice,\n    format,\n    has_music:      tpl.has_music      || false,\n    primary_color:  tpl.primary_color  || '#EAB308',\n    accent_color:   tpl.accent_color   || '#FFFFFF',\n    watermark_text: tpl.watermark_text || 'DarkTube AI',\n    script_segments: tpl.script_segments || [],\n    tpl\n  }\n}];",
+        "options": {}
+      },
+      "name": "Normalize + Auto Engine",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        1968
+      ],
+      "id": "2d97433c-075d-4dda-a781-392be0202aa6"
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        656,
+        1968
+      ],
+      "id": "2d8fbf12-aa7c-48b2-aa62-0358dbb50c1d"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ── Geração / Resolução de Imagem da Cena ──\nconst norm    = $('Normalize + Auto Engine').item.json;\nconst segment = $('Loop Over Items').item.json;\nconst tpl     = norm.tpl || {};\n\n// 1. Se o segmento possui imagem própria enviada pelo usuário (Upload Manual)\nconst visual = segment.visual_content || {};\nconst providedUrl = segment.image_url || segment.media_url || segment.custom_image || visual.image_url;\n\nlet imageUrl;\nlet source;\n\nif (providedUrl) {\n  imageUrl = providedUrl;\n  source = 'user_uploaded';\n} else if (tpl.engine_mode === 'manual' || tpl.image_model === 'manual-image') {\n  imageUrl = tpl.video_thumbnail || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1080';\n  source = 'manual_fallback';\n} else {\n  imageUrl = tpl.video_thumbnail || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1080';\n  source = 'ai_fallback';\n}\n\nreturn [{\n  json: {\n    ...segment,\n    image_url: imageUrl,\n    source: source\n  }\n}];",
+        "options": {}
+      },
+      "name": "Generate Scene Image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        1968
+      ],
+      "id": "8e123f64-6335-4b57-bdc5-8986e8308ae9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"tts-1\",\n  \"input\": \"{{ $('Loop Over Items').item.json.voiceover?.text || $('Loop Over Items').item.json.voiceover_text || $('Loop Over Items').item.json.voiceoverText || $('Loop Over Items').item.json.text || $json.voiceover?.text || $json.voiceover_text || $json.text }}\",\n  \"voice\": \"{{ $('Normalize + Auto Engine').item.json.voice }}\",\n  \"language\": \"{{ $('Normalize + Auto Engine').item.json.language }}\",\n  \"speed\": 1.0,\n  \"response_format\": \"mp3\"\n}",
+        "options": {}
+      },
+      "name": "Generate TTS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        1968
+      ],
+      "id": "e8e1106b-ba75-46b9-83f3-dc52709218c9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.data }}",
+              "parameterType": "formBinaryData",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "model",
+              "value": "Systran/faster-whisper-small"
+            },
+            {
+              "name": "response_format",
+              "value": "verbose_json"
+            },
+            {
+              "name": "timestamp_granularities[]",
+              "value": "word"
+            },
+            {
+              "name": "language",
+              "value": "={{ $('Normalize + Auto Engine').item.json.language }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Whisper Word Timestamps",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        1968
+      ],
+      "id": "b1d7578e-7a54-4cb8-8d82-87897fe321ef"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ── Monta SceneSegment completo ──\nconst norm    = $('Normalize + Auto Engine').item.json;\nconst segment = $('Loop Over Items').item.json;\nconst imgRes  = $('Generate Scene Image').item.json;\nconst ttsRes  = $('Generate TTS').item.json;\nconst wRes    = $('Whisper Word Timestamps').item.json;\n\nconst voiceover = segment.voiceover || {};\nconst visual    = segment.visual_content || {};\n\nconst imageUrl = segment.image_url\n  || segment.media_url\n  || visual.image_url\n  || imgRes.image_url\n  || imgRes.url\n  || norm.tpl.video_thumbnail\n  || '';\n\nconst audioUrl = segment.audio_url || ttsRes.audio_url || ttsRes.url || '';\nconst captionText = voiceover.text || segment.voiceover_text || segment.voiceoverText || segment.text || '';\n\nconst words = (wRes.words || wRes.segments?.[0]?.words || []).map(w => ({\n  word: w.word,\n  startInSeconds: parseFloat(w.start),\n  endInSeconds:   parseFloat(w.end)\n}));\n\nconst duration = wRes.duration\n  || (() => {\n    const ts = segment.timestamp || '';\n    const parts = ts.split('-');\n    const toSec = t => { const p = t.trim().split(':'); return p.length===2 ? parseInt(p[0])*60+parseInt(p[1]) : parseInt(p[0]); };\n    return parts.length === 2 ? toSec(parts[1]) - toSec(parts[0]) : 5;\n  })();\n\nconst ALL_STYLES = ['kenburns-right','kenburns-left','zoom-punch','parallax-up','zoom-out'];\nconst idx = parseInt(segment.index || segment.id || 0);\nlet animationStyle;\nif (norm.animation_mix === 'kenburns')    animationStyle = idx % 2 === 0 ? 'kenburns-right' : 'kenburns-left';\nelse if (norm.animation_mix === 'zoom-punch') animationStyle = 'zoom-punch';\nelse animationStyle = ALL_STYLES[idx % ALL_STYLES.length];\n\nreturn [{\n  json: {\n    index:          idx,\n    imageUrl,\n    audioUrl,\n    captionText,\n    words,\n    durationSeconds: duration,\n    animationStyle,\n    transitionIn:   'fade'\n  }\n}];",
+        "options": {}
+      },
+      "name": "Build Scene",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        2048
+      ],
+      "id": "b7fa4bb7-8ade-4420-a197-917d2a377895"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ── Agrega todas as cenas geradas pelo loop ──\nconst norm = $('Normalize + Auto Engine').first().json;\nconst tpl  = norm.tpl;\n\nconst scenes = $input.all()\n  .map(item => item.json)\n  .sort((a, b) => a.index - b.index);\n\nconst baseCallback = `https://darktube.fjt-solutions.com/api/webhooks/render-complete`;\n\nconst composition = {\n  scenes,\n  format:            norm.format,\n  captionStyle:      norm.caption_style,\n  primaryColor:      norm.primary_color,\n  accentColor:       norm.accent_color,\n  showWatermark:     true,\n  watermarkText:     norm.watermark_text,\n  backgroundMusicUrl: norm.has_music ? (tpl.music_url || '') : ''\n};\n\nreturn [{\n  json: {\n    session_id:    norm.session_id,\n    render_engine: norm.render_engine,\n    template_id:   tpl.id,\n    callback_url:  baseCallback,\n    composition\n  }\n}];",
+        "options": {}
+      },
+      "name": "Aggregate Scenes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        1680
+      ],
+      "id": "d6c6475c-de83-4484-bf2d-d6b758e35fab"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ── Geração da Capa / Thumbnail HD ──\nconst norm = $('Normalize + Auto Engine').first().json;\nconst tpl  = norm.tpl || {};\n\nconst thumbUrl = tpl.thumbnail_url || tpl.video_thumbnail || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1080';\n\nreturn [{ json: { image_url: thumbUrl, url: thumbUrl } }];",
+        "options": {}
+      },
+      "name": "Generate Thumbnail",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        1776
+      ],
+      "id": "74cbe82e-5654-477e-b903-e04e6bf844a2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.render_engine }}",
+                    "rightValue": "remotion",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.render_engine }}",
+                    "rightValue": "hyperframes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "{{ $env.OUTPUTKEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Route to Engine",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        1584
+      ],
+      "id": "25195eee-1ac3-49df-b913-1b371cf620e9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"historyId\":   \"{{ $json.session_id }}\",\n  \"templateId\":  \"{{ $json.template_id }}\",\n  \"callbackUrl\": \"{{ $json.callback_url }}\",\n  \"composition\": {{ JSON.stringify($json.composition) }}\n}",
+        "options": {}
+      },
+      "name": "Remotion Render",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        1488
+      ],
+      "id": "4304c962-a6d1-430d-a579-acfbfb7c2fb8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"historyId\":   \"{{ $json.session_id }}\",\n  \"templateId\":  \"{{ $json.template_id }}\",\n  \"callbackUrl\": \"{{ $json.callback_url }}\",\n  \"payload\":     {{ JSON.stringify($json.composition) }}\n}",
+        "options": {}
+      },
+      "name": "Hyperframes Render",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        1680
+      ],
+      "id": "f5927597-f655-4104-8f40-861b39295e9f"
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {
+          "webhookSuffix": "{{ $env.WEBHOOKSUFFIX }}"
+        }
+      },
+      "name": "Wait Render",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        1584
+      ],
+      "id": "b1623c45-eb57-4940-9a85-bcd8fc731a94"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ── Auto-Post Blotato (Publicação Social) ──\nconst norm = $('Normalize + Auto Engine').first().json;\nconst tpl  = norm.tpl || {};\nconst waitRes = $('Wait Render').first().json;\n\nconst accounts = tpl.target_accounts || [];\nif (accounts.length === 0) {\n  return [{ json: { status: 'skipped_no_accounts', video_url: waitRes.video_url || '' } }];\n}\n\nreturn [{ json: { status: 'ready_to_post', accounts, video_url: waitRes.video_url || '' } }];",
+        "options": {}
+      },
+      "name": "Auto-Post Blotato",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        1584
+      ],
+      "id": "db564ca1-8553-468f-bfe5-7f18068aac4e"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"template_id\":   \"{{ $('Normalize + Auto Engine').item.json.tpl.id }}\",\n  \"session_id\":    \"{{ $('Normalize + Auto Engine').item.json.session_id }}\",\n  \"render_engine\": \"{{ $('Normalize + Auto Engine').item.json.render_engine }}\",\n  \"video_url\":     \"{{ $('Wait Render').item.json.video_url }}\",\n  \"thumbnail_url\": \"{{ $('Generate Thumbnail').item.json.image_url || '' }}\",\n  \"status\":        \"completed\"\n}",
+        "options": {}
+      },
+      "name": "Callback DarkTube",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2000,
+        1584
+      ],
+      "id": "a1b6073b-5541-47dd-a0a6-26773d95773a"
+    }
+  ],
+  "connections": {
+    "Webhook Darktube": {
+      "main": [
+        [
+          {
+            "node": "Normalize + Auto Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize + Auto Engine": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Scenes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Scene Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Scene Image": {
+      "main": [
+        [
+          {
+            "node": "Generate TTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate TTS": {
+      "main": [
+        [
+          {
+            "node": "Whisper Word Timestamps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Whisper Word Timestamps": {
+      "main": [
+        [
+          {
+            "node": "Build Scene",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Scene": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Scenes": {
+      "main": [
+        [
+          {
+            "node": "Route to Engine",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate Thumbnail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route to Engine": {
+      "main": [
+        [
+          {
+            "node": "Remotion Render",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Hyperframes Render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remotion Render": {
+      "main": [
+        [
+          {
+            "node": "Wait Render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hyperframes Render": {
+      "main": [
+        [
+          {
+            "node": "Wait Render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Render": {
+      "main": [
+        [
+          {
+            "node": "Auto-Post Blotato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-Post Blotato": {
+      "main": [
+        [
+          {
+            "node": "Callback DarkTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "activeVersionId": null,
+  "versionCounter": 57,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-07-27T03:14:12.126Z",
+      "createdAt": "2026-07-27T03:14:12.126Z",
+      "role": "workflow:owner",
+      "workflowId": "7p80QtdVYIP3FDv8",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
