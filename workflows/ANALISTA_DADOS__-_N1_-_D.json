@@ -1,0 +1,732 @@
+{
+  "id": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+  "name": "ANALISTA DADOS  - N1 - D",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        112,
+        112
+      ],
+      "id": "02846f72-ba34-4620-b894-69638b501976",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "content": "# ANALISTA DE DADOS",
+        "height": 364,
+        "width": 1800
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "cd3cfa06-6a73-425d-a7f3-fc38ef47bc47",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d730f70a-b886-4e8c-b492-9fb7c24a9819",
+              "name": "firstName",
+              "value": "={{ $json.firstName }}",
+              "type": "string"
+            },
+            {
+              "id": "705aa45a-a3fc-4c39-a80a-506772ae923a",
+              "name": "lastName",
+              "value": "={{ $json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4bbec06e-0b8e-4013-8750-c339c272b46e",
+              "name": "emailAddress",
+              "value": "={{ $json.emailAddress }}",
+              "type": "string"
+            },
+            {
+              "id": "f3029fa5-d37b-4a66-a451-1ef6f875b6ce",
+              "name": "headline",
+              "value": "={{ $json.headline }}",
+              "type": "string"
+            },
+            {
+              "id": "7ed737b5-6d53-4ed8-b652-1fed38f38c96",
+              "name": "linkedInProfileUrl",
+              "value": "={{ $json.linkedInProfileUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "5faf6d18-b17c-47b5-89c2-a4ab7566027f",
+              "name": "number",
+              "value": "={{ $json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "ff3db22d-01aa-4fdc-945f-4be509733764",
+              "name": "companyName",
+              "value": "={{ $json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "875beeb9-afd6-4c81-95ba-8487d0e19322",
+              "name": "typeCompany",
+              "value": "={{ $json.typeCompany }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        112
+      ],
+      "id": "42d4a92f-ae06-4a24-ba82-1972868c1ce0",
+      "name": "SET1"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.number }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "whatsapp",
+              "description": "Numero de whatsapp dos comércios",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=Sua função é localizar e extrair os numeros de whatsapp dos comercios, os comercios possuem essa estrutura de número: 'DDD + 9 + numero', exemplo: '11 9 1234-5678'. Você deve identificar os números do whatsapp e extrair-los e trazer o output no formato: '11912345678'. Caso localize um número fora deste formato informe 'fixo'."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        576,
+        112
+      ],
+      "id": "77116f29-e4e5-4834-bfb7-f5e78127a09b",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "24ck4WDvy5zSCNw9",
+          "mode": "list",
+          "cachedResultName": "REGISTRADOR - N1 - D"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1520,
+        112
+      ],
+      "id": "0cd014ba-b2b8-47fc-a29e-1ef0aba79047",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "833e3c4f-7d11-4c7b-a8d1-6c7d778836a7",
+              "leftValue": "={{ $json.output.whatsapp }}",
+              "rightValue": "fixo",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        112
+      ],
+      "id": "d732deb4-2b19-4c4a-a45d-96165da34658",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e512bd4-f6f7-409e-9be6-32abec25ce2c",
+              "name": "firstName",
+              "value": "={{ $('SET1').item.json.firstName }}",
+              "type": "string"
+            },
+            {
+              "id": "fe4b837e-7ecd-45bc-a988-7d82eca3442a",
+              "name": "lastName",
+              "value": "={{ $('SET1').item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "8844bf27-5289-40cf-b3d9-c47c3f0ca537",
+              "name": "emailAddress",
+              "value": "={{ $('SET1').item.json.emailAddress }}",
+              "type": "string"
+            },
+            {
+              "id": "ccb10bec-9885-481e-894e-9a1b5b12f66e",
+              "name": "headline",
+              "value": "={{ $('SET1').item.json.headline }}",
+              "type": "string"
+            },
+            {
+              "id": "b7bca73b-96a9-4937-81d8-8db5d62747ea",
+              "name": "linkedInProfileUrl",
+              "value": "={{ $('SET1').item.json.linkedInProfileUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "f8863c05-c573-41c0-8c24-c6445f4474ed",
+              "name": "number",
+              "value": "={{ $('SET1').item.json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "1674807f-46fc-4d42-9b48-8d8e200b527f",
+              "name": "companyName",
+              "value": "={{ $('SET1').item.json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "87f6fdc4-ee88-44ef-8222-7d981f9c4982",
+              "name": "typeCompany",
+              "value": "={{ $('SET1').item.json.typeCompany }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1248,
+        112
+      ],
+      "id": "572c5dcc-5578-43c7-b2b0-b94a63bef2e6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        224
+      ],
+      "id": "2eef6b6b-a0e5-40a1-81c0-97058a65ca9c",
+      "name": "4.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "SET1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET1": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "b5e28670-f255-46b0-8b08-5dd0de297476",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:40.535Z",
+      "createdAt": "2025-10-20T18:56:40.535Z",
+      "role": "workflow:owner",
+      "workflowId": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "b5e28670-f255-46b0-8b08-5dd0de297476",
+    "workflowId": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+    "nodes": [
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          112,
+          112
+        ],
+        "id": "02846f72-ba34-4620-b894-69638b501976",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "content": "# ANALISTA DE DADOS",
+          "height": 364,
+          "width": 1800
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          0,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "cd3cfa06-6a73-425d-a7f3-fc38ef47bc47",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d730f70a-b886-4e8c-b492-9fb7c24a9819",
+                "name": "firstName",
+                "value": "={{ $json.firstName }}",
+                "type": "string"
+              },
+              {
+                "id": "705aa45a-a3fc-4c39-a80a-506772ae923a",
+                "name": "lastName",
+                "value": "={{ $json.lastName }}",
+                "type": "string"
+              },
+              {
+                "id": "4bbec06e-0b8e-4013-8750-c339c272b46e",
+                "name": "emailAddress",
+                "value": "={{ $json.emailAddress }}",
+                "type": "string"
+              },
+              {
+                "id": "f3029fa5-d37b-4a66-a451-1ef6f875b6ce",
+                "name": "headline",
+                "value": "={{ $json.headline }}",
+                "type": "string"
+              },
+              {
+                "id": "7ed737b5-6d53-4ed8-b652-1fed38f38c96",
+                "name": "linkedInProfileUrl",
+                "value": "={{ $json.linkedInProfileUrl }}",
+                "type": "string"
+              },
+              {
+                "id": "5faf6d18-b17c-47b5-89c2-a4ab7566027f",
+                "name": "number",
+                "value": "={{ $json.number }}",
+                "type": "string"
+              },
+              {
+                "id": "ff3db22d-01aa-4fdc-945f-4be509733764",
+                "name": "companyName",
+                "value": "={{ $json.companyName }}",
+                "type": "string"
+              },
+              {
+                "id": "875beeb9-afd6-4c81-95ba-8487d0e19322",
+                "name": "typeCompany",
+                "value": "={{ $json.typeCompany }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          352,
+          112
+        ],
+        "id": "42d4a92f-ae06-4a24-ba82-1972868c1ce0",
+        "name": "SET1"
+      },
+      {
+        "parameters": {
+          "text": "={{ $json.number }}",
+          "attributes": {
+            "attributes": [
+              {
+                "name": "whatsapp",
+                "description": "Numero de whatsapp dos comércios",
+                "required": true
+              }
+            ]
+          },
+          "options": {
+            "systemPromptTemplate": "=Sua função é localizar e extrair os numeros de whatsapp dos comercios, os comercios possuem essa estrutura de número: 'DDD + 9 + numero', exemplo: '11 9 1234-5678'. Você deve identificar os números do whatsapp e extrair-los e trazer o output no formato: '11912345678'. Caso localize um número fora deste formato informe 'fixo'."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+        "typeVersion": 1.2,
+        "position": [
+          576,
+          112
+        ],
+        "id": "77116f29-e4e5-4834-bfb7-f5e78127a09b",
+        "name": "Information Extractor"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "24ck4WDvy5zSCNw9",
+            "mode": "list",
+            "cachedResultName": "REGISTRADOR - N1 - D"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "mode": "each",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          1520,
+          112
+        ],
+        "id": "0cd014ba-b2b8-47fc-a29e-1ef0aba79047",
+        "name": "Execute Workflow"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "833e3c4f-7d11-4c7b-a8d1-6c7d778836a7",
+                "leftValue": "={{ $json.output.whatsapp }}",
+                "rightValue": "fixo",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          960,
+          112
+        ],
+        "id": "d732deb4-2b19-4c4a-a45d-96165da34658",
+        "name": "Filter"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "4e512bd4-f6f7-409e-9be6-32abec25ce2c",
+                "name": "firstName",
+                "value": "={{ $('SET1').item.json.firstName }}",
+                "type": "string"
+              },
+              {
+                "id": "fe4b837e-7ecd-45bc-a988-7d82eca3442a",
+                "name": "lastName",
+                "value": "={{ $('SET1').item.json.lastName }}",
+                "type": "string"
+              },
+              {
+                "id": "8844bf27-5289-40cf-b3d9-c47c3f0ca537",
+                "name": "emailAddress",
+                "value": "={{ $('SET1').item.json.emailAddress }}",
+                "type": "string"
+              },
+              {
+                "id": "ccb10bec-9885-481e-894e-9a1b5b12f66e",
+                "name": "headline",
+                "value": "={{ $('SET1').item.json.headline }}",
+                "type": "string"
+              },
+              {
+                "id": "b7bca73b-96a9-4937-81d8-8db5d62747ea",
+                "name": "linkedInProfileUrl",
+                "value": "={{ $('SET1').item.json.linkedInProfileUrl }}",
+                "type": "string"
+              },
+              {
+                "id": "f8863c05-c573-41c0-8c24-c6445f4474ed",
+                "name": "number",
+                "value": "={{ $('SET1').item.json.number }}",
+                "type": "string"
+              },
+              {
+                "id": "1674807f-46fc-4d42-9b48-8d8e200b527f",
+                "name": "companyName",
+                "value": "={{ $('SET1').item.json.companyName }}",
+                "type": "string"
+              },
+              {
+                "id": "87f6fdc4-ee88-44ef-8222-7d981f9c4982",
+                "name": "typeCompany",
+                "value": "={{ $('SET1').item.json.typeCompany }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1248,
+          112
+        ],
+        "id": "572c5dcc-5578-43c7-b2b0-b94a63bef2e6",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4.1-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-4.1-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          800,
+          224
+        ],
+        "id": "2eef6b6b-a0e5-40a1-81c0-97058a65ca9c",
+        "name": "4.1-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account 2"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "SET1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET1": {
+        "main": [
+          [
+            {
+              "node": "Information Extractor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Information Extractor": {
+        "main": [
+          [
+            {
+              "node": "Filter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4.1-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Information Extractor",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:43:35.114Z",
+        "id": 85,
+        "workflowId": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+        "versionId": "b5e28670-f255-46b0-8b08-5dd0de297476",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
