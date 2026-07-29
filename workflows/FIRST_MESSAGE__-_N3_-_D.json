@@ -1,0 +1,1633 @@
+{
+  "id": "6e734dd0-325f-40df-817e-b9efc3e1c1b3",
+  "name": "FIRST MESSAGE  - N3 - D",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -4208,
+        -656
+      ],
+      "id": "67873da1-eb51-43c1-be30-742df081657b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b0ce4ecc-88b6-4176-9227-81a2b705b5d6",
+              "name": "lead.id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "ed51197c-3bed-42c4-b328-72adb32003ea",
+              "name": "lead.comercio",
+              "value": "={{ $json.comercio }}",
+              "type": "string"
+            },
+            {
+              "id": "d48debd2-0ed0-4759-a007-0ea440f247cd",
+              "name": "lead.site",
+              "value": "={{ $json.site }}",
+              "type": "string"
+            },
+            {
+              "id": "84b6ecd7-3639-4966-85d6-9804f6174f3f",
+              "name": "lead.telefone",
+              "value": "={{ $json.telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "9d6d9e68-423e-409b-92ce-e33d36110ca9",
+              "name": "lead.data",
+              "value": "={{ $json.data }}",
+              "type": "string"
+            },
+            {
+              "id": "4feeb662-cce7-40ce-83c1-0572b6f5f8d4",
+              "name": "lead.contato",
+              "value": "={{ $json.contato }}",
+              "type": "boolean"
+            },
+            {
+              "id": "2caf88e8-ebaa-4076-9760-5a464ef6cca9",
+              "name": "lead.idioma",
+              "value": "Português - Brasil",
+              "type": "string"
+            },
+            {
+              "id": "97bb3b40-1ccb-44b1-b263-a664c3d72fff",
+              "name": "lead.remoteJid",
+              "value": "={{ $json.telefone }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2832,
+        -656
+      ],
+      "id": "684d2823-5d6b-4a7d-a783-5c7eefc679f3",
+      "name": "SET"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        -3104,
+        -144
+      ],
+      "id": "8bdbad2e-e928-4c30-8b53-0290e6263794",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -3056,
+        -656
+      ],
+      "id": "9238a799-f065-4a71-a92b-00d396041d5d",
+      "name": "Limit"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -3744,
+        -848
+      ],
+      "id": "4369cdc4-310c-4636-8fbc-98ef9058b86b",
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Faça o primeiro atendimento.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# IDIOMA\n- {{ $('SET').item.json.lead.idioma }}\n\n# DATA ATUAL\n- {{ $now.format('dd-MM-yyyy HH:mm:ss') }}\n\n**DADOS DO LEAD:** {{ $('SET').item.json.lead.toJsonString() }}\n\n## IDENTIDADE E PAPEL\n\nVocê é a Carla da FJT Solutions, especialista em primeiro contato com leads qualificados. Sua missão é fazer o **primeiro atendimento via WhatsApp** de forma humana, curta e acolhedora, criando curiosidade e rapport inicial.\n\n## CONTEXTO E OBJETIVO\n\n- Primeiro contato com leads qualificados.\n- Crie conexão genuína e desperte interesse.\n- **Não use pitches longos nem envie links de formulário de primeira.**\n- Mantenha a conversa leve e natural, como se fosse uma pessoa real.\n\n## ESTRATÉGIA DE PRIMEIRO CONTATO\n\n### ABORDAGEM INICIAL\n\n- **Sempre seja caloroso** e breve.\n- **Apresente-se rapidamente**: \"Oi [nome], sou a Carla da FJT Solutions.\"\n- **Puxe curiosidade**: use perguntas que incentivem o lead a responder.\n- **Limite a primeira mensagem a 1 ou 2 frases curtas.**\n\n### EXEMPLOS DE PRIMEIRA MENSAGEM\n\n1. \"Oi [nome], tudo bem? 👋 Sou a Carla da FJT Solutions… me diz, já pensou em usar IA pra simplificar o dia a dia do seu negócio?\"\n2. \"Oi [nome]! Sou a Carla da FJT Solutions 🙂 posso te mostrar rapidinho como IA ajuda negócios como o seu?\"\n3. \"Oi [nome], tudo certo? 🚀 Aqui é a Carla da FJT Solutions. Você já imaginou como IA pode facilitar processos no seu negócio?\"\n\n### REGRAS IMPORTANTES\n\n1. **Nunca envie pitches longos ou explicações detalhadas de primeira.**\n2. **Evite links de formulário na primeira mensagem.**\n3. **Mantenha tom humano, acolhedor e curto.**\n4. **Sempre abra espaço para o lead responder.**\n\n## FORMATO DE SAÍDA OBRIGATÓRIO\n\nSua resposta final DEVE SER **um objeto JSON válido**:\n\n\n{\n  \"mensagem1\": \"\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -3216,
+        -384
+      ],
+      "id": "12619b8f-9ecc-4041-995c-36f94165e4fb",
+      "name": "ATENDIMENTO DE LEADS"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"mensagem1\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -2960,
+        -144
+      ],
+      "id": "8b77664b-3c92-463f-a89f-5bf60ceaa552",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "92cd606c-9d43-4f5a-8f1e-7134f5f811c5",
+              "leftValue": "={{ $json.output.mensagem1 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2784,
+        -384
+      ],
+      "id": "dd6ff2ee-2626-4580-a1fc-eadc2951129d",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "# PRIMEIRO CONTATO",
+        "height": 1348,
+        "width": 2820,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4352,
+        -784
+      ],
+      "typeVersion": 1,
+      "id": "c5050f88-7551-431f-b9c1-d2f6e7127bd3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "databaseId": 269448,
+        "tableId": 632023,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        -3488,
+        -656
+      ],
+      "id": "5a2bdce2-a8cb-429b-9b2b-2e9bd00ff561",
+      "name": "GET N2",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "FirstMessage",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "comercio",
+              "fieldValue": "={{ $('SET').first().json.lead.comercio }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('SET').first().json.lead.telefone }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -2528,
+        -384
+      ],
+      "id": "914bbfa5-cf25-46dc-87a8-84e1f71e1b52",
+      "name": "CREATE FIRST MESSAGE",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | Cap.LeadsFJT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "687fda78-2e78-47cb-8366-880c83414068",
+              "leftValue": "={{ $json.contato }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -3280,
+        -656
+      ],
+      "id": "4565bc17-da45-4114-87bf-bec405551bda",
+      "name": "FILTER FALSE CONTATO"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1712,
+        -160
+      ],
+      "id": "e8cb5e08-512b-4141-b83a-5c9524165e1b",
+      "name": "WAIT 10'"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "FirstMessage",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $json.data.key.remoteJid }}"
+            },
+            {
+              "fieldId": "mensagem1",
+              "fieldValue": "={{ $('ATENDIMENTO DE LEADS').item.json.output.mensagem1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1936,
+        -160
+      ],
+      "id": "8a6fed65-9230-453d-a4aa-bfa78cbe9de4",
+      "name": "UPDATE FIRST MESSAGE",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | Cap.LeadsFJT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "FollowUp - Cap.Leads FJT",
+        "remoteJid": "=55{{ $json.numero }}",
+        "messageText": "={{ $('ATENDIMENTO DE LEADS').item.json.output.mensagem1 }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        -2176,
+        -160
+      ],
+      "id": "7d11f074-ab7b-4510-8bb6-6de793eaab71",
+      "name": "SEND FIRST MESSAGE",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution account 2"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 269448,
+        "tableId": 632023,
+        "rowId": "={{ $('SET').first().json.lead.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 5152537,
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        -2288,
+        256
+      ],
+      "id": "1060334f-e74b-4ead-be8b-f31a987c8b42",
+      "name": "UPDATE CONTATO BASEROW N2",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "FirstMessage",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "{{ $env.KEYNAME }}",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "contato",
+              "fieldValue": "=true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -2048,
+        256
+      ],
+      "id": "10e5e5d4-eb72-40c0-a745-c67ba5b93104",
+      "name": "UPDATE CONTATO SUPABASE N2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | Cap.LeadsFJT"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "tableId": "FollowUp",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "comercio",
+              "fieldValue": "={{ $('CREATE FIRST MESSAGE').item.json.comercio }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "=55{{ $('CREATE FIRST MESSAGE').item.json.numero }}@s.whatsapp.net"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1808,
+        256
+      ],
+      "id": "1288109c-8804-4534-ae1c-618126336e13",
+      "name": "CREATE FOLLOW UP",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | Cap.LeadsFJT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.numero }}",
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -3744,
+        -656
+      ],
+      "id": "248d7111-2c98-4a99-9b3a-ef7ea3f35953",
+      "name": "Wait"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "FirstMessage",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "{{ $env.KEYVALUE }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "comercio",
+              "fieldValue": "={{ $('SET').item.json.comercio }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -2176,
+        -384
+      ],
+      "id": "4563608a-c1dc-4d34-81d6-a7d9a8d2d5af",
+      "name": "UPDATE COMERCIO",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase | Cap.LeadsFJT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let ultimoNumero = $json.ultimoNumero ?? null;\n\nfunction gerarNumeroBaixaRepeticao() {\n  let numero;\n  do {\n    numero = Math.floor(Math.random() * (20 - 5 + 1)) + 5;\n  } while (numero === ultimoNumero && Math.random() < 0.9);\n\n  ultimoNumero = numero;\n  return numero;\n}\n\nconst numeroGerado = gerarNumeroBaixaRepeticao();\n\nreturn [\n  {\n    json: {\n      numero: numeroGerado\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3968,
+        -656
+      ],
+      "id": "007c4142-cbe3-4fe0-8d9e-db0844a54c35",
+      "name": "Random Time",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -3248,
+        -144
+      ],
+      "id": "f4b2f7c7-6b41-4791-9146-0d72a1abee73",
+      "name": "4.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1920,
+        80
+      ],
+      "id": "cff79b9a-4447-478d-a6ee-04ce85cba4ef",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Random Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "ATENDIMENTO DE LEADS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "ATENDIMENTO DE LEADS",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "GET N2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ATENDIMENTO DE LEADS": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "ATENDIMENTO DE LEADS",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "CREATE FIRST MESSAGE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ATENDIMENTO DE LEADS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET N2": {
+      "main": [
+        [
+          {
+            "node": "FILTER FALSE CONTATO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREATE FIRST MESSAGE": {
+      "main": [
+        [
+          {
+            "node": "SEND FIRST MESSAGE",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "UPDATE CONTATO BASEROW N2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "UPDATE COMERCIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FILTER FALSE CONTATO": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UPDATE FIRST MESSAGE": {
+      "main": [
+        [
+          {
+            "node": "WAIT 10'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEND FIRST MESSAGE": {
+      "main": [
+        [
+          {
+            "node": "UPDATE FIRST MESSAGE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UPDATE CONTATO BASEROW N2": {
+      "main": [
+        [
+          {
+            "node": "UPDATE CONTATO SUPABASE N2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UPDATE CONTATO SUPABASE N2": {
+      "main": [
+        [
+          {
+            "node": "CREATE FOLLOW UP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "GET N2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Random Time": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "ATENDIMENTO DE LEADS",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "a6c5d43c-6d62-482d-9845-1ff651e995cb",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:55.322Z",
+      "createdAt": "2025-10-20T18:56:55.322Z",
+      "role": "workflow:owner",
+      "workflowId": "6e734dd0-325f-40df-817e-b9efc3e1c1b3",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:45.241Z",
+    "createdAt": "2025-12-11T15:43:45.241Z",
+    "versionId": "a6c5d43c-6d62-482d-9845-1ff651e995cb",
+    "workflowId": "6e734dd0-325f-40df-817e-b9efc3e1c1b3",
+    "nodes": [
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -4208,
+          -656
+        ],
+        "id": "67873da1-eb51-43c1-be30-742df081657b",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b0ce4ecc-88b6-4176-9227-81a2b705b5d6",
+                "name": "lead.id",
+                "value": "={{ $json.id }}",
+                "type": "number"
+              },
+              {
+                "id": "ed51197c-3bed-42c4-b328-72adb32003ea",
+                "name": "lead.comercio",
+                "value": "={{ $json.comercio }}",
+                "type": "string"
+              },
+              {
+                "id": "d48debd2-0ed0-4759-a007-0ea440f247cd",
+                "name": "lead.site",
+                "value": "={{ $json.site }}",
+                "type": "string"
+              },
+              {
+                "id": "84b6ecd7-3639-4966-85d6-9804f6174f3f",
+                "name": "lead.telefone",
+                "value": "={{ $json.telefone }}",
+                "type": "string"
+              },
+              {
+                "id": "9d6d9e68-423e-409b-92ce-e33d36110ca9",
+                "name": "lead.data",
+                "value": "={{ $json.data }}",
+                "type": "string"
+              },
+              {
+                "id": "4feeb662-cce7-40ce-83c1-0572b6f5f8d4",
+                "name": "lead.contato",
+                "value": "={{ $json.contato }}",
+                "type": "boolean"
+              },
+              {
+                "id": "2caf88e8-ebaa-4076-9760-5a464ef6cca9",
+                "name": "lead.idioma",
+                "value": "Português - Brasil",
+                "type": "string"
+              },
+              {
+                "id": "97bb3b40-1ccb-44b1-b263-a664c3d72fff",
+                "name": "lead.remoteJid",
+                "value": "={{ $json.telefone }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -2832,
+          -656
+        ],
+        "id": "684d2823-5d6b-4a7d-a783-5c7eefc679f3",
+        "name": "SET"
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolThink",
+        "typeVersion": 1,
+        "position": [
+          -3104,
+          -144
+        ],
+        "id": "8bdbad2e-e928-4c30-8b53-0290e6263794",
+        "name": "Think"
+      },
+      {
+        "parameters": {
+          "keep": "lastItems"
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          -3056,
+          -656
+        ],
+        "id": "9238a799-f065-4a71-a92b-00d396041d5d",
+        "name": "Limit"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -3744,
+          -848
+        ],
+        "id": "4369cdc4-310c-4636-8fbc-98ef9058b86b",
+        "name": "When clicking ‘Execute workflow’",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Faça o primeiro atendimento.",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# IDIOMA\n- {{ $('SET').item.json.lead.idioma }}\n\n# DATA ATUAL\n- {{ $now.format('dd-MM-yyyy HH:mm:ss') }}\n\n**DADOS DO LEAD:** {{ $('SET').item.json.lead.toJsonString() }}\n\n## IDENTIDADE E PAPEL\n\nVocê é a Carla da FJT Solutions, especialista em primeiro contato com leads qualificados. Sua missão é fazer o **primeiro atendimento via WhatsApp** de forma humana, curta e acolhedora, criando curiosidade e rapport inicial.\n\n## CONTEXTO E OBJETIVO\n\n- Primeiro contato com leads qualificados.\n- Crie conexão genuína e desperte interesse.\n- **Não use pitches longos nem envie links de formulário de primeira.**\n- Mantenha a conversa leve e natural, como se fosse uma pessoa real.\n\n## ESTRATÉGIA DE PRIMEIRO CONTATO\n\n### ABORDAGEM INICIAL\n\n- **Sempre seja caloroso** e breve.\n- **Apresente-se rapidamente**: \"Oi [nome], sou a Carla da FJT Solutions.\"\n- **Puxe curiosidade**: use perguntas que incentivem o lead a responder.\n- **Limite a primeira mensagem a 1 ou 2 frases curtas.**\n\n### EXEMPLOS DE PRIMEIRA MENSAGEM\n\n1. \"Oi [nome], tudo bem? 👋 Sou a Carla da FJT Solutions… me diz, já pensou em usar IA pra simplificar o dia a dia do seu negócio?\"\n2. \"Oi [nome]! Sou a Carla da FJT Solutions 🙂 posso te mostrar rapidinho como IA ajuda negócios como o seu?\"\n3. \"Oi [nome], tudo certo? 🚀 Aqui é a Carla da FJT Solutions. Você já imaginou como IA pode facilitar processos no seu negócio?\"\n\n### REGRAS IMPORTANTES\n\n1. **Nunca envie pitches longos ou explicações detalhadas de primeira.**\n2. **Evite links de formulário na primeira mensagem.**\n3. **Mantenha tom humano, acolhedor e curto.**\n4. **Sempre abra espaço para o lead responder.**\n\n## FORMATO DE SAÍDA OBRIGATÓRIO\n\nSua resposta final DEVE SER **um objeto JSON válido**:\n\n\n{\n  \"mensagem1\": \"\"\n}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          -3216,
+          -384
+        ],
+        "id": "12619b8f-9ecc-4041-995c-36f94165e4fb",
+        "name": "ATENDIMENTO DE LEADS"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"mensagem1\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          -2960,
+          -144
+        ],
+        "id": "8b77664b-3c92-463f-a89f-5bf60ceaa552",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "92cd606c-9d43-4f5a-8f1e-7134f5f811c5",
+                "leftValue": "={{ $json.output.mensagem1 }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -2784,
+          -384
+        ],
+        "id": "dd6ff2ee-2626-4580-a1fc-eadc2951129d",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "content": "# PRIMEIRO CONTATO",
+          "height": 1348,
+          "width": 2820,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -4352,
+          -784
+        ],
+        "typeVersion": 1,
+        "id": "c5050f88-7551-431f-b9c1-d2f6e7127bd3",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "databaseId": 269448,
+          "tableId": 632023,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          -3488,
+          -656
+        ],
+        "id": "5a2bdce2-a8cb-429b-9b2b-2e9bd00ff561",
+        "name": "GET N2",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "tableId": "FirstMessage",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "comercio",
+                "fieldValue": "={{ $('SET').first().json.lead.comercio }}"
+              },
+              {
+                "fieldId": "numero",
+                "fieldValue": "={{ $('SET').first().json.lead.telefone }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          -2528,
+          -384
+        ],
+        "id": "914bbfa5-cf25-46dc-87a8-84e1f71e1b52",
+        "name": "CREATE FIRST MESSAGE",
+        "executeOnce": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "CH8bccQ2U2NfMtiZ",
+            "name": "Supabase | Cap.LeadsFJT"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "687fda78-2e78-47cb-8366-880c83414068",
+                "leftValue": "={{ $json.contato }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          -3280,
+          -656
+        ],
+        "id": "4565bc17-da45-4114-87bf-bec405551bda",
+        "name": "FILTER FALSE CONTATO"
+      },
+      {
+        "parameters": {
+          "amount": 10
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          -1712,
+          -160
+        ],
+        "id": "e8cb5e08-512b-4141-b83a-5c9524165e1b",
+        "name": "WAIT 10'",
+        "webhookId": "592c820d-8bcf-4fcd-bbdd-8bba9900f7af"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "FirstMessage",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "condition": "eq",
+                "keyValue": "={{ $('CREATE FIRST MESSAGE').item.json.id }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "numero",
+                "fieldValue": "={{ $json.data.key.remoteJid }}"
+              },
+              {
+                "fieldId": "mensagem1",
+                "fieldValue": "={{ $('ATENDIMENTO DE LEADS').item.json.output.mensagem1 }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          -1936,
+          -160
+        ],
+        "id": "8a6fed65-9230-453d-a4aa-bfa78cbe9de4",
+        "name": "UPDATE FIRST MESSAGE",
+        "credentials": {
+          "supabaseApi": {
+            "id": "CH8bccQ2U2NfMtiZ",
+            "name": "Supabase | Cap.LeadsFJT"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "messages-api",
+          "instanceName": "FollowUp - Cap.Leads FJT",
+          "remoteJid": "=55{{ $json.numero }}",
+          "messageText": "={{ $('ATENDIMENTO DE LEADS').item.json.output.mensagem1 }}",
+          "options_message": {}
+        },
+        "type": "n8n-nodes-evolution-api.evolutionApi",
+        "typeVersion": 1,
+        "position": [
+          -2176,
+          -160
+        ],
+        "id": "7d11f074-ab7b-4510-8bb6-6de793eaab71",
+        "name": "SEND FIRST MESSAGE",
+        "credentials": {
+          "evolutionApi": {
+            "id": "b3mpy5RQEarqZZLq",
+            "name": "Evolution account 2"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "databaseId": 269448,
+          "tableId": 632023,
+          "rowId": "={{ $('SET').first().json.lead.id }}",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 5152537,
+                "fieldValue": "true"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          -2288,
+          256
+        ],
+        "id": "1060334f-e74b-4ead-be8b-f31a987c8b42",
+        "name": "UPDATE CONTATO BASEROW N2",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "FirstMessage",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "numero",
+                "condition": "eq",
+                "keyValue": "={{ $('SET').first().json.lead.telefone }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "contato",
+                "fieldValue": "=true"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          -2048,
+          256
+        ],
+        "id": "10e5e5d4-eb72-40c0-a745-c67ba5b93104",
+        "name": "UPDATE CONTATO SUPABASE N2",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "CH8bccQ2U2NfMtiZ",
+            "name": "Supabase | Cap.LeadsFJT"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "tableId": "FollowUp",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "comercio",
+                "fieldValue": "={{ $('CREATE FIRST MESSAGE').item.json.comercio }}"
+              },
+              {
+                "fieldId": "numero",
+                "fieldValue": "=55{{ $('CREATE FIRST MESSAGE').item.json.numero }}@s.whatsapp.net"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          -1808,
+          256
+        ],
+        "id": "1288109c-8804-4534-ae1c-618126336e13",
+        "name": "CREATE FOLLOW UP",
+        "executeOnce": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "CH8bccQ2U2NfMtiZ",
+            "name": "Supabase | Cap.LeadsFJT"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "amount": "={{ $json.numero }}",
+          "unit": "minutes"
+        },
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          -3744,
+          -656
+        ],
+        "id": "248d7111-2c98-4a99-9b3a-ef7ea3f35953",
+        "name": "Wait",
+        "webhookId": "7119b88d-f387-4dd2-93f2-8c39c1700504"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "tableId": "FirstMessage",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "id",
+                "condition": "eq",
+                "keyValue": "={{ $('CREATE FIRST MESSAGE').item.json.id }}"
+              }
+            ]
+          },
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "comercio",
+                "fieldValue": "={{ $('SET').item.json.comercio }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          -2176,
+          -384
+        ],
+        "id": "4563608a-c1dc-4d34-81d6-a7d9a8d2d5af",
+        "name": "UPDATE COMERCIO",
+        "credentials": {
+          "supabaseApi": {
+            "id": "CH8bccQ2U2NfMtiZ",
+            "name": "Supabase | Cap.LeadsFJT"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "let ultimoNumero = $json.ultimoNumero ?? null;\n\nfunction gerarNumeroBaixaRepeticao() {\n  let numero;\n  do {\n    numero = Math.floor(Math.random() * (20 - 5 + 1)) + 5;\n  } while (numero === ultimoNumero && Math.random() < 0.9);\n\n  ultimoNumero = numero;\n  return numero;\n}\n\nconst numeroGerado = gerarNumeroBaixaRepeticao();\n\nreturn [\n  {\n    json: {\n      numero: numeroGerado\n    },\n  },\n];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -3968,
+          -656
+        ],
+        "id": "007c4142-cbe3-4fe0-8d9e-db0844a54c35",
+        "name": "Random Time",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-4.1-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          -3248,
+          -144
+        ],
+        "id": "f4b2f7c7-6b41-4791-9146-0d72a1abee73",
+        "name": "4.1-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account 2"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          -1920,
+          80
+        ],
+        "id": "cff79b9a-4447-478d-a6ee-04ce85cba4ef",
+        "name": "No Operation, do nothing"
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Random Time",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "ATENDIMENTO DE LEADS",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Think": {
+        "ai_tool": [
+          [
+            {
+              "node": "ATENDIMENTO DE LEADS",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "GET N2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ATENDIMENTO DE LEADS": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "ATENDIMENTO DE LEADS",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "CREATE FIRST MESSAGE",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "ATENDIMENTO DE LEADS",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GET N2": {
+        "main": [
+          [
+            {
+              "node": "FILTER FALSE CONTATO",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CREATE FIRST MESSAGE": {
+        "main": [
+          [
+            {
+              "node": "SEND FIRST MESSAGE",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "UPDATE CONTATO BASEROW N2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "UPDATE COMERCIO",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "FILTER FALSE CONTATO": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UPDATE FIRST MESSAGE": {
+        "main": [
+          [
+            {
+              "node": "WAIT 10'",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SEND FIRST MESSAGE": {
+        "main": [
+          [
+            {
+              "node": "UPDATE FIRST MESSAGE",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UPDATE CONTATO BASEROW N2": {
+        "main": [
+          [
+            {
+              "node": "UPDATE CONTATO SUPABASE N2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UPDATE CONTATO SUPABASE N2": {
+        "main": [
+          [
+            {
+              "node": "CREATE FOLLOW UP",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "GET N2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Random Time": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4.1-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "ATENDIMENTO DE LEADS",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:43:40.735Z",
+        "id": 42,
+        "workflowId": "6e734dd0-325f-40df-817e-b9efc3e1c1b3",
+        "versionId": "a6c5d43c-6d62-482d-9845-1ff651e995cb",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
