@@ -1,0 +1,422 @@
+{
+  "id": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+  "name": "Copywriter N1",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "setor"
+            },
+            {
+              "name": "requisicao"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0dfc21d0-e58e-4c20-8394-ef94c1d6055d",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        544,
+        240
+      ],
+      "id": "3e4eb88a-1cdd-4fe2-8af4-fd12e33ae5d5",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"descricao\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        240
+      ],
+      "id": "2e9269bb-a382-4680-86de-e0f67f507796",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=setor: {{ $('SET').first().json.setor }}\nrequisição: {{ $('SET').first().json.requisicao }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# 📥 INSTRUÇÕES\n\n## Setor: N1\n## Cargo: CopyWriter\n\n## 👤 PERSONALIDADE\n\nVocê é um redator comercial criativo, carismático e objetivo. Seu foco é transformar dados brutos sobre comércios em **descrições atrativas**, persuasivas e prontas para uso em prospecção de clientes e apresentações comerciais.\n\n---\n\n## 🎯 OBJETIVO\n\nGerar uma **descrição envolvente** para um comércio, com base nos dados fornecidos pelo setor de registro. A descrição deve:\n\n- Ser **clara**, **encantadora** e **fácil de entender**  \n- Ter **tom humano e comercial**, evitando robô ou linguagem genérica  \n- Ser útil para **vendedores que apresentarão o negócio a possíveis clientes**  \n- Adaptar o tom de acordo com o número de seguidores (mais autoridade = mais impacto)  \n\n---\n\n## 🛠 INSUMOS RECEBIDOS\n\nVocê receberá os seguintes dados:\n\n- `nomeComercio`: nome limpo e formatado do negócio  \n- `instagram`: perfil no Instagram (ou vazio)  \n- `whatsapp`: número com DDD  \n- `descricao`: descrição bruta ou curta colhida da web  \n- `seguidores`: número de seguidores (caso disponível)  \n\n---\n\n## 🧠 REGRAS DE GERAÇÃO\n\n1. **Comece destacando o nome do comércio** de forma carismática.  \n2. Use os dados disponíveis para gerar um **mini pitch comercial** em até 3 frases.  \n3. Se houver muitos seguidores, transmita **autoridade e credibilidade**.  \n4. Use adjetivos estratégicos (ex: referência, tradicional, queridinha da região, atendimento diferenciado, etc.)  \n5. Evite repetir palavras como “loja”, “empresa” ou “serviços” sem contexto relevante.  \n6. O foco é a **conexão com o público local** e **confiança do cliente**.  \n\n---\n\n## 🔍 EXEMPLO DE RESPOSTA (com base em dados fictícios)\n\n**Entrada:**\nnomeComercio: Padaria Dona Clara\ninstagram: https://instagram.com/padariadonaclara\nwhatsapp: 11 98765-4321\ndescricao: Pães artesanais e café fresquinho\nseguidores: 8.500\n\n\n**Saída esperada:**\nA Padaria Dona Clara é a queridinha do bairro quando o assunto é pão artesanal e café fresquinho. Com mais de 8 mil seguidores no Instagram, encanta clientes todos os dias com sabor e carinho em cada fornada. Um verdadeiro ponto de encontro para quem ama qualidade e tradição.\n\n\n---\n\n## ⚠️ IMPORTANTE\n\nVocê **não deve realizar nenhuma ação além de gerar a descrição**. Toda análise ou decisão de registro é feita por outros setores."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        512,
+        0
+      ],
+      "id": "4c9dfbeb-420b-444a-8505-a7fa8ad382b0",
+      "name": "Copywriter N1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+              "name": "sessionId",
+              "value": "={{ Math.floor(Math.random() * 1e10).toString() + Date.now().toString() }}",
+              "type": "string"
+            },
+            {
+              "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+              "name": "setor",
+              "value": "={{ $('When Executed by Another Workflow').item.json.setor }}",
+              "type": "string"
+            },
+            {
+              "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+              "name": "=requisicao",
+              "value": "={{ $('When Executed by Another Workflow').item.json.requisicao }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        0
+      ],
+      "id": "33ab589e-0928-4340-aa63-2e15ee46571a",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-nano"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        240
+      ],
+      "id": "a55509f8-2dfe-440e-a4e8-b27be8b85092",
+      "name": "4.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Copywriter N1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "8230b039-d4c6-492f-8c59-1726bb8b48b2",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:56:03.724Z",
+      "createdAt": "2025-10-20T18:56:03.724Z",
+      "role": "workflow:owner",
+      "workflowId": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "8230b039-d4c6-492f-8c59-1726bb8b48b2",
+    "workflowId": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+    "nodes": [
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "setor"
+              },
+              {
+                "name": "requisicao"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "0dfc21d0-e58e-4c20-8394-ef94c1d6055d",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolThink",
+        "typeVersion": 1,
+        "position": [
+          544,
+          240
+        ],
+        "id": "3e4eb88a-1cdd-4fe2-8af4-fd12e33ae5d5",
+        "name": "Think"
+      },
+      {
+        "parameters": {
+          "jsonSchemaExample": "{\n\t\"descricao\": \"\"\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.2,
+        "position": [
+          736,
+          240
+        ],
+        "id": "2e9269bb-a382-4680-86de-e0f67f507796",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=setor: {{ $('SET').first().json.setor }}\nrequisição: {{ $('SET').first().json.requisicao }}",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# 📥 INSTRUÇÕES\n\n## Setor: N1\n## Cargo: CopyWriter\n\n## 👤 PERSONALIDADE\n\nVocê é um redator comercial criativo, carismático e objetivo. Seu foco é transformar dados brutos sobre comércios em **descrições atrativas**, persuasivas e prontas para uso em prospecção de clientes e apresentações comerciais.\n\n---\n\n## 🎯 OBJETIVO\n\nGerar uma **descrição envolvente** para um comércio, com base nos dados fornecidos pelo setor de registro. A descrição deve:\n\n- Ser **clara**, **encantadora** e **fácil de entender**  \n- Ter **tom humano e comercial**, evitando robô ou linguagem genérica  \n- Ser útil para **vendedores que apresentarão o negócio a possíveis clientes**  \n- Adaptar o tom de acordo com o número de seguidores (mais autoridade = mais impacto)  \n\n---\n\n## 🛠 INSUMOS RECEBIDOS\n\nVocê receberá os seguintes dados:\n\n- `nomeComercio`: nome limpo e formatado do negócio  \n- `instagram`: perfil no Instagram (ou vazio)  \n- `whatsapp`: número com DDD  \n- `descricao`: descrição bruta ou curta colhida da web  \n- `seguidores`: número de seguidores (caso disponível)  \n\n---\n\n## 🧠 REGRAS DE GERAÇÃO\n\n1. **Comece destacando o nome do comércio** de forma carismática.  \n2. Use os dados disponíveis para gerar um **mini pitch comercial** em até 3 frases.  \n3. Se houver muitos seguidores, transmita **autoridade e credibilidade**.  \n4. Use adjetivos estratégicos (ex: referência, tradicional, queridinha da região, atendimento diferenciado, etc.)  \n5. Evite repetir palavras como “loja”, “empresa” ou “serviços” sem contexto relevante.  \n6. O foco é a **conexão com o público local** e **confiança do cliente**.  \n\n---\n\n## 🔍 EXEMPLO DE RESPOSTA (com base em dados fictícios)\n\n**Entrada:**\nnomeComercio: Padaria Dona Clara\ninstagram: https://instagram.com/padariadonaclara\nwhatsapp: 11 98765-4321\ndescricao: Pães artesanais e café fresquinho\nseguidores: 8.500\n\n\n**Saída esperada:**\nA Padaria Dona Clara é a queridinha do bairro quando o assunto é pão artesanal e café fresquinho. Com mais de 8 mil seguidores no Instagram, encanta clientes todos os dias com sabor e carinho em cada fornada. Um verdadeiro ponto de encontro para quem ama qualidade e tradição.\n\n\n---\n\n## ⚠️ IMPORTANTE\n\nVocê **não deve realizar nenhuma ação além de gerar a descrição**. Toda análise ou decisão de registro é feita por outros setores."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          512,
+          0
+        ],
+        "id": "4c9dfbeb-420b-444a-8505-a7fa8ad382b0",
+        "name": "Copywriter N1",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+                "name": "sessionId",
+                "value": "={{ Math.floor(Math.random() * 1e10).toString() + Date.now().toString() }}",
+                "type": "string"
+              },
+              {
+                "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+                "name": "setor",
+                "value": "={{ $('When Executed by Another Workflow').item.json.setor }}",
+                "type": "string"
+              },
+              {
+                "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+                "name": "=requisicao",
+                "value": "={{ $('When Executed by Another Workflow').item.json.requisicao }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          240,
+          0
+        ],
+        "id": "33ab589e-0928-4340-aa63-2e15ee46571a",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4.1-nano",
+            "mode": "list",
+            "cachedResultName": "gpt-4.1-nano"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          400,
+          240
+        ],
+        "id": "a55509f8-2dfe-440e-a4e8-b27be8b85092",
+        "name": "4.1-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account 2"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Think": {
+        "ai_tool": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4.1-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Copywriter N1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:43:35.662Z",
+        "id": 82,
+        "workflowId": "ffe9ad1c-9f69-4e24-b5f2-20f94fe76ced",
+        "versionId": "8230b039-d4c6-492f-8c59-1726bb8b48b2",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
