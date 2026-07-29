@@ -1,0 +1,2663 @@
+{
+  "id": "e9e1c748-0e03-4885-86e0-0fb0ea29c70f",
+  "name": "N2 - A",
+  "description": null,
+  "active": true,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+        "height": 508,
+        "width": 1368,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        80
+      ],
+      "typeVersion": 1,
+      "id": "805d745f-d9f1-4433-b8ae-fc4b6b9fd0ae",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# Prompt de Qualificação de Leads (WhatsApp) no n8n\n\n### 📅 Dados do Comércio\n- **Data e Hora**: {{ $now.format('HH:mm:ss dd-MM-yyyy') }}\n- **Comércio**: {{ $json['Comércio'] }}\n- **Site**: {{ $json.Site }}\n- **Telefone**: {{ $json.Telefone }}\n- **Descrição**: {{ $json['Descrição'] }}\n- **Seguidores**: {{ $json.Seguidores }}",
+        "options": {
+          "systemMessage": "=Language\nPT-BR\n\n🤖 N2 — Validador de Leads (WhatsApp)\n🎯 Objetivo\nValidar e registrar comércios com números de WhatsApp válidos.\n\n🛠 Ferramentas\nCreateRow: Registra um novo comércio se qualificado.\n\nGestor: Apoio para tirar dúvidas durante o processo.\n\n✅ Critérios de Qualificação\nO número de telefone deve ser um WhatsApp válido, com formato correto.\n\n📏 Regras\nO número deve ter o dígito \"9\" após o DDD (ex: 11 92354-9871).\n\nNúmeros inválidos ou não localizados devem ser descartados.\n\n🔄 Processo Atualizado\n1. Verificar WhatsApp\nValidar se o número tem o formato correto e possui o dígito 9 após o DDD.\n\nSe for válido → registre o comércio.\n\n🧪 Exemplo de WhatsApp Válido\n11 92354-9871\n\n21 98765-4321\n\n55 11 9 4567-5474\n\n📐 Formato Esperado\nDDD 9 XXXX-XXXX\n\n❓ Em Caso de Dúvidas\nConsulte o Gestor apenas para esclarecimentos.\nA responsabilidade de validação e decisão final é do próprio N2."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        288,
+        192
+      ],
+      "id": "ebb81dfa-8e97-4cb9-913b-e7cabe4f7d25",
+      "name": "Qualificação de Leads",
+      "alwaysOutputData": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "description": "Chame essa tool quando estiver em dúvida e precise de ajuda do gestor",
+        "workflowId": {
+          "__rl": true,
+          "value": "GCLIP3zFzCs8wseu",
+          "mode": "list",
+          "cachedResultName": "GESTAO ATENDIMENTO - N1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "setor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('setor', `Campo especifico para informar seu setor`, 'string') }}",
+            "requisicao": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('requisicao', `Campo especifico para informar sua solicitação`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "setor",
+              "displayName": "setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "requisicao",
+              "displayName": "requisicao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        416
+      ],
+      "id": "f5f179dd-2bd0-4dd2-a8f2-563bdc40c4ec",
+      "name": "gestor"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "databaseId": 269448,
+        "tableId": 632023,
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 5152514,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `nome do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152515,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `rede social do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152527,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `celular do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152529,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues3_Field_Value', `descricao do comercio`, 'string') }}"
+            },
+            {
+              "fieldId": 5152530,
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `numero de seguidores`, 'string') }}"
+            },
+            {
+              "fieldId": 5152532,
+              "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserowTool",
+      "typeVersion": 1,
+      "position": [
+        432,
+        416
+      ],
+      "id": "6787c122-a1a2-4c21-9f78-c91f12ed4657",
+      "name": "CreateRow",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        544,
+        416
+      ],
+      "id": "7863ea1c-1df9-4684-8526-9ff86adf6b7d",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "hdrRLloxYPiFvLSv",
+          "mode": "list",
+          "cachedResultName": "FIRST MESSAGE  - N3 - A"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        976,
+        192
+      ],
+      "id": "907203ae-ab08-4c4c-8791-8f667e4495af",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "394e989d-4be1-4345-a285-3b39e55f55fa",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "sucesso",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        192
+      ],
+      "id": "32143406-ad88-4bef-80db-80bc09906b6c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -336,
+        1328
+      ],
+      "id": "a374062a-58b0-49eb-af76-abb43a95301c",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        416
+      ],
+      "id": "230b2f3a-380d-4acb-83d2-613cb10ac4f3",
+      "name": "4.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | empriser"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+        "height": 396,
+        "width": 2552,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        688
+      ],
+      "typeVersion": 1,
+      "id": "92ed2850-2809-4f41-a59b-677e0c4b6ae7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "r63tsE9USBEjbBgg",
+          "mode": "list",
+          "cachedResultName": "FIRST MESSAGE  - N3 - A"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2368,
+        1312
+      ],
+      "id": "25925b90-8f85-48e4-83e5-b56da790d59f",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+              "name": "sessionId",
+              "value": "=history_n1",
+              "type": "string"
+            },
+            {
+              "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+              "name": "comercio",
+              "value": "={{ $('When Executed by Another Workflow').first().json.comercio }}",
+              "type": "string"
+            },
+            {
+              "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+              "name": "=site",
+              "value": "={{ $('When Executed by Another Workflow').item.json.redeSocial }}",
+              "type": "string"
+            },
+            {
+              "id": "6033d420-6eed-4126-bc86-4193df25dc86",
+              "name": "whatsapp",
+              "value": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+              "type": "string"
+            },
+            {
+              "id": "14a8862d-cdd5-41fe-937d-dd578d6d7ba3",
+              "name": "descricao",
+              "value": "={{ $('When Executed by Another Workflow').first().json.descricao }}",
+              "type": "string"
+            },
+            {
+              "id": "f05e8c55-1ae0-4fa8-bb83-d57ed9cf0aa6",
+              "name": "seguidores",
+              "value": "={{ $('When Executed by Another Workflow').first().json.seguidores }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        816
+      ],
+      "id": "275a7589-adda-40f6-9d73-d65dae061eeb",
+      "name": "SET1"
+    },
+    {
+      "parameters": {
+        "databaseId": 269448,
+        "tableId": 632023,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        176,
+        816
+      ],
+      "id": "ed80cb93-46b9-4b44-811d-42e18f83e967",
+      "name": "Get many rows",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b7eb67cc-5995-4c6b-8082-e2951397afff",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.redeSocial }}",
+              "rightValue": "={{ $json.site }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "e33116f4-1ae1-4fa1-bed8-7e4577c07c33",
+              "leftValue": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+              "rightValue": "={{ $json.telefone }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        816
+      ],
+      "id": "673bd48c-4058-4e22-8a4d-0f4f87fc0c04",
+      "name": "Filter",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "databaseId": 269448,
+        "tableId": 632023,
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 5152514,
+              "fieldValue": "={{ $('SET1').item.json.comercio }}"
+            },
+            {
+              "fieldId": 5152515,
+              "fieldValue": "={{ $('SET1').item.json.site }}"
+            },
+            {
+              "fieldId": 5152527,
+              "fieldValue": "={{ $('SET1').item.json.whatsapp }}"
+            },
+            {
+              "fieldId": 5152529,
+              "fieldValue": "={{ $('SET1').item.json.descricao }}"
+            },
+            {
+              "fieldId": 5152530,
+              "fieldValue": "={{ $('SET1').item.json.seguidores }}"
+            },
+            {
+              "fieldId": 5152532,
+              "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        816
+      ],
+      "id": "a36e42a0-35a9-44f2-8bd9-2c0a16930593",
+      "name": "Create a row",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "46ee0913-05ca-4df7-8579-d7ed883674ac",
+              "leftValue": "={{ $json.comercio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1f0fe7f2-c275-445a-b3df-88cbd784596f",
+              "leftValue": "={{ $json.site }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0f5dde30-3797-4e69-b854-55ab9d3ce2ca",
+              "leftValue": "={{ $json.telefone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "76dd81f1-2a98-4233-bd4b-8dbf9a3d29f9",
+              "leftValue": "={{ $json.descricao }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "5ea8b083-2067-4be1-98aa-97c84e34ed11",
+              "leftValue": "={{ $json.seguidores.toString() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "09333458-ccb3-4635-8b8c-212897186025",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1872,
+        816
+      ],
+      "id": "cbc0616a-13e2-43b9-a6f1-2663720a26fe",
+      "name": "If Not Empty"
+    },
+    {
+      "parameters": {
+        "text": "=é whatsapp ou fixo o número em sua descrição",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "whatsapp",
+              "description": "Numero de whatsapp dos comércios",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=# Prompt para Identificação de Números WhatsApp Comerciais\n\n**Sua função:** Analisar e classificar números de telefone para identificar se são WhatsApp comerciais.\n\n## Critérios de Identificação\n\n### WhatsApp Comercial (Celular)\n- **Estrutura:** DDD + 9 + 8 dígitos\n- **Formato:** O número deve conter obrigatoriamente o dígito \"9\" após o DDD\n- **Exemplos válidos:**\n  - `11912345678` (formato sem espaços/hífen)\n  - `11 9 1234-5678` (formato com espaços e hífen)\n  - `(11) 91234-5678` (formato com parênteses)\n\n### Telefone Fixo\n- **Estrutura:** DDD + 8 dígitos (SEM o 9)\n- **Formato:** Número que NÃO possui o dígito \"9\" após o DDD\n- **Exemplos:**\n  - `1112345678`\n  - `11 1234-5678`\n\n## Instruções de Resposta\n\n1. **Se for WhatsApp:** Retorne o número no formato limpo (apenas dígitos): `11912345678`\n2. **Se for telefone fixo:** Retorne: `fixo`\n3. **Se o formato for inválido:** Retorne: `formato_invalido`\n\n## Processamento\n- Ignore espaços, hífens, parênteses e outros caracteres de formatação\n- Analise apenas a sequência numérica\n- Considere DDDs brasileiros válidos (11 a 99)\n\n**Número para análise:** {{ $json.whatsapp }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        816
+      ],
+      "id": "97479649-43e4-413e-a24f-a7fe0c58ff98",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9d22c984-cb31-48c7-bd5f-887fe7906646",
+              "leftValue": "={{ $json.output.whatsapp }}",
+              "rightValue": "fixo",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "d22011e6-9c0d-41da-87d8-99e39a5ba9dc",
+              "leftValue": "={{ $json.output.whatsapp }}",
+              "rightValue": "formato_invalido",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        816
+      ],
+      "id": "353da769-4c4f-4ad4-b517-8296743c9c9c",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1152,
+        928
+      ],
+      "id": "c47886f1-19a4-4e70-8757-8c933639478d",
+      "name": "4.1-mini1",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | empriser"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        592,
+        1568
+      ],
+      "id": "cf4ff852-1686-434c-abca-d53a27a78372",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+        "height": 556,
+        "width": 3000,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -416,
+        1184
+      ],
+      "typeVersion": 1,
+      "id": "e2677dba-6262-4f3c-85a5-0f112ec942c9",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+              "name": "comercio",
+              "value": "={{ $('When Executed by Another Workflow').item.json.comercio }}",
+              "type": "string"
+            },
+            {
+              "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+              "name": "=site",
+              "value": "={{ $('When Executed by Another Workflow').item.json.redeSocial }}",
+              "type": "string"
+            },
+            {
+              "id": "6033d420-6eed-4126-bc86-4193df25dc86",
+              "name": "whatsapp",
+              "value": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        1312
+      ],
+      "id": "00ef4566-5206-4e25-9de9-72c3cf65c040",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "databaseId": 269448,
+        "tableId": 632023,
+        "returnAll": true,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        1328
+      ],
+      "id": "47df8304-3b20-4f1f-92ef-a3f99979a788",
+      "name": "Get many rows1",
+      "executeOnce": true,
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "databaseId": 269448,
+        "tableId": 632023,
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 5152514,
+              "fieldValue": "={{ $('SET').item.json.comercio }}"
+            },
+            {
+              "fieldId": 5152515,
+              "fieldValue": "={{ $('SET').item.json.site }}"
+            },
+            {
+              "fieldId": 5152527,
+              "fieldValue": "={{ $('SET').item.json.whatsapp }}"
+            },
+            {
+              "fieldId": 5152532,
+              "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1808,
+        1312
+      ],
+      "id": "6bf9da6d-a2e3-4b3a-856e-2c0a23e6f203",
+      "name": "Create a row1",
+      "credentials": {
+        "baserowApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "46ee0913-05ca-4df7-8579-d7ed883674ac",
+              "leftValue": "={{ $json.comercio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1f0fe7f2-c275-445a-b3df-88cbd784596f",
+              "leftValue": "={{ $json.site }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "0f5dde30-3797-4e69-b854-55ab9d3ce2ca",
+              "leftValue": "={{ $json.telefone }}",
+              "rightValue": "Incompleto",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "09333458-ccb3-4635-8b8c-212897186025",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2080,
+        1312
+      ],
+      "id": "43f6e9ab-d66c-4213-8ade-e928215480ba",
+      "name": "If Not Empty1"
+    },
+    {
+      "parameters": {
+        "text": "=é whatsapp ou fixo o número em sua descrição",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "whatsapp",
+              "description": "Numero de whatsapp dos comércios",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=# Prompt para Identificação de Números WhatsApp Comerciais\n\n**Sua função:** Analisar e classificar números de telefone para identificar se são WhatsApp comerciais.\n\n## Critérios de Identificação\n\n### WhatsApp Comercial (Celular)\n- **Estrutura:** DDD + 9 + 8 dígitos\n- **Formato:** O número deve conter obrigatoriamente o dígito \"9\" após o DDD\n- **Exemplos válidos:**\n  - `11912345678` (formato sem espaços/hífen)\n  - `11 9 1234-5678` (formato com espaços e hífen)\n  - `(11) 91234-5678` (formato com parênteses)\n\n### Telefone Fixo\n- **Estrutura:** DDD + 8 dígitos (SEM o 9)\n- **Formato:** Número que NÃO possui o dígito \"9\" após o DDD\n- **Exemplos:**\n  - `1112345678`\n  - `11 1234-5678`\n\n## Instruções de Resposta\n\n1. **Se for WhatsApp:** Retorne o número no formato limpo (apenas dígitos): `11912345678`\n2. **Se for telefone fixo:** Retorne: `fixo`\n3. **Se o formato for inválido:** Retorne: `formato_invalido`\n\n## Processamento\n- Ignore espaços, hífens, parênteses e outros caracteres de formatação\n- Analise apenas a sequência numérica\n- Considere DDDs brasileiros válidos (11 a 99)\n\n**Número para análise:** {{ $json.whatsapp }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        1312
+      ],
+      "id": "30cf39bd-415d-4647-be24-99ff08188203",
+      "name": "Information Extractor1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9d22c984-cb31-48c7-bd5f-887fe7906646",
+              "leftValue": "={{ $json.output.whatsapp }}",
+              "rightValue": "fixo",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "d22011e6-9c0d-41da-87d8-99e39a5ba9dc",
+              "leftValue": "={{ $json.output.whatsapp }}",
+              "rightValue": "formato_invalido",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1552,
+        1312
+      ],
+      "id": "65ea4572-7419-43d9-8fe7-4b43bf72bd91",
+      "name": "Filter4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        1424
+      ],
+      "id": "7eff0322-f733-4e87-b864-55583869ab40",
+      "name": "4.1-mini2",
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenAi account | empriser"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "comercio"
+            },
+            {
+              "fieldToAggregate": "telefone"
+            },
+            {
+              "fieldToAggregate": "contato"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        80,
+        1328
+      ],
+      "id": "f0fdcf0a-3d68-4dd3-ac88-f937ed568069",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8c45d925-87f4-4dd1-972f-b2933d7d829c",
+              "leftValue": "={{ $json.telefone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1c42073c-2224-46a1-8465-94ffdc9131d1",
+              "leftValue": "={{ $json.redeSocial }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        528,
+        1328
+      ],
+      "id": "f4db4277-368c-41f6-934e-a5257ab9f5cb",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b7eb67cc-5995-4c6b-8082-e2951397afff",
+              "leftValue": "={{ $json.comercio.toJsonString() }}",
+              "rightValue": "={{ $('When Executed by Another Workflow').item.json.comercio }}",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "7e2b7bd6-19ad-49c1-9c43-9555854d2d5d",
+              "leftValue": "={{ $json.telefone.toJsonString() }}",
+              "rightValue": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        1328
+      ],
+      "id": "81147a5a-de38-4dae-b9e8-d9ecb7cd230c",
+      "name": "Filter2",
+      "alwaysOutputData": true
+    }
+  ],
+  "connections": {
+    "gestor": {
+      "ai_tool": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateRow": {
+      "ai_tool": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qualificação de Leads": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get many rows1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Qualificação de Leads",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "SET1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
+            "node": "If Not Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET1": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Not Empty": {
+      "main": [
+        []
+      ]
+    },
+    "4.1-mini1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row1": {
+      "main": [
+        [
+          {
+            "node": "If Not Empty1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Not Empty1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor1": {
+      "main": [
+        [
+          {
+            "node": "Filter4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter4": {
+      "main": [
+        [
+          {
+            "node": "Create a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1-mini2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Filter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "errorWorkflow": "CRnDoVvUKB8NtpCj"
+  },
+  "activeVersionId": "e16b9a21-d39b-4c53-8300-e009ee6f8b8e",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T18:55:51.007Z",
+      "createdAt": "2025-10-20T18:55:51.007Z",
+      "role": "workflow:owner",
+      "workflowId": "e9e1c748-0e03-4885-86e0-0fb0ea29c70f",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2025-12-11T15:43:43.845Z",
+    "createdAt": "2025-12-11T15:43:43.845Z",
+    "versionId": "e16b9a21-d39b-4c53-8300-e009ee6f8b8e",
+    "workflowId": "e9e1c748-0e03-4885-86e0-0fb0ea29c70f",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+          "height": 508,
+          "width": 1368,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -112,
+          80
+        ],
+        "typeVersion": 1,
+        "id": "805d745f-d9f1-4433-b8ae-fc4b6b9fd0ae",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=# Prompt de Qualificação de Leads (WhatsApp) no n8n\n\n### 📅 Dados do Comércio\n- **Data e Hora**: {{ $now.format('HH:mm:ss dd-MM-yyyy') }}\n- **Comércio**: {{ $json['Comércio'] }}\n- **Site**: {{ $json.Site }}\n- **Telefone**: {{ $json.Telefone }}\n- **Descrição**: {{ $json['Descrição'] }}\n- **Seguidores**: {{ $json.Seguidores }}",
+          "options": {
+            "systemMessage": "=Language\nPT-BR\n\n🤖 N2 — Validador de Leads (WhatsApp)\n🎯 Objetivo\nValidar e registrar comércios com números de WhatsApp válidos.\n\n🛠 Ferramentas\nCreateRow: Registra um novo comércio se qualificado.\n\nGestor: Apoio para tirar dúvidas durante o processo.\n\n✅ Critérios de Qualificação\nO número de telefone deve ser um WhatsApp válido, com formato correto.\n\n📏 Regras\nO número deve ter o dígito \"9\" após o DDD (ex: 11 92354-9871).\n\nNúmeros inválidos ou não localizados devem ser descartados.\n\n🔄 Processo Atualizado\n1. Verificar WhatsApp\nValidar se o número tem o formato correto e possui o dígito 9 após o DDD.\n\nSe for válido → registre o comércio.\n\n🧪 Exemplo de WhatsApp Válido\n11 92354-9871\n\n21 98765-4321\n\n55 11 9 4567-5474\n\n📐 Formato Esperado\nDDD 9 XXXX-XXXX\n\n❓ Em Caso de Dúvidas\nConsulte o Gestor apenas para esclarecimentos.\nA responsabilidade de validação e decisão final é do próprio N2."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.8,
+        "position": [
+          288,
+          192
+        ],
+        "id": "ebb81dfa-8e97-4cb9-913b-e7cabe4f7d25",
+        "name": "Qualificação de Leads",
+        "alwaysOutputData": false,
+        "retryOnFail": false
+      },
+      {
+        "parameters": {
+          "description": "Chame essa tool quando estiver em dúvida e precise de ajuda do gestor",
+          "workflowId": {
+            "__rl": true,
+            "value": "GCLIP3zFzCs8wseu",
+            "mode": "list",
+            "cachedResultName": "GESTAO ATENDIMENTO - N1"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "setor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('setor', `Campo especifico para informar seu setor`, 'string') }}",
+              "requisicao": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('requisicao', `Campo especifico para informar sua solicitação`, 'string') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "setor",
+                "displayName": "setor",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "requisicao",
+                "displayName": "requisicao",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          320,
+          416
+        ],
+        "id": "f5f179dd-2bd0-4dd2-a8f2-563bdc40c4ec",
+        "name": "gestor"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "databaseId": 269448,
+          "tableId": 632023,
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 5152514,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `nome do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152515,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues1_Field_Value', `rede social do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152527,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues2_Field_Value', `celular do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152529,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues3_Field_Value', `descricao do comercio`, 'string') }}"
+              },
+              {
+                "fieldId": 5152530,
+                "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues4_Field_Value', `numero de seguidores`, 'string') }}"
+              },
+              {
+                "fieldId": 5152532,
+                "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserowTool",
+        "typeVersion": 1,
+        "position": [
+          432,
+          416
+        ],
+        "id": "6787c122-a1a2-4c21-9f78-c91f12ed4657",
+        "name": "CreateRow",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.toolThink",
+        "typeVersion": 1,
+        "position": [
+          544,
+          416
+        ],
+        "id": "7863ea1c-1df9-4684-8526-9ff86adf6b7d",
+        "name": "Think"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "hdrRLloxYPiFvLSv",
+            "mode": "list",
+            "cachedResultName": "FIRST MESSAGE  - N3 - A"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          976,
+          192
+        ],
+        "id": "907203ae-ab08-4c4c-8791-8f667e4495af",
+        "name": "Execute Workflow"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "394e989d-4be1-4345-a285-3b39e55f55fa",
+                "leftValue": "={{ $json.output }}",
+                "rightValue": "sucesso",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          672,
+          192
+        ],
+        "id": "32143406-ad88-4bef-80db-80bc09906b6c",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -336,
+          1328
+        ],
+        "id": "a374062a-58b0-49eb-af76-abb43a95301c",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4.1-mini",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          192,
+          416
+        ],
+        "id": "230b2f3a-380d-4acb-83d2-613cb10ac4f3",
+        "name": "4.1-mini",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account | empriser"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+          "height": 396,
+          "width": 2552,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -112,
+          688
+        ],
+        "typeVersion": 1,
+        "id": "92ed2850-2809-4f41-a59b-677e0c4b6ae7",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "r63tsE9USBEjbBgg",
+            "mode": "list",
+            "cachedResultName": "FIRST MESSAGE  - N3 - A"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          2368,
+          1312
+        ],
+        "id": "25925b90-8f85-48e4-83e5-b56da790d59f",
+        "name": "Execute Workflow1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "88dcb483-0b31-4687-86b6-3eb58a72d543",
+                "name": "sessionId",
+                "value": "=history_n1",
+                "type": "string"
+              },
+              {
+                "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+                "name": "comercio",
+                "value": "={{ $('When Executed by Another Workflow').first().json.comercio }}",
+                "type": "string"
+              },
+              {
+                "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+                "name": "=site",
+                "value": "={{ $('When Executed by Another Workflow').item.json.redeSocial }}",
+                "type": "string"
+              },
+              {
+                "id": "6033d420-6eed-4126-bc86-4193df25dc86",
+                "name": "whatsapp",
+                "value": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+                "type": "string"
+              },
+              {
+                "id": "14a8862d-cdd5-41fe-937d-dd578d6d7ba3",
+                "name": "descricao",
+                "value": "={{ $('When Executed by Another Workflow').first().json.descricao }}",
+                "type": "string"
+              },
+              {
+                "id": "f05e8c55-1ae0-4fa8-bb83-d57ed9cf0aa6",
+                "name": "seguidores",
+                "value": "={{ $('When Executed by Another Workflow').first().json.seguidores }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          688,
+          816
+        ],
+        "id": "275a7589-adda-40f6-9d73-d65dae061eeb",
+        "name": "SET1"
+      },
+      {
+        "parameters": {
+          "databaseId": 269448,
+          "tableId": 632023,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          176,
+          816
+        ],
+        "id": "ed80cb93-46b9-4b44-811d-42e18f83e967",
+        "name": "Get many rows",
+        "executeOnce": true,
+        "alwaysOutputData": true,
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b7eb67cc-5995-4c6b-8082-e2951397afff",
+                "leftValue": "={{ $('When Executed by Another Workflow').item.json.redeSocial }}",
+                "rightValue": "={{ $json.site }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "e33116f4-1ae1-4fa1-bed8-7e4577c07c33",
+                "leftValue": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+                "rightValue": "={{ $json.telefone }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          416,
+          816
+        ],
+        "id": "673bd48c-4058-4e22-8a4d-0f4f87fc0c04",
+        "name": "Filter",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "databaseId": 269448,
+          "tableId": 632023,
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 5152514,
+                "fieldValue": "={{ $('SET1').item.json.comercio }}"
+              },
+              {
+                "fieldId": 5152515,
+                "fieldValue": "={{ $('SET1').item.json.site }}"
+              },
+              {
+                "fieldId": 5152527,
+                "fieldValue": "={{ $('SET1').item.json.whatsapp }}"
+              },
+              {
+                "fieldId": 5152529,
+                "fieldValue": "={{ $('SET1').item.json.descricao }}"
+              },
+              {
+                "fieldId": 5152530,
+                "fieldValue": "={{ $('SET1').item.json.seguidores }}"
+              },
+              {
+                "fieldId": 5152532,
+                "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          1600,
+          816
+        ],
+        "id": "a36e42a0-35a9-44f2-8bd9-2c0a16930593",
+        "name": "Create a row",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "46ee0913-05ca-4df7-8579-d7ed883674ac",
+                "leftValue": "={{ $json.comercio }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "1f0fe7f2-c275-445a-b3df-88cbd784596f",
+                "leftValue": "={{ $json.site }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "0f5dde30-3797-4e69-b854-55ab9d3ce2ca",
+                "leftValue": "={{ $json.telefone }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "76dd81f1-2a98-4233-bd4b-8dbf9a3d29f9",
+                "leftValue": "={{ $json.descricao }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "5ea8b083-2067-4be1-98aa-97c84e34ed11",
+                "leftValue": "={{ $json.seguidores.toString() }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "09333458-ccb3-4635-8b8c-212897186025",
+                "leftValue": "={{ $json.data }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1872,
+          816
+        ],
+        "id": "cbc0616a-13e2-43b9-a6f1-2663720a26fe",
+        "name": "If Not Empty"
+      },
+      {
+        "parameters": {
+          "text": "=é whatsapp ou fixo o número em sua descrição",
+          "attributes": {
+            "attributes": [
+              {
+                "name": "whatsapp",
+                "description": "Numero de whatsapp dos comércios",
+                "required": true
+              }
+            ]
+          },
+          "options": {
+            "systemPromptTemplate": "=# Prompt para Identificação de Números WhatsApp Comerciais\n\n**Sua função:** Analisar e classificar números de telefone para identificar se são WhatsApp comerciais.\n\n## Critérios de Identificação\n\n### WhatsApp Comercial (Celular)\n- **Estrutura:** DDD + 9 + 8 dígitos\n- **Formato:** O número deve conter obrigatoriamente o dígito \"9\" após o DDD\n- **Exemplos válidos:**\n  - `11912345678` (formato sem espaços/hífen)\n  - `11 9 1234-5678` (formato com espaços e hífen)\n  - `(11) 91234-5678` (formato com parênteses)\n\n### Telefone Fixo\n- **Estrutura:** DDD + 8 dígitos (SEM o 9)\n- **Formato:** Número que NÃO possui o dígito \"9\" após o DDD\n- **Exemplos:**\n  - `1112345678`\n  - `11 1234-5678`\n\n## Instruções de Resposta\n\n1. **Se for WhatsApp:** Retorne o número no formato limpo (apenas dígitos): `11912345678`\n2. **Se for telefone fixo:** Retorne: `fixo`\n3. **Se o formato for inválido:** Retorne: `formato_invalido`\n\n## Processamento\n- Ignore espaços, hífens, parênteses e outros caracteres de formatação\n- Analise apenas a sequência numérica\n- Considere DDDs brasileiros válidos (11 a 99)\n\n**Número para análise:** {{ $json.whatsapp }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+        "typeVersion": 1.2,
+        "position": [
+          912,
+          816
+        ],
+        "id": "97479649-43e4-413e-a24f-a7fe0c58ff98",
+        "name": "Information Extractor"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "9d22c984-cb31-48c7-bd5f-887fe7906646",
+                "leftValue": "={{ $json.output.whatsapp }}",
+                "rightValue": "fixo",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              },
+              {
+                "id": "d22011e6-9c0d-41da-87d8-99e39a5ba9dc",
+                "leftValue": "={{ $json.output.whatsapp }}",
+                "rightValue": "formato_invalido",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1344,
+          816
+        ],
+        "id": "353da769-4c4f-4ad4-b517-8296743c9c9c",
+        "name": "Filter1"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4.1-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-4.1-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          1152,
+          928
+        ],
+        "id": "c47886f1-19a4-4e70-8757-8c933639478d",
+        "name": "4.1-mini1",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account | empriser"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          592,
+          1568
+        ],
+        "id": "cf4ff852-1686-434c-abca-d53a27a78372",
+        "name": "No Operation, do nothing"
+      },
+      {
+        "parameters": {
+          "content": "# N2\nQualifica o Lead (busca leads que possui whatsapp)",
+          "height": 556,
+          "width": 3000,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -416,
+          1184
+        ],
+        "typeVersion": 1,
+        "id": "e2677dba-6262-4f3c-85a5-0f112ec942c9",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "96d07395-1613-4051-bd49-4a3c4507281f",
+                "name": "comercio",
+                "value": "={{ $('When Executed by Another Workflow').item.json.comercio }}",
+                "type": "string"
+              },
+              {
+                "id": "a90e5d52-1330-49e1-bdf4-b511b1d38799",
+                "name": "=site",
+                "value": "={{ $('When Executed by Another Workflow').item.json.redeSocial }}",
+                "type": "string"
+              },
+              {
+                "id": "6033d420-6eed-4126-bc86-4193df25dc86",
+                "name": "whatsapp",
+                "value": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          896,
+          1312
+        ],
+        "id": "00ef4566-5206-4e25-9de9-72c3cf65c040",
+        "name": "SET"
+      },
+      {
+        "parameters": {
+          "databaseId": 269448,
+          "tableId": 632023,
+          "returnAll": true,
+          "additionalOptions": {}
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          -128,
+          1328
+        ],
+        "id": "47df8304-3b20-4f1f-92ef-a3f99979a788",
+        "name": "Get many rows1",
+        "executeOnce": true,
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "databaseId": 269448,
+          "tableId": 632023,
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": 5152514,
+                "fieldValue": "={{ $('SET').item.json.comercio }}"
+              },
+              {
+                "fieldId": 5152515,
+                "fieldValue": "={{ $('SET').item.json.site }}"
+              },
+              {
+                "fieldId": 5152527,
+                "fieldValue": "={{ $('SET').item.json.whatsapp }}"
+              },
+              {
+                "fieldId": 5152532,
+                "fieldValue": "={{ $now.format('dd-MM-yyyy HH:mm:ss') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.baserow",
+        "typeVersion": 1,
+        "position": [
+          1808,
+          1312
+        ],
+        "id": "6bf9da6d-a2e3-4b3a-856e-2c0a23e6f203",
+        "name": "Create a row1",
+        "credentials": {
+          "baserowApi": {
+            "id": "BPK9DGliEMF3WufU",
+            "name": "Baserow account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "46ee0913-05ca-4df7-8579-d7ed883674ac",
+                "leftValue": "={{ $json.comercio }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "1f0fe7f2-c275-445a-b3df-88cbd784596f",
+                "leftValue": "={{ $json.site }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "0f5dde30-3797-4e69-b854-55ab9d3ce2ca",
+                "leftValue": "={{ $json.telefone }}",
+                "rightValue": "Incompleto",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              },
+              {
+                "id": "09333458-ccb3-4635-8b8c-212897186025",
+                "leftValue": "={{ $json.data }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2080,
+          1312
+        ],
+        "id": "43f6e9ab-d66c-4213-8ade-e928215480ba",
+        "name": "If Not Empty1"
+      },
+      {
+        "parameters": {
+          "text": "=é whatsapp ou fixo o número em sua descrição",
+          "attributes": {
+            "attributes": [
+              {
+                "name": "whatsapp",
+                "description": "Numero de whatsapp dos comércios",
+                "required": true
+              }
+            ]
+          },
+          "options": {
+            "systemPromptTemplate": "=# Prompt para Identificação de Números WhatsApp Comerciais\n\n**Sua função:** Analisar e classificar números de telefone para identificar se são WhatsApp comerciais.\n\n## Critérios de Identificação\n\n### WhatsApp Comercial (Celular)\n- **Estrutura:** DDD + 9 + 8 dígitos\n- **Formato:** O número deve conter obrigatoriamente o dígito \"9\" após o DDD\n- **Exemplos válidos:**\n  - `11912345678` (formato sem espaços/hífen)\n  - `11 9 1234-5678` (formato com espaços e hífen)\n  - `(11) 91234-5678` (formato com parênteses)\n\n### Telefone Fixo\n- **Estrutura:** DDD + 8 dígitos (SEM o 9)\n- **Formato:** Número que NÃO possui o dígito \"9\" após o DDD\n- **Exemplos:**\n  - `1112345678`\n  - `11 1234-5678`\n\n## Instruções de Resposta\n\n1. **Se for WhatsApp:** Retorne o número no formato limpo (apenas dígitos): `11912345678`\n2. **Se for telefone fixo:** Retorne: `fixo`\n3. **Se o formato for inválido:** Retorne: `formato_invalido`\n\n## Processamento\n- Ignore espaços, hífens, parênteses e outros caracteres de formatação\n- Analise apenas a sequência numérica\n- Considere DDDs brasileiros válidos (11 a 99)\n\n**Número para análise:** {{ $json.whatsapp }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+        "typeVersion": 1.2,
+        "position": [
+          1120,
+          1312
+        ],
+        "id": "30cf39bd-415d-4647-be24-99ff08188203",
+        "name": "Information Extractor1"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "9d22c984-cb31-48c7-bd5f-887fe7906646",
+                "leftValue": "={{ $json.output.whatsapp }}",
+                "rightValue": "fixo",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              },
+              {
+                "id": "d22011e6-9c0d-41da-87d8-99e39a5ba9dc",
+                "leftValue": "={{ $json.output.whatsapp }}",
+                "rightValue": "formato_invalido",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1552,
+          1312
+        ],
+        "id": "65ea4572-7419-43d9-8fe7-4b43bf72bd91",
+        "name": "Filter4"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4.1-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-4.1-mini"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          1360,
+          1424
+        ],
+        "id": "7eff0322-f733-4e87-b864-55583869ab40",
+        "name": "4.1-mini2",
+        "credentials": {
+          "openAiApi": {
+            "id": "S4nX8HNif1ccfc47",
+            "name": "OpenAi account | empriser"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "fieldsToAggregate": {
+            "fieldToAggregate": [
+              {
+                "fieldToAggregate": "comercio"
+              },
+              {
+                "fieldToAggregate": "telefone"
+              },
+              {
+                "fieldToAggregate": "contato"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          80,
+          1328
+        ],
+        "id": "f0fdcf0a-3d68-4dd3-ac88-f937ed568069",
+        "name": "Aggregate"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "8c45d925-87f4-4dd1-972f-b2933d7d829c",
+                "leftValue": "={{ $json.telefone }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notExists",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "1c42073c-2224-46a1-8465-94ffdc9131d1",
+                "leftValue": "={{ $json.redeSocial }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notExists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          528,
+          1328
+        ],
+        "id": "f4db4277-368c-41f6-934e-a5257ab9f5cb",
+        "name": "If3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "b7eb67cc-5995-4c6b-8082-e2951397afff",
+                "leftValue": "={{ $json.comercio.toJsonString() }}",
+                "rightValue": "={{ $('When Executed by Another Workflow').item.json.comercio }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              },
+              {
+                "id": "7e2b7bd6-19ad-49c1-9c43-9555854d2d5d",
+                "leftValue": "={{ $json.telefone.toJsonString() }}",
+                "rightValue": "={{ $('When Executed by Another Workflow').item.json.telefone }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "notContains"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          320,
+          1328
+        ],
+        "id": "81147a5a-de38-4dae-b9e8-d9ecb7cd230c",
+        "name": "Filter2",
+        "alwaysOutputData": true
+      }
+    ],
+    "connections": {
+      "gestor": {
+        "ai_tool": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateRow": {
+        "ai_tool": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Think": {
+        "ai_tool": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Qualificação de Leads": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Get many rows1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4.1-mini": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Qualificação de Leads",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many rows": {
+        "main": [
+          [
+            {
+              "node": "Filter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter": {
+        "main": [
+          [
+            {
+              "node": "SET1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a row": {
+        "main": [
+          [
+            {
+              "node": "If Not Empty",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET1": {
+        "main": [
+          [
+            {
+              "node": "Information Extractor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Information Extractor": {
+        "main": [
+          [
+            {
+              "node": "Filter1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter1": {
+        "main": [
+          [
+            {
+              "node": "Create a row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Not Empty": {
+        "main": [
+          []
+        ]
+      },
+      "4.1-mini1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Information Extractor",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SET": {
+        "main": [
+          [
+            {
+              "node": "Information Extractor1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many rows1": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a row1": {
+        "main": [
+          [
+            {
+              "node": "If Not Empty1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Not Empty1": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Information Extractor1": {
+        "main": [
+          [
+            {
+              "node": "Filter4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter4": {
+        "main": [
+          [
+            {
+              "node": "Create a row1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4.1-mini2": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Information Extractor1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate": {
+        "main": [
+          [
+            {
+              "node": "Filter2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter2": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "SET",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-10-27T21:53:20.810Z",
+        "id": 81,
+        "workflowId": "e9e1c748-0e03-4885-86e0-0fb0ea29c70f",
+        "versionId": "e16b9a21-d39b-4c53-8300-e009ee6f8b8e",
+        "event": "activated",
+        "userId": null
+      }
+    ]
+  }
+}
