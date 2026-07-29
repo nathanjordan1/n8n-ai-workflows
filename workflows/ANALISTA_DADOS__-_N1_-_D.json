@@ -1,9 +1,9 @@
 {
-  "id": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+  "id": "f00dd4a2-2781-410e-8a86-45a0ae5eaf07",
   "name": "ANALISTA DADOS  - N1 - D",
   "description": null,
   "active": true,
-  "isArchived": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -347,15 +347,15 @@
     "executionOrder": "v1",
     "errorWorkflow": "CRnDoVvUKB8NtpCj"
   },
-  "activeVersionId": "b5e28670-f255-46b0-8b08-5dd0de297476",
+  "activeVersionId": "65ba0d94-93d0-498c-87d8-259a1d3a5fb7",
   "versionCounter": 48,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2025-10-20T18:56:40.535Z",
-      "createdAt": "2025-10-20T18:56:40.535Z",
+      "updatedAt": "2025-10-20T18:55:50.533Z",
+      "createdAt": "2025-10-20T18:55:50.533Z",
       "role": "workflow:owner",
-      "workflowId": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+      "workflowId": "f00dd4a2-2781-410e-8a86-45a0ae5eaf07",
       "projectId": "9znItQPvqmXBWZNc",
       "project": {
         "updatedAt": "2025-10-16T01:26:13.918Z",
@@ -373,8 +373,8 @@
   "activeVersion": {
     "updatedAt": "2025-12-11T15:43:43.845Z",
     "createdAt": "2025-12-11T15:43:43.845Z",
-    "versionId": "b5e28670-f255-46b0-8b08-5dd0de297476",
-    "workflowId": "49625a5d-1185-4825-a37a-2ddcd729ec73",
+    "versionId": "65ba0d94-93d0-498c-87d8-259a1d3a5fb7",
+    "workflowId": "f00dd4a2-2781-410e-8a86-45a0ae5eaf07",
     "nodes": [
       {
         "parameters": {
@@ -720,10 +720,10 @@
     "autosaved": false,
     "workflowPublishHistory": [
       {
-        "createdAt": "2025-10-27T21:43:35.114Z",
-        "id": 85,
-        "workflowId": "49625a5d-1185-4825-a37a-2ddcd729ec73",
-        "versionId": "b5e28670-f255-46b0-8b08-5dd0de297476",
+        "createdAt": "2025-10-28T01:10:04.380Z",
+        "id": 9,
+        "workflowId": "f00dd4a2-2781-410e-8a86-45a0ae5eaf07",
+        "versionId": "65ba0d94-93d0-498c-87d8-259a1d3a5fb7",
         "event": "activated",
         "userId": null
       }
