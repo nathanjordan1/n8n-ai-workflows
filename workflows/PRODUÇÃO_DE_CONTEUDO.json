@@ -1,0 +1,2114 @@
+{
+  "id": "dzGI1iGCTA9y483xM9F61",
+  "name": "PRODUÇÃO DE CONTEUDO",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c2b54cff-8ec0-43c1-8cca-509cfb71451c",
+              "name": "image_url",
+              "value": "={{ $json.data.link }}",
+              "type": "string"
+            },
+            {
+              "id": "b1f66450-b679-494f-9720-8d3c24171221",
+              "name": "caption",
+              "value": "teste de postagem dentro do Instagram",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4352,
+        752
+      ],
+      "id": "ce11a37e-a1e1-43c0-9291-a5d0736f109a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4832,
+        752
+      ],
+      "id": "85749d0e-7325-4fc5-8884-0083c8374f6f",
+      "name": "Wait"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3776,
+        496
+      ],
+      "id": "5af22c01-0400-48af-b568-89e27c19e934",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "{{ $env.CURRENTKEY }}",
+              "newKey": "{{ $env.NEWKEY }}"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        704
+      ],
+      "id": "d7630198-f0f8-45ec-b03b-9a4e983f7fd7",
+      "name": "Rename Keys"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $json.query || '';\nreturn {\n  json: {\n    query: query.replace(/\\n/g, ' ').trim()\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2576,
+        704
+      ],
+      "id": "e2440766-ae65-42b5-8de3-c846171cd2aa",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b8676c2-53b6-49f5-a5a7-e12aeab6f397",
+              "name": "chatInput",
+              "value": "=Eu quero que você crie uma frase forte que ninguém fala sobre investimeto, e o tema é bitcoin",
+              "type": "string"
+            },
+            {
+              "id": "9a326497-f3d3-417b-88c3-e0e83ce5d4b6",
+              "name": "sessionId",
+              "value": "{{ Math.floor(Math.random() * 1e10).toString() + Date.now().toString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2272,
+        384
+      ],
+      "id": "c3891bd3-34b4-4d36-964d-b46be28dfc1a",
+      "name": "SET"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('SET').item.json.chatInput }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "# FUNÇÃO\nSua função é criar temas, qualquer tipo de tema e esse tema será efetivo na criação de imagens, então seja especifico no tema.\n\n# OUTPUT\nExiba apenas o tema e nada mais, sem adicionais"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        2544,
+        384
+      ],
+      "id": "3990ed59-575f-4f03-822b-e67e17013884",
+      "name": "GERAR TEMA"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE UM TÍTULO PARA MIM DE ACORDO COM O SYSTEM MESSAGE",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# TEMA: {{ $json.text }}\n\n# FUNÇÃO\nVocê irá receber um tema e você deve criar um título chamativo, esse titulo será usado dentro de uma postagem 1080x1080.\n\n# OUTPUT\nExiba apenas o título e nada mais, sem adicionais"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        2976,
+        384
+      ],
+      "id": "332fd201-efcb-412a-b2ea-bb1ba61cef7f",
+      "name": "GERAR TITULO"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE O PROMPT DE CRIAÇÃO DE IMAGEM PRA MIM DE ACORDO COM SEU SYSTEM MESSAGE",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Crie uma imagem ultra-realista e impactante no formato quadrado (Tamanho ideal: 1080 x 1080 pixels; Proporção: 1:1), inspirada em postagens chamativas de redes sociais.\n\n## CONTEÚDO VISUAL\n• A imagem deve representar visualmente o tema gerado em `{{ $('GERAR TEMA').item.json.text }}` com forte apelo visual.  \n• Utilize composição central ou simétrica com elementos diretamente ligados ao tema.  \n• A iluminação deve ser dramática, com foco claro no elemento principal.  \n• O fundo deve complementar o tema, podendo ser desfocado ou conter textura suave, sem roubar a atenção.  \n• Paleta de cores baseada no sentimento do tema (ex: tons frios para temas tristes, tons quentes para temas de ação ou alerta).\n\n## TEXTO EMBUTIDO\n• Deixe espaço no terço inferior da imagem para sobrepor o título `{{ $('GERAR TITULO').item.json.text }}`.  \n• Tipografia **sem serifa**, **bold**, **caixa alta**, na cor **branca ou amarelo claro**, com leve sombra escura.  \n• Tamanho grande (entre 64px e 96px), centralizado ou alinhado ao centro inferior da imagem.  \n• A palavra-chave principal pode ter destaque extra (fonte maior ou mais pesada).\n\n### IDIOMA DO TEXTO\nPT-BR\n\n#### OBSERVAÇÃO\nSEJA CAUTELOSO COM O TEXTO PARA NÃO TER FALHA NA ESCRITA\n\n## ESTILO & ATMOSFERA\n• Atmosfera condizente com o tema (ex: suspense, ação, tranquilidade, caos).  \n• Estilo cinematográfico ou editorial, com contraste alto, boa profundidade e clareza visual.  \n• Evitar minimalismo excessivo — priorizar impacto visual com equilíbrio.\n\n## SAÍDA\n• **Gere apenas o prompt final pronto para ser usado por uma IA de geração de imagens. Sem explicações, sem justificativas, sem comentários. Apenas o prompt, direto.**  \n• Imagem final já no formato quadrado (1:1), com recorte ideal para redes sociais.  \n• Inclua o texto em conjunto a imagem final."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        3424,
+        384
+      ],
+      "id": "9aa2b555-3fe3-4ce4-9b47-6dbd4015bdda",
+      "name": "GERAR PROMPT IMAGEM"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n  {\n    \"contents\": [\n      {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"Você é um gerador de imagens AI profissional. Crie uma imagem com aparência ultra-realista e minimalista seguindo estritamente as instruções fornecidas pelo usuário a seguir. Atente-se a todos os detalhes visuais, estilísticos e técnicos mencionados na solicitação do usuário.\"\n          }\n        ]\n      },\n      {\n        \"role\": \"user\",\n        \"parts\": [\n          {\n            \"text\": $json.query\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"responseModalities\": [\n        [\"Text\", \"Image\"]\n      ]\n    }\n  }\n}}",
+        "options": {}
+      },
+      "id": "b9ca45ad-4b8a-40dc-ab7c-bb6c907a2f28",
+      "name": "Gerar Imagem (Gemini)5",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2800,
+        704
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "378a964b-af48-4684-a531-d278d489022c",
+              "leftValue": "={{ $json.candidates[0].content.parts[0].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "a76c8877-6b62-4df7-810d-a1f66776642f",
+              "leftValue": "={{ $json.candidates[0].content.parts[1].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3040,
+        704
+      ],
+      "id": "c7ea5231-1b47-4d5b-a681-289b7341167d",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7f65739c-492a-4b9c-9af3-9c8b7b07cfc2",
+              "leftValue": "={{ $json.inlineData }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3600,
+        720
+      ],
+      "id": "a5bca9af-a825-48e5-924d-b211e1e4560d",
+      "name": "Filter4"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "inlineData.data",
+        "options": {
+          "fileName": "data",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3824,
+        752
+      ],
+      "id": "d9443768-19ff-4fec-b72f-69951612a7c2",
+      "name": "Convert to File4"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "candidates[0].content.parts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3440,
+        720
+      ],
+      "id": "f7e8f1b6-0782-4e50-be0b-8c50cc5e9822",
+      "name": "Split Out4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        720
+      ],
+      "id": "512230b2-5d1b-41fa-bf5f-b313c28232bf",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        1840
+      ],
+      "id": "d9ced049-b2c8-42eb-9a84-255856dcbc58",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "{{ $env.NAME }}",
+              "value": "{{ $env.VALUE }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4112,
+        752
+      ],
+      "id": "1dbf942b-6d05-4b26-8beb-83ebdfafe4ff",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "{{ $env.GRAPHAPIVERSION }}",
+        "node": "17841469717601909",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "image_url",
+                "value": "={{ $json.image_url }}"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $json.caption }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        4592,
+        752
+      ],
+      "id": "2acaa808-fb19-4757-a410-30244547ca70",
+      "name": "INSTAGRAM CONTAINER"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "{{ $env.GRAPHAPIVERSION }}",
+        "node": "17841469717601909",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $json.id }}"
+              },
+              {
+                "name": "image_url",
+                "value": "={{ $('Edit Fields').item.json.image_url }}"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $('Edit Fields').item.json.caption }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        5072,
+        752
+      ],
+      "id": "9ebb812a-eb40-4c2d-ad1b-b472b9579095",
+      "name": "INSTAGRAM POST"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4384,
+        1760
+      ],
+      "id": "9e00697d-6d1e-401e-9d89-03946abdd198",
+      "name": "Google Gemini Chat Model1"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "{{ $env.CURRENTKEY }}",
+              "newKey": "{{ $env.NEWKEY }}"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        2944,
+        1872
+      ],
+      "id": "6e1bebcb-b83b-46ed-bf8a-5d7052895206",
+      "name": "Rename Keys1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $json.query || '';\nreturn {\n  json: {\n    query: query.replace(/\\n/g, ' ').trim()\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3136,
+        1872
+      ],
+      "id": "9149d93f-48fb-4f49-8ecd-22f7cec3630b",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b8676c2-53b6-49f5-a5a7-e12aeab6f397",
+              "name": "chatInput",
+              "value": "=Crie imagens referente {{ $json.output.tema }}",
+              "type": "string"
+            },
+            {
+              "id": "9a326497-f3d3-417b-88c3-e0e83ce5d4b6",
+              "name": "sessionId",
+              "value": "{{ Math.floor(Math.random() * 1e10).toString() + Date.now().toString() }}",
+              "type": "string"
+            },
+            {
+              "id": "687600d4-8eeb-4b9d-8618-8a1a0b8d6bc9",
+              "name": "tipo",
+              "value": "={{ $json.output.escolha }}",
+              "type": "string"
+            },
+            {
+              "id": "c4f02773-dc63-4d28-9177-a8492480f443",
+              "name": "idioma",
+              "value": "Português - Brasil",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2464,
+        1840
+      ],
+      "id": "2eabbe16-2885-4c21-b468-555da32a2a7d",
+      "name": "SET1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('SET1').item.json.chatInput }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua função é criar temas, qualquer tipo de tema e esse tema será efetivo na criação de imagens, então seja especifico no tema.\n\n# OUTPUT\nExiba apenas o tema e nada mais, sem adicionais"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        3184,
+        1632
+      ],
+      "id": "54bac32b-50ff-43ed-8ce4-adc54fd67576",
+      "name": "GERAR TEMA1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE UM TÍTULO PARA MIM DE ACORDO COM O SYSTEM MESSAGE",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nVocê irá receber um tema e deve criar frases impactantes e curtas que serão utilizadas como **texto principal dentro de imagens (1080x1080)** em uma postagem para redes sociais.\n\n## TEMA\n{{ $json.text }}\n\n## TIPO DE POSTAGEM\n• Tipo: {{ $('SET1').item.json.tipo }}\n• Quantidade de imagens: {{ $('QUANTIDADE IMAGENS').item.json.quantidade }}\n\n---\n\n# REGRAS\n• Crie **{{ $('QUANTIDADE IMAGENS').item.json.quantidade }} frases diferentes**, uma para **cada imagem**.\n• Cada frase deve conter **no máximo 6 palavras**.\n• As frases devem estar **conectadas entre si** (tematicamente ou sequencialmente), como se fossem partes de uma **narrativa ou argumento**.\n• O tom deve ser **impactante, direto e visualmente forte**, adequado para postagens de redes sociais.\n\n---\n\n# FORMATO DE RESPOSTA\nExiba **somente as frases**, separadas por linha ou numeração simples (sem títulos, sem explicações, sem blocos extras).\n\nExemplo de saída esperada:\n1. Comece pela liberdade financeira  \n2. Questione o sistema bancário atual  \n3. Invista no que é seu  \n4. O futuro está descentralizado  \n5. Tenha controle total do seu dinheiro\n\n---\n\n# IMPORTANTE\n• **Não repita frases.**  \n• **Não gere explicações.**  \n• **Apenas as frases, prontas para uso.**\n"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        3536,
+        1632
+      ],
+      "id": "a3d87430-02b2-46da-bf88-e6b27b0c6bdc",
+      "name": "GERAR TITULO1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE O PROMPT DE {{ $('QUANTIDADE IMAGENS').item.json.quantidade }} IMAGEM PRA MIM DE ACORDO COM O SYSTEM MESSAGE",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# Crie imagens ultra-realista e impactante no formato quadrado (Tamanho ideal: 1080 x 1080 pixels; Proporção: 1:1), inspirada em postagens chamativas de redes sociais.\n\n## TIPO DE POSTAGEM\n• {{ $('SET1').item.json.tipo }}\n\n**Essa imagem deve ser usada em carrossel.**\n- Carrossel: {{ $('QUANTIDADE IMAGENS').item.json.quantidade }} imagens\n• **Especifique essa quantidade explicitamente no início do prompt final** comece o prompt como: \"Gere X imagens...\"*\n\n---\n\n# CONTEÚDO VISUAL\n• Utilize um único item central diretamente ligado ao tema. \n• A imagem deve representar visualmente o tema gerado em `{{ $('GERAR TEMA1').item.json.text }}` com forte apelo visual.  \n• A iluminação deve ser dramática, com foco claro no elemento principal.  \n• O fundo deve complementar o tema, podendo ser desfocado ou conter textura suave, sem roubar a atenção.  \n• Paleta de cores baseada no tema.\n\n---\n\n# TEXTO EMBUTIDO\n• Deixe espaço no terço inferior da imagem para sobrepor o título `{{ $json.text }}`.  \n• Tipografia: IMPACT, **sem serifa**, **bold**, **caixa alta**, na cor **branca ou amarelo claro**, com leve sombra escura.  \n• Tamanho grande (entre 84px e 96px), centralizado ao centro um pouco abaixo da imagem.\n• Não incluir no texto final '1.' ou qualquer semelhante, apenas o texto em si.\n• Aplique um espaçamento entre **letras** de 4px para evitar letras juntas\n\n## IDIOMA DO TEXTO\n{{ $('SET1').item.json.idioma }}\n\n### OBSERVAÇÃO1\nVOCÊ DEVE TER FOCO TOTAL NO TEXTO PARA EVITAR QUALQUER ERRO ORTOGRÁFICO OU QUALQUER MÁ LEITURA, SEJA CAUTELOSO COM O TEXTO PARA NÃO TER FALHA NA ESCRITA\n\n### OBSERVAÇÃO2\nNunca mude o texto recebido.\n\n---\n\n# ESTILO & ATMOSFERA\n• Atmosfera condizente com o tema.  \n• Estilo cinematográfico ou editorial, com contraste alto, boa profundidade e clareza visual.  \n• Evitar minimalismo excessivo — priorizar impacto visual com equilíbrio.\n\n---\n\n# FORMATO DA SAÍDA\n- Sempre comece com: `Gere X imagens individualmente:` (com X sendo o da quantidade de imagens a ser produzido).\n- Para cada imagem, escreva um bloco começando com `Imagem 1:`, `Imagem 2:` etc., seguido da descrição para a IA receber.\n- Não gere colagem, nem mosaico, nem slide. As imagens devem ser **independentes entre si**.\n- Priorize sempre a melhor saida para a IA receber o seu prompt final"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        3952,
+        1632
+      ],
+      "id": "7e531cfe-a89f-4c47-a082-9f4d85c3e94f",
+      "name": "GERAR PROMPT IMAGEM1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n  {\n    \"contents\": [\n      {\n        \"role\": \"user\",\n        \"parts\": [\n          {\n            \"text\": $json.query\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"responseModalities\": [\n        [\"Text\", \"Image\"]\n      ]\n    }\n  }\n}}",
+        "options": {}
+      },
+      "id": "b384100d-0cb6-4a0e-82ba-e3940b2c8601",
+      "name": "Gerar Imagem (Gemini)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        3360,
+        1872
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "378a964b-af48-4684-a531-d278d489022c",
+              "leftValue": "={{ $json.candidates[0].content.parts[4].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3600,
+        1872
+      ],
+      "id": "15eaf6c9-9b92-40c9-8ae0-a9c4c25ac9db",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7f65739c-492a-4b9c-9af3-9c8b7b07cfc2",
+              "leftValue": "={{ $json.inlineData }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        4272,
+        1904
+      ],
+      "id": "4feb77ea-5ef4-4d52-83f0-801fa7ad9bb4",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "inlineData.data",
+        "options": {
+          "fileName": "data",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        4512,
+        1904
+      ],
+      "id": "bd29e8eb-fc86-409b-be81-3544d0511caa",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "candidates[0].content.parts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        4064,
+        1904
+      ],
+      "id": "69fcd755-b7cc-4c18-8a18-b07835b5a995",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        3840,
+        1904
+      ],
+      "id": "20ea6c82-f489-4446-ae5c-5f0701e4b206",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        480
+      ],
+      "id": "7a094d2b-d9b4-4356-b489-8f9146a97a4d",
+      "name": "Google Gemini Chat Model2"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "{{ $env.CURRENTKEY }}",
+              "newKey": "{{ $env.NEWKEY }}"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        64,
+        672
+      ],
+      "id": "4adb6f4f-41da-43c2-8e62-c042937d1216",
+      "name": "Rename Keys2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $json.query || '';\nreturn {\n  json: {\n    query: query.replace(/\\n/g, ' ').trim()\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        672
+      ],
+      "id": "c2a77077-6474-410a-90a4-e7a9ca2766d0",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b8676c2-53b6-49f5-a5a7-e12aeab6f397",
+              "name": "chatInput",
+              "value": "=Eu quero que você crie uma frase forte que ninguém fala sobre investimeto, e o tema é bitcoin",
+              "type": "string"
+            },
+            {
+              "id": "9a326497-f3d3-417b-88c3-e0e83ce5d4b6",
+              "name": "sessionId",
+              "value": "{{ Math.floor(Math.random() * 1e10).toString() + Date.now().toString() }}",
+              "type": "string"
+            },
+            {
+              "id": "687600d4-8eeb-4b9d-8618-8a1a0b8d6bc9",
+              "name": "tipo",
+              "value": "carrossel",
+              "type": "string"
+            },
+            {
+              "id": "c4f02773-dc63-4d28-9177-a8492480f443",
+              "name": "idioma",
+              "value": "Português - Brasil",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        352
+      ],
+      "id": "b5ee2c35-a4b9-4e30-8532-977d24b5a33c",
+      "name": "SET2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('SET2').item.json.chatInput }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua função é criar temas, qualquer tipo de tema e esse tema será efetivo na criação de imagens, então seja especifico no tema.\n\n# OUTPUT\nExiba apenas o tema e nada mais, sem adicionais"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        224,
+        352
+      ],
+      "id": "debb4a2f-9c33-42a6-be5f-95b8167e7470",
+      "name": "GERAR TEMA2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE UM TÍTULO PARA MIM DE ACORDO COM O SYSTEM MESSAGE",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# TEMA: {{ $json.text }}\n\n# FUNÇÃO\nVocê irá receber um tema e você deve criar um título chamativo, esse titulo será usado dentro de uma postagem 1080x1080.\n\n# OUTPUT\nExiba apenas o título e nada mais, sem adicionais"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        656,
+        352
+      ],
+      "id": "41ddd142-81fa-4836-8fc7-fbd70524b29a",
+      "name": "GERAR TITULO2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE O PROMPT DE CRIAÇÃO DE IMAGEM PRA MIM DE ACORDO COM SEU SYSTEM MESSAGE EM FORMATO {{ $('SET2').item.json.tipo }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# Crie uma imagem ultra-realista e impactante no formato quadrado (Tamanho ideal: 1080 x 1080 pixels; Proporção: 1:1), inspirada em postagens chamativas de redes sociais.\n\n**Essa imagem deve ser usada em carrossel ou estático.**\n- Carrossel (4 ~ 6 imagens)\nEscolha aleatoriamente entre 4 e 6 imagens e **especifique essa quantidade explicitamente no início do prompt final** comece o prompt como: \"Gere X imagens...\"*\n\n- Estático (1 imagem)\n\n---\n\n## CONTEÚDO VISUAL\n• A imagem deve representar visualmente o tema gerado em `{{ $('GERAR TEMA2').item.json.text }}` com forte apelo visual.  \n• Utilize composição central ou simétrica com elementos diretamente ligados ao tema.  \n• A iluminação deve ser dramática, com foco claro no elemento principal.  \n• O fundo deve complementar o tema, podendo ser desfocado ou conter textura suave, sem roubar a atenção.  \n• Paleta de cores baseada no sentimento do tema (ex: tons frios para temas tristes, tons quentes para temas de ação ou alerta).\n\n---\n\n## TEXTO EMBUTIDO\n• Deixe espaço no terço inferior da imagem para sobrepor o título `{{ $('GERAR TITULO2').item.json.text }}`.  \n• Tipografia **sem serifa**, **bold**, **caixa alta**, na cor **branca ou amarelo claro**, com leve sombra escura.  \n• Tamanho grande (entre 64px e 96px), centralizado ou alinhado ao centro inferior da imagem.  \n• A palavra-chave principal pode ter destaque extra (fonte maior ou mais pesada).\n\n---\n\n### IDIOMA DO TEXTO\n{{ $('SET2').item.json.idioma }}\n\n#### OBSERVAÇÃO\nSEJA CAUTELOSO COM O TEXTO PARA NÃO TER FALHA NA ESCRITA\n\n---\n\n## ESTILO & ATMOSFERA\n• Atmosfera condizente com o tema (ex: suspense, ação, tranquilidade, caos).  \n• Estilo cinematográfico ou editorial, com contraste alto, boa profundidade e clareza visual.  \n• Evitar minimalismo excessivo — priorizar impacto visual com equilíbrio.\n\n---\n\n## SAÍDA\n• **Gere apenas o prompt final pronto para ser usado por uma IA de geração de imagens. Sem explicações, sem justificativas, sem comentários. Apenas o prompt, direto.**  \n• Imagem final já no formato quadrado (1:1), com recorte ideal para redes sociais.  \n• Inclua o texto em conjunto a imagem final."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1104,
+        352
+      ],
+      "id": "05a4c35b-8a75-4c38-9078-8a4bf00f8abd",
+      "name": "GERAR PROMPT IMAGEM2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n  {\n    \"contents\": [\n      {\n        \"role\": \"user\",\n        \"parts\": [\n          {\n            \"text\": $json.query\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"responseModalities\": [\n        [\"Text\", \"Image\"]\n      ]\n    }\n  }\n}}",
+        "options": {}
+      },
+      "id": "08747f80-63e2-4666-aa67-6c7ffb489383",
+      "name": "Gerar Imagem (Gemini)1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        480,
+        672
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "378a964b-af48-4684-a531-d278d489022c",
+              "leftValue": "={{ $json.candidates[0].content.parts[0].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "a76c8877-6b62-4df7-810d-a1f66776642f",
+              "leftValue": "={{ $json.candidates[0].content.parts[1].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        672
+      ],
+      "id": "8ad9fdf6-8d60-46c8-a76c-3f9abd32bd24",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7f65739c-492a-4b9c-9af3-9c8b7b07cfc2",
+              "leftValue": "={{ $json.inlineData }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        704
+      ],
+      "id": "6b61b274-ff19-4eff-b053-3ae0730782d2",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "inlineData.data",
+        "options": {
+          "fileName": "data",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        736
+      ],
+      "id": "80b439c5-0610-428f-b7c6-2e23ec9c3ac0",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "candidates[0].content.parts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        704
+      ],
+      "id": "9d627508-683c-49b9-a820-eb90d702d2a0",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        960,
+        704
+      ],
+      "id": "9eb99b2c-c712-4e9c-a61a-7e5d7ad39fbb",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0fee84de-8933-4858-bad1-93de49217564",
+              "leftValue": "={{ $json.tipo }}",
+              "rightValue": "carrossel",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2672,
+        1840
+      ],
+      "id": "3c9d70c2-d8dd-4cf5-aa23-be1c2e10ea69",
+      "name": "IF CARROSSEL"
+    },
+    {
+      "parameters": {
+        "jsCode": "const quantidade = Math.floor(Math.random() * 3) + 4; // 4, 5 ou 6\nreturn [\n  {\n    json: {\n      quantidade\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2992,
+        1632
+      ],
+      "id": "0facefb2-41c0-418e-a1da-8a51029cb59d",
+      "name": "QUANTIDADE IMAGENS"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3824,
+        2224
+      ],
+      "id": "b30ee104-e3a8-4a50-a74e-2726b9387567",
+      "name": "Google Gemini Chat Model3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('SET1').item.json.chatInput }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nSua função é criar temas, qualquer tipo de tema e esse tema será efetivo na criação de imagens, então seja especifico no tema.\n\n# OUTPUT\nExiba apenas o tema e nada mais, sem adicionais"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        2656,
+        2096
+      ],
+      "id": "be102cf0-7200-44ca-9783-3e07a473a69b",
+      "name": "GERAR TEMA3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE UM TÍTULO PARA MIM DE ACORDO COM O SYSTEM MESSAGE",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# FUNÇÃO\nVocê irá receber um tema e deve criar uma frase impactantes e curtas que serão utilizadas como **texto principal dentro de imagens (1080x1080)** em uma postagem para redes sociais.\n\n## TEMA\n{{ $json.text }}\n\n## TIPO DE POSTAGEM\n• Tipo: {{ $('SET1').item.json.tipo }}\n\n---\n\n# REGRAS\n• Crie uma única frase para a imagem.\n• A frase deve conter **no máximo 6 palavras**..\n• O tom deve ser **impactante, direto e visualmente forte**, adequado para postagens de redes sociais.\n\n---\n\n# FORMATO DE RESPOSTA\nExiba **somente uma frase** (sem títulos, sem explicações, sem blocos extras).\n\n## Exemplo de saída esperada:\nComece pela liberdade financeira\n\n---\n\n# IMPORTANTE\n• **Não repita frases.**  \n• **Não gere explicações.**  \n• **Apenas uma frase, prontas para uso.**\n"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        3024,
+        2096
+      ],
+      "id": "1a20b15e-2781-4ce2-96f8-f5299ddd1402",
+      "name": "GERAR TITULO3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=CRIE O PROMPT DE CRIAÇÃO DE IMAGEM PRA MIM DE ACORDO COM SEU SYSTEM MESSAGE EM FORMATO {{ $('SET1').item.json.tipo }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# Crie uma imagem ultra-realista e impactante no formato quadrado (Tamanho ideal: 1080 x 1080 pixels; Proporção: 1:1), inspirada em postagens chamativas de redes sociais.\n\n## TIPO DE POSTAGEM\n• {{ $('SET1').item.json.tipo }}\n\nEstatico = 1 Imagem\n\n---\n\n# CONTEÚDO VISUAL\n• Utilize um único item central diretamente ligado ao tema. \n• A imagem deve representar visualmente o tema gerado em `{{ $('GERAR TEMA3').item.json.text }}` com forte apelo visual.  \n• A iluminação deve ser dramática, com foco claro no elemento principal.  \n• O fundo deve complementar o tema, podendo ser desfocado ou conter textura suave, sem roubar a atenção.  \n• Paleta de cores baseada no tema.\n\n---\n\n# TEXTO EMBUTIDO\n• Deixe espaço no terço inferior da imagem para sobrepor o título `{{ $json.text }}`.  \n• Tipografia: IMPACT, **sem serifa**, **bold**, **caixa alta**, na cor **branca ou amarelo claro**, com leve sombra escura.  \n• Tamanho grande (entre 84px e 96px), centralizado ao centro um pouco abaixo da imagem.\n• Não incluir no texto final '1.' ou qualquer semelhante, apenas o texto em si.\n• Aplique um espaçamento entre **letras** de 4px para evitar letras juntas\n\n## IDIOMA DO TEXTO\n{{ $('SET1').item.json.idioma }}\n\n### OBSERVAÇÃO1\nVOCÊ DEVE TER FOCO TOTAL NO TEXTO PARA EVITAR QUALQUER ERRO ORTOGRÁFICO OU QUALQUER MÁ LEITURA, SEJA CAUTELOSO COM O TEXTO PARA NÃO TER FALHA NA ESCRITA\n\n### OBSERVAÇÃO2\nNunca mude o texto recebido.\n\n---\n\n# ESTILO & ATMOSFERA\n• Atmosfera condizente com o tema (ex: suspense, ação, tranquilidade, caos).  \n• Estilo cinematográfico ou editorial, com contraste alto, boa profundidade e clareza visual.  \n• Evitar minimalismo excessivo — priorizar impacto visual com equilíbrio.\n\n---\n\n# FORMATO DA SAÍDA\n- Sempre comece com: `Gere X imagem:` (com X sendo o da quantidade de imagem a ser produzido).\n- Escreva um bloco começando com `Imagem 1:`, seguido da descrição.\n- Não gere colagem, nem mosaico. A imagem deve ser **independente**.\n- Priorize sempre a melhor saida para a IA receber o seu prompt final"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        3440,
+        2096
+      ],
+      "id": "c20807a6-bd0b-48b0-9383-de5cc499ce2f",
+      "name": "GERAR PROMPT IMAGEM3"
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "{{ $env.CURRENTKEY }}",
+              "newKey": "{{ $env.NEWKEY }}"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        2464,
+        2352
+      ],
+      "id": "c4b4f44f-195d-403f-b74a-3473a0d1121e",
+      "name": "Rename Keys3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $json.query || '';\nreturn {\n  json: {\n    query: query.replace(/\\n/g, ' ').trim()\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2656,
+        2352
+      ],
+      "id": "d7af7f66-d768-473a-8aae-d85d36b3d329",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "{{ $env.URL }}",
+        "authentication": "{{ $env.AUTHENTICATION }}",
+        "nodeCredentialType": "{{ $env.NODECREDENTIALTYPE }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n  {\n    \"contents\": [\n      {\n        \"role\": \"user\",\n        \"parts\": [\n          {\n            \"text\": $json.query\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"responseModalities\": [\n        [\"Text\", \"Image\"]\n      ]\n    }\n  }\n}}",
+        "options": {}
+      },
+      "id": "f5bcc026-d2f8-4189-badf-c4c4304a6aab",
+      "name": "Gerar Imagem (Gemini)2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2880,
+        2352
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 1,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "378a964b-af48-4684-a531-d278d489022c",
+              "leftValue": "={{ $json.candidates[0].content.parts[0].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "bcac93af-4137-45a8-84dd-a6bd07759ef9",
+              "leftValue": "={{ $json.candidates[0].content.parts[1].inlineData.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3120,
+        2352
+      ],
+      "id": "7689b5f5-7867-4481-8118-e2a3f56b92b9",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7f65739c-492a-4b9c-9af3-9c8b7b07cfc2",
+              "leftValue": "={{ $json.inlineData }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3792,
+        2384
+      ],
+      "id": "dc7c62c7-52be-48d3-8bf5-6d264609eb09",
+      "name": "Filter2"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "inlineData.data",
+        "options": {
+          "fileName": "data",
+          "mimeType": "image/jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        4032,
+        2384
+      ],
+      "id": "8be6e2b7-b582-4746-96d5-7ca8e8a467bf",
+      "name": "Convert to File2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "candidates[0].content.parts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3584,
+        2384
+      ],
+      "id": "2b3ce38c-7cd3-47ad-b28b-4c6e43de9180",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        2384
+      ],
+      "id": "0b8bf949-4e6a-4cc7-b031-1371b50a496c",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Carrossel ou estático?",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Sua única função é escolher 'carrossel ou estático' e nada mais. Me traga uma saída única com sua escolha e nada mais, sem adicionais.\n\nSua próxima função é escolher um tema, para criar conteudo no instagram"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2064,
+        1840
+      ],
+      "id": "845cf83b-a975-40f0-be21-a6653fe6d4c3",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        2016
+      ],
+      "id": "93d564f2-7d2d-4c9a-8303-940c544f9c23",
+      "name": "Google Gemini Chat Model4"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"tema\": \"\",\n\t\"escolha\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        2224,
+        2016
+      ],
+      "id": "b75483b4-00f9-4a81-98cd-7e8f7279c70b",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "INSTAGRAM CONTAINER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TEMA",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TITULO",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Gerar Imagem (Gemini)5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET": {
+      "main": [
+        [
+          {
+            "node": "GERAR TEMA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TEMA": {
+      "main": [
+        [
+          {
+            "node": "GERAR TITULO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TITULO": {
+      "main": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR PROMPT IMAGEM": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar Imagem (Gemini)5": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter4": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out4": {
+      "main": [
+        [
+          {
+            "node": "Filter4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Split Out4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "INSTAGRAM POST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "INSTAGRAM CONTAINER": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TEMA1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TITULO1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Gerar Imagem (Gemini)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET1": {
+      "main": [
+        [
+          {
+            "node": "IF CARROSSEL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TEMA1": {
+      "main": [
+        [
+          {
+            "node": "GERAR TITULO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TITULO1": {
+      "main": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR PROMPT IMAGEM1": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar Imagem (Gemini)": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TEMA2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TITULO2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys2": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Gerar Imagem (Gemini)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SET2": {
+      "main": [
+        [
+          {
+            "node": "GERAR TEMA2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TEMA2": {
+      "main": [
+        [
+          {
+            "node": "GERAR TITULO2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TITULO2": {
+      "main": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR PROMPT IMAGEM2": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar Imagem (Gemini)1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SET2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF CARROSSEL": {
+      "main": [
+        [
+          {
+            "node": "QUANTIDADE IMAGENS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GERAR TEMA3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QUANTIDADE IMAGENS": {
+      "main": [
+        [
+          {
+            "node": "GERAR TEMA1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM3",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TEMA3",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "GERAR TITULO3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TEMA3": {
+      "main": [
+        [
+          {
+            "node": "GERAR TITULO3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR TITULO3": {
+      "main": [
+        [
+          {
+            "node": "GERAR PROMPT IMAGEM3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GERAR PROMPT IMAGEM3": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys3": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Gerar Imagem (Gemini)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar Imagem (Gemini)2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter2": {
+      "main": [
+        [
+          {
+            "node": "Convert to File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Filter2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "SET1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "activeVersionId": null,
+  "versionCounter": 2,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-02-22T23:11:24.371Z",
+      "createdAt": "2026-02-22T23:11:24.371Z",
+      "role": "workflow:owner",
+      "workflowId": "dzGI1iGCTA9y483xM9F61",
+      "projectId": "9znItQPvqmXBWZNc",
+      "project": {
+        "updatedAt": "2025-10-16T01:26:13.918Z",
+        "createdAt": "2025-10-15T22:27:43.380Z",
+        "id": "9znItQPvqmXBWZNc",
+        "name": "Nathan Jordan <nathan.jordan@fjt-solutions.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "8eda8aea-80c3-4e42-ba82-43d3843329b3"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
